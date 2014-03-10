@@ -1,5 +1,4 @@
 <?php
-
 class Data_anggaran extends Admin_Controller
 {
     public function __construct ()
@@ -18,7 +17,7 @@ class Data_anggaran extends Admin_Controller
         //dump($this->data['item_anggaran']);
         $this->load->view('app/_layout_main', $this->data);
     }
-
+   
     public function edit ($id = NULL)
     {
         // Fetch a tsl or set a new one
