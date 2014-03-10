@@ -11,7 +11,7 @@ class Data_aktual extends Admin_Controller
         $this->load->model('master/jenis_item_m');
     }
 
-    public function index ($kode)
+    public function index ($kode = NULL)
     {
         $this->data['item_anggaran'] = $this->item_anggaran_m->get_item_anggaran($kode); // Fetch all item anggaran with limit offset
         $this->data['subview'] = 'app/master/item_anggaran/index'; // Load view
