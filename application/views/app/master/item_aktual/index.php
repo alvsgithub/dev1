@@ -2,7 +2,7 @@
     <h4>Item Anggaran</h4>
 </div>
 <section_custom>
-    <?php echo btn_add('app/data_aktual/edit'); ?>
+    <?php echo btn_add('app/data_anggaran/edit'); ?>
     <table id="example" class="table table-striped table-bordered table-hover table-condensed">
         <thead>
             <tr id="header1">
@@ -19,16 +19,16 @@
         <tbody>
         <?php if(count($item_anggaran)): foreach($item_anggaran as $item): ?>	
             <tr>
-                <td><?php echo anchor('app/data_aktual/edit/' . $item->kode, $item->kode); ?></td>
-                <td><?php echo anchor('app/data_aktual/edit/' . $item->tahun, $item->tahun); ?></td>
-                <td><?php echo anchor('app/data_aktual/edit/' . $item->kode, $item->nama); ?></td>
-                <td><?php echo anchor('app/data_aktual/edit/' . $item->satuan, $item->satuan); ?></td>
-                <td><?php echo anchor('app/data_aktual/edit/' . $item->jenis, $item->jenis); ?></td>
-                <td style="text-align: right;"><?php echo anchor('app/data_aktual/edit/' . $item->kode, $item->harga_pagu); ?></td>
-                <td style="text-align: right;"><?php echo anchor('app/data_aktual/edit/' . $item->kode, $item->harga_oe); ?></td>
+                <td><?php echo anchor('app/data_anggaran/edit/' . $item->kode, $item->kode); ?></td>
+                <td><?php echo anchor('app/data_anggaran/edit/' . $item->tahun, $item->tahun); ?></td>
+                <td><?php echo anchor('app/data_anggaran/edit/' . $item->kode, $item->nama); ?></td>
+                <td><?php echo anchor('app/data_anggaran/edit/' . $item->satuan, $item->satuan); ?></td>
+                <td><?php echo anchor('app/data_anggaran/edit/' . $item->jenis, $item->jenis); ?></td>
+                <td style="text-align: right;"><?php echo anchor('app/data_anggaran/edit/' . $item->kode, $item->harga_pagu); ?></td>
+                <td style="text-align: right;"><?php echo anchor('app/data_anggaran/edit/' . $item->kode, $item->harga_oe); ?></td>
                 <td id="actions1">
-                    <?php echo btn_edit('app/data_aktual/edit/' . $item->kode); ?>
-                    <?php echo btn_delete('app/data_aktual/delete/' . $item->kode); ?>
+                    <?php echo btn_edit('app/data_anggaran/edit/' . $item->kode); ?>
+                    <?php echo btn_delete('app/data_anggaran/delete/' . $item->kode); ?>
                 </td>
             </tr>
         <?php endforeach; ?>
