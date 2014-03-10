@@ -74,9 +74,7 @@ CREATE TABLE `ci_sessions` (
   KEY `last_activity_idx` (`last_activity`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-INSERT INTO ci_sessions VALUES("f5b872b84f2b4aceb35283bcaaf1d1c6","202.67.40.25","Mozilla/5.0 (Windows NT 6.1; WOW64; rv:27.0) Gecko/20100101 Firefox/27.0","1394432299","");
 INSERT INTO ci_sessions VALUES("c4d84ee39bd6094cd1034aeba640871c","::1","Mozilla/5.0 (Windows NT 6.1; WOW64; rv:27.0) Gecko/20100101 Firefox/27.0","1394434223","a:6:{s:9:\"user_data\";s:0:\"\";s:8:\"username\";s:9:\"firmantok\";s:5:\"email\";s:21:\"fir_man_tok@yahoo.com\";s:2:\"id\";s:1:\"2\";s:8:\"id_group\";s:1:\"2\";s:8:\"loggedin\";b:1;}");
-INSERT INTO ci_sessions VALUES("068da7ed7aecee83d3110cf5524bc738","127.0.0.1","Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/534.7 (KHTML, like Gecko) Chrome/7.0.517.41 Safari/534.7","1394439635","a:6:{s:9:\"user_data\";s:0:\"\";s:8:\"username\";s:9:\"firmantok\";s:5:\"email\";s:21:\"fir_man_tok@yahoo.com\";s:2:\"id\";s:1:\"2\";s:8:\"id_group\";s:1:\"2\";s:8:\"loggedin\";b:1;}");
 
 
 
@@ -214,17 +212,17 @@ INSERT INTO menu VALUES("35","Periode","app/periode","2","7","","+1+2+3+","app/p
 INSERT INTO menu VALUES("36","Jenis Item","app/jenis_item","2","7","","+1+2+3+","app/jenis_item","app/jenis_item");
 INSERT INTO menu VALUES("38","Satuan Item","app/satuan_item","2","7","","+1+2+3+","app/satuan_item","app/satuan_item");
 INSERT INTO menu VALUES("39","Data Anggaran","","1","0","","+1+2+3+","","");
-INSERT INTO menu VALUES("40","Upah","app/data_anggaran/up","2","39","","+1+2+3+","app/data_anggaran/up","app/data_anggaran/up");
-INSERT INTO menu VALUES("41","Alat","app/data_anggaran/al","2","39","","+1+2+3+","app/data_anggaran/al","app/data_anggaran/al");
-INSERT INTO menu VALUES("42","Satuan","app/data_anggaran/st","2","39","","+1+2+3+","app/data_anggaran/st","app/data_anggaran/st");
-INSERT INTO menu VALUES("43","Analisa Harga","app/data_anggaran/ah","2","39","","+1+2+3+","app/data_anggaran/ah","app/data_anggaran/ah");
-INSERT INTO menu VALUES("44","Lumpsum","app/data_anggaran/ls","2","39","","+1+2+3+","app/data_anggaran/ls","app/data_anggaran/ls");
+INSERT INTO menu VALUES("40","Upah","app/data_anggaran/index/up","2","39","","+1+2+3+","app/data_anggaran/up","app/data_anggaran/up");
+INSERT INTO menu VALUES("41","Alat","app/data_anggaran/index/al","2","39","","+1+2+3+","app/data_anggaran/al","app/data_anggaran/al");
+INSERT INTO menu VALUES("42","Satuan","app/data_anggaran/index/st","2","39","","+1+2+3+","app/data_anggaran/st","app/data_anggaran/st");
+INSERT INTO menu VALUES("43","Analisa Harga","app/data_anggaran/index/ah","2","39","","+1+2+3+","app/data_anggaran/ah","app/data_anggaran/ah");
+INSERT INTO menu VALUES("44","Lumpsum","app/data_anggaran/index/ls","2","39","","+1+2+3+","app/data_anggaran/ls","app/data_anggaran/ls");
 INSERT INTO menu VALUES("47","Data Aktual","","1","0","","+1+2+3+","","");
-INSERT INTO menu VALUES("48","Upah","app/data_aktual/up","2","47","","+1+2+3+","app/data_aktual/up","app/data_aktual/up");
-INSERT INTO menu VALUES("49","Alat","app/data_aktual/al","2","47","","+1+2+3+","app/data_aktual/al","app/data_aktual/al");
-INSERT INTO menu VALUES("50","Satuan","app/data_aktual/st","2","47","","+1+2+3+","app/data_aktual/st","app/data_aktual/st");
-INSERT INTO menu VALUES("51","Analisa Harga","app/data_aktual/ah","2","47","","+1+2+3+","app/data_aktual/ah","app/data_aktual/ah");
-INSERT INTO menu VALUES("52","Lumpsum","app/data_aktual/ls","2","47","","+1+2+3+","app/data_aktual/ls","app/data_aktual/ls");
+INSERT INTO menu VALUES("48","Upah","app/data_aktual/index/up","2","47","","+1+2+3+","app/data_aktual/up","app/data_aktual/up");
+INSERT INTO menu VALUES("49","Alat","app/data_aktual/index/al","2","47","","+1+2+3+","app/data_aktual/al","app/data_aktual/al");
+INSERT INTO menu VALUES("50","Satuan","app/data_aktual/index/st","2","47","","+1+2+3+","app/data_aktual/st","app/data_aktual/st");
+INSERT INTO menu VALUES("51","Analisa Harga","app/data_aktual/index/ah","2","47","","+1+2+3+","app/data_aktual/ah","app/data_aktual/ah");
+INSERT INTO menu VALUES("52","Lumpsum","app/data_aktual/index/ls","2","47","","+1+2+3+","app/data_aktual/ls","app/data_aktual/ls");
 
 
 
