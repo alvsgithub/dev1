@@ -1,0 +1,92 @@
+
+
+tr#header1 { 
+    border: 3px solid blue;
+    background-color:#fff3ce;
+}
+th#actions1 {
+    text-align: center;
+    width: 150px;
+}
+td#actions1 {
+    text-align: center;
+}
+
+.placeholder {
+    border: 1px dashed #4183C4; 
+    -webkit-border-radius: 3px; 
+    -moz-border-radius: 3px; 
+    border-radius: 3px;
+}
+
+.mjs-nestedSortable-error {
+	background: #fbe3e4; border-color: transparent;
+}
+
+ol {
+	margin: 0; padding: 0; padding-left: 30px;
+}
+
+ol.sortable,ol.sortable ol {
+	margin: 0 0 0 25px; padding: 0; list-style-type: none;
+}
+
+ol.sortable {
+	margin: 4em 0;
+}
+
+.sortable li {
+	margin: 5px 0 0 0; padding: 0;
+}
+
+.sortable li div {
+	border: 1px solid #d4d4d4; 
+        -webkit-border-radius: 3px; 
+        -moz-border-radius: 3px; 
+        border-radius: 3px; 
+        border-color: #D4D4D4 #D4D4D4 #BCBCBC; 
+        padding: 6px; 
+        margin: 0; 
+        cursor: move; 
+        background: #f6f6f6; 
+        background: -moz-linear-gradient(top, #ffffff 0%, #f6f6f6 47%, #ededed 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffffff), color-stop(47%, #f6f6f6), color-stop(100%, #ededed) ); 
+        background: -webkit-linear-gradient(top, #ffffff 0%, #f6f6f6 47%, #ededed 100%); 
+        background: -o-linear-gradient(top, #ffffff 0%, #f6f6f6 47%, #ededed 100%); 
+        background: -ms-linear-gradient(top, #ffffff 0%, #f6f6f6 47%, #ededed 100%);
+	background: linear-gradient(top, #ffffff 0%, #f6f6f6 47%, #ededed 100%); 
+        filter: DXImageTransform.Microsoft.gradient (   startColorstr = '#ffffff', endColorstr = '#ededed', GradientType = 0 );
+}
+
+._header_bg { 
+    border: 1px solid #99ff00;
+    background-image: url(../images/header-natural.jpg);
+    background-size: 100%;
+}
+._logo { 
+    width: 71px; 
+    height: 71px;
+    border: 0px solid red;
+    margin: 10px 30px;
+    float:left;
+    background: url(../images/logo_kehutanan_70.png) no-repeat;
+    background-size: 70px;
+    
+}
+._title {
+    width: 600px;
+    height: auto;
+    margin: 1px 120px;
+    border: 0px solid red;
+    text-shadow: 0 1px 0 rgba(255,255,255,0.5);
+}
+
+._title h2 {
+    font-size:27.5px;
+    color: #fff;
+}
+
+._title p{
+    font-size:12px;
+    color: #fff;
+}

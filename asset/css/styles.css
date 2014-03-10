@@ -1,0 +1,324 @@
+.content_box1{
+    /*height:114px;*/
+    overflow:hidden;
+    /*padding:12px 12px 0;*/
+    /*padding-bottom:12px;*/
+    /*font-size:11px;*/
+    /*line-height:16px;*/
+    background-color:#e1f6fa;
+}
+
+.content_box1 p{
+    /*line-height:20px;*/
+}
+
+.link-spanner{
+  position:absolute; 
+  width:100%;
+  height:100%;
+  top:0;
+  left: 0;
+  z-index: 1;
+
+  /* edit: fixes overlap error in IE7/8, 
+     make sure you have an empty gif 
+  background-image: url('empty.gif');*/
+}   
+
+@font-face { 
+  font-family: Jenna Sue; 
+    src: url('../fonts/JennaSue-webfont.eot'); 
+    src: local("Jenna Sue"), url(../fonts/JennaSue-webfont.ttf); 
+} 
+
+@font-face { 
+  font-family: News Cycle; 
+    src: url('../fonts/NewsCycle-Regular.eot'); 
+    src: local("News Cycle"), url(../fonts/NewsCycle-Regular.ttf); 
+} 
+
+@font-face {
+  font-family: 'Telex';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Telex-Regular'), url(../fonts/QBUn5F7b-9Ulki7K75J1Bw.woff) format('woff');
+}
+@font-face {
+	font-family: NexaSlab;
+	src: url(../fonts/NexaSlab-Regular.ttf);
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face {
+	font-family: Celeste;
+	src: url(../fonts/Celeste-Regular.otf);
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'TitilliumText14L250wt';
+	src: url('../fonts/titilliumtext250wt-webfont.eot');
+	src: local('☺'), url('../fonts/titilliumtext250wt-webfont.woff') format('woff'), url('../fonts/titilliumtext250wt-webfont.ttf') format('truetype'), url('../fonts/titilliumtext250wt-webfont.svg#webfontABTuNSBB') format('svg'), url('../fonts/titilliumtext250wt-webfont-2.svg#webfontABTuNSBB') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'TitilliumText14L600wt';
+	src: url('../fonts/titilliumtext600wt-webfont.eot');
+	src: local('☺'), url('../fonts/titilliumtext600wt-webfont.woff') format('woff'), url('../fonts/titilliumtext600wt-webfont.ttf') format('truetype'), url('../fonts/titilliumtext600wt-webfont.svg#webfontyPovCJ2V') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+    font-family:"Open Sans Light";
+    src:url("../fonts/OpenSans-Light.eot?") 
+    format("eot"),url("../fonts/OpenSans-Light.woff") 
+    format("woff"),url("../fonts/OpenSans-Light.ttf") 
+    format("truetype"),url("../fonts/OpenSans-Light.svg#OpenSans-Light") 
+    format("svg");
+    font-weight:normal;
+    font-style:normal;
+}
+
+body { 
+
+    /*background-color: #a79f4f;*/
+    /*background-repeat: no-repeat;*/
+    /*background-position: top center;*/
+    background: url(../images/Wood_Background.png);
+    background-size: 100% 100%;
+    font-family: 'Telex';
+    margin: 0px;
+    padding: 0px;
+    color: #CCCCCC;
+    font-size: 13px;
+    line-height:1.5em; 
+
+}
+h1 a{ 
+    text-align:center;	
+    color: black; 
+}
+
+h7 a{
+    font-size: 28px;
+    text-align:center;	
+    color: #fbe724; 
+}
+
+p{
+    color: white;
+}
+
+h8 {
+    font-size: 14px;
+    text-align:center;	
+    color: #fbe724; 
+}
+
+p.pubdate { 
+    font-style: italic; 
+    font-size: 0.9em;
+    color: #fff;
+}
+
+/* sidebar */ 
+#sidebar_wrapper {
+	float: right;
+	width: 220px;
+	margin: 20px 30px;
+}
+
+#sidebar_top {
+	width: 220px;
+	height: 8px;
+	background: url(../images/templatemo_sidebar_top2.png) no-repeat;
+}
+#sidebar_bottom {
+	width: 220px;
+	height: 8px;
+	background: url(../images/templatemo_sidebar_bottom2.png) no-repeat;
+}
+
+#sidebar {
+	padding: 8px 10px;
+	border: 0px solid red;
+	background: url(../images/templatemo_sidebar2.png) repeat-y;
+}
+
+.sb_news_box {
+	margin-bottom: 20px;
+	padding: 10px 0 20px 0;
+	border-bottom: 1px solid #343320;
+}
+
+.sb_news_box img {
+	float: left;
+	width: 60px;
+	height: 60px;
+	border: 1px solid #FFF;
+	padding: 2px;
+}
+
+.sb_news_box .nb_right {
+	float: right;
+	width: 140px;
+	margin-bottom: 0;
+	padding-bottom: 0;
+}
+
+.sb_news_box .nb_right a {
+	text-decoration: none;
+}
+
+.sb_news_box .nb_right a:hover {
+	text-decoration: underline;
+}
+
+.sb_news_box .nb_right a h6 {
+	color: #172a37;
+	text-decoration: underline;
+}
+
+.sidebar{
+    border: 0px solid blue;
+}
+.sidebar h3 { 
+    font-size: 1em; 
+    line-height: 1.2em; 
+    margin-bottom: 0; 
+}
+.sidebar ul { 
+    margin-left: 0; 
+    list-style-type: none; 
+}
+
+/* header */
+#_header {
+    width: 950px;
+    height: 90px;
+    color: #000;
+    text-shadow:0 3px 0 rgba(0,0,0,0.25);
+    background: url(../images/header1.png) repeat-y;
+    /*background-color: blue;*/
+    /*background-image: url(../images/main.png);*/
+    /*background-repeat: repeat;*/
+    /*border: 1px solid red;*/
+}
+
+#_header #logo {
+    float: left;
+    padding: 8px 0px 2px 20px;
+}
+
+#_header #header_left {
+    float: left;
+    padding-left: 20px;
+    width: 600px;
+}
+
+#_header #header_right {
+    float: right;
+    width: 500px;
+    margin-right: 30px;
+}
+
+#_header  #site_title {
+    width: 600px;
+    border: 0px solid red;
+    padding: 5px 0 5px 0px;
+}
+
+#_header  #site_title a{
+    margin: 0px;
+    padding: 0px;
+    font-size: 28px;
+    font-family: 'Telex';
+    text-shadow: 1px 1px 1px #703508;
+    font-weight: normal;
+    text-decoration: none;
+}
+
+#social_box {
+    float: right;
+    display: inline-block;
+    margin: 20px 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+#social_box li {
+    display: block;
+    float: left;
+    padding: 0;
+    margin: 0;
+}
+
+#social_box li a {
+    width: 46px;
+    height: 46px;
+    margin-right: 5px;
+}
+
+
+/* footer */
+
+#_footer {
+    width: 950px;
+    height: 200px;
+    margin: 0;   
+    background: #0d869c url(../images/templatemo_footer.png) top repeat-x;
+    /*background-color: yellow;*/
+    border: 0px solid red;
+}
+
+#_footer .footer_box {
+    float: left;
+    width: 260px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 30px;
+    padding-left: 30px;
+    border: 0px solid red;
+}
+
+#_footer ul { 
+    padding: 0; 
+    margin: 0; 
+    list-style: none; 
+}
+
+#_footer li { 
+    padding: 0; 
+    margin: 0 0 5px 0; 
+}
+
+#_footer li a {
+    display: block;
+    color: #ccc;
+    text-decoration: none;
+    border-bottom: 1px dotted #fff;
+}
+
+#_footer li a:hover {
+    color: #fff;
+}
+
+#_footer .last {
+    padding-right: 0;
+}
+
+/* end of footer */
+
+/* copyright */
+
+#_copyright {
+    width: 950px;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    background: #0c4650 url(images/templatemo_copyright.png) top repeat-x;
+}
+
+/* end of footer */
