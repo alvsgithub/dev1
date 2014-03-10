@@ -18,10 +18,6 @@ class Satuan_item_m extends MY_Model
             'rules' => 'trim|required|xss_clean'
         )
     );
-
-    public function tes(){
-        return true;
-    }
     
     public function get_new(){
         $satuan_item = new stdClass();
