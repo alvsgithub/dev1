@@ -19,6 +19,10 @@ class Satuan_item_m extends MY_Model
         )
     );
 
+    public function tes(){
+        return true;
+    }
+    
     public function get_new(){
         $satuan_item = new stdClass();
         $satuan_item->kode = '';
