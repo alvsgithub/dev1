@@ -46,12 +46,20 @@ class Item_anggaran_M extends MY_Model
     );
     
     //VIEW ITEM ANGGARAN DATA
+<<<<<<< HEAD
     public function get_item_anggaran() {
+=======
+    public function get_item_anggaran($kode) {
+>>>>>>> 936a5e48051dfe8562aba424e99b78a3f8c70c35
         $this->db->select('item_anggaran.*,periode.tahun,satuan_item.satuan,jenis_item.jenis');
         $this->db->from('item_anggaran');
         $this->db->join('periode', 'periode.id = item_anggaran.id_periode');
         $this->db->join('satuan_item', 'satuan_item.kode = item_anggaran.kode_satuan');
         $this->db->join('jenis_item', 'jenis_item.kode = item_anggaran.kode_jenis_item');
+<<<<<<< HEAD
+=======
+        $this->db->where('kode_jenis',$kode);
+>>>>>>> 936a5e48051dfe8562aba424e99b78a3f8c70c35
         $query = $this->db->get()->result();
         return $query;
     }
