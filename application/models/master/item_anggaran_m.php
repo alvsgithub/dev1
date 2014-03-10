@@ -2,7 +2,7 @@
 class Item_anggaran_M extends MY_Model
 {
     protected $_table_name = 'item_anggaran';
-    protected $_primary_key = 'kode';
+    protected $_primary_key = 'kode'; 
     protected $_order_by = 'kode';
     protected $_timestamps = TRUE;
     protected $_logs = TRUE;
