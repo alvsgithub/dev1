@@ -1,4 +1,5 @@
 <?php
+
 class Item_anggaran_M extends MY_Model
 {
     protected $_table_name = 'item_anggaran';
