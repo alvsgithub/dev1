@@ -1,0 +1,37 @@
+@font-face {
+	font-family: NexaSlab;
+	src: url(NexaSlab-Regular.ttf);
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face {
+	font-family: Celeste;
+	src: url(Celeste-Regular.otf);
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'TitilliumText14L250wt';
+	src: url('titilliumtext250wt-webfont.eot');
+	src: local('☺'), url('titilliumtext250wt-webfont.woff') format('woff'), url('titilliumtext250wt-webfont.ttf') format('truetype'), url('titilliumtext250wt-webfont.svg#webfontABTuNSBB') format('svg'), url('titilliumtext250wt-webfont-2.svg#webfontABTuNSBB') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'TitilliumText14L600wt';
+	src: url('titilliumtext600wt-webfont.eot');
+	src: local('☺'), url('titilliumtext600wt-webfont.woff') format('woff'), url('titilliumtext600wt-webfont.ttf') format('truetype'), url('titilliumtext600wt-webfont.svg#webfontyPovCJ2V') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+    font-family:"Open Sans Light";
+    src:url("OpenSans-Light.eot?") 
+    format("eot"),url("OpenSans-Light.woff") 
+    format("woff"),url("OpenSans-Light.ttf") 
+    format("truetype"),url("OpenSans-Light.svg#OpenSans-Light") 
+    format("svg");
+    font-weight:normal;
+    font-style:normal;
+}
