@@ -52,7 +52,7 @@ class Item_anggaran_M extends MY_Model
         $this->db->join('periode', 'periode.id = item_anggaran.id_periode');
         $this->db->join('satuan_item', 'satuan_item.kode = item_anggaran.kode_satuan');
         $this->db->join('jenis_item', 'jenis_item.kode = item_anggaran.kode_jenis_item');
-        $this->db->where('kode_jenis',$kode);
+        $this->db->where('kode_jenis_item',  strtoupper($kode));
         $query = $this->db->get()->result();
         return $query;
     }
