@@ -2,73 +2,36 @@
 
 class Aktual extends Admin_Controller
 {
+
     public function __construct ()
     {
         parent::__construct();
+        $this->load->model('master/periode_m');
         $this->load->model('master/item_m');
     }
 
-    public function upah ()
+    public function index ($jenis = NULL)
     {
-        $this->data['item'] = $this->item_m->get_by("jenis = 'UPAH'"); // Fetch all provinsi with limit offset
-        $this->data['jenis'] = 'UPAH';
+        $this->data['options_periode'] = $this->periode_m->get();
+        $this->data['item'] = $this->item_m->get_item_by($jenis); // Fetch all provinsi with limit offset
+        $this->data['jenis'] = $jenis;
         $this->data['subview'] = 'app/master/aktual/index'; // Load view
 //        dump($this->data['pagination']);
         $this->load->view('app/_layout_main', $this->data);
     }
     
-    public function alat ()
+    public function edit ($param = NULL)
     {
-        $this->data['item'] = $this->item_m->get_by("jenis = 'ALAT'"); // Fetch all provinsi with limit offset
-        $this->data['jenis'] = 'UPAH';
-        $this->data['subview'] = 'app/master/aktual/index'; // Load view
-//        dump($this->data['pagination']);
-        $this->load->view('app/_layout_main', $this->data);
-    }
-    
-    public function satuan ()
-    {
-        $this->data['item'] = $this->item_m->get_by("jenis = 'SATUAN'"); // Fetch all provinsi with limit offset
-        $this->data['jenis'] = 'UPAH';
-        $this->data['subview'] = 'app/master/aktual/index'; // Load view
-//        dump($this->data['pagination']);
-        $this->load->view('app/_layout_main', $this->data);
-    }
-    
-    public function lumpsum ()
-    {
-        $this->data['item'] = $this->item_m->get_by("jenis = 'LUMPSUM'"); // Fetch all provinsi with limit offset
-        $this->data['jenis'] = 'UPAH';
-        $this->data['subview'] = 'app/master/aktual/index'; // Load view
-//        dump($this->data['pagination']);
-        $this->load->view('app/_layout_main', $this->data);
-    }
-    
-    public function edit ($id = NULL)
-    {
-        // Fetch a tsl or set a new one
-        if ($id) {
+        list($jenis, $id) = explode('-', $param);
+        if ($id != 'new') {
             $this->data['item'] = $this->item_m->get($id);
-            $this->data['options_locked'] = array(
-                'Y' => 'Ya',
-                'T' => 'Tidak'
-            );
-            $this->data['options_active'] = array(
-                'Y' => 'Ya',
-                'T' => 'Tidak'
-            );
+            $this->data['options_periode'] = $this->periode_m->get_combobox(NULL, FALSE, 'id', 'tahun,semester', NULL, FALSE);
+//            dump($this->data['item']);
             count($this->data['item']) || $this->data['errors'][] = 'item could not be found';
         }
         else {
-            $this->data['options_locked'] = array(
-                'Y' => 'Ya',
-                'T' => 'Tidak'
-            );
-            $this->data['options_active'] = array(
-                'Y' => 'Ya',
-                'T' => 'Tidak'
-            );
-            $this->data['item'] = $this->item_m->get_new();
+            $this->data['options_periode'] = $this->periode_m->get_combobox(NULL, FALSE, 'id', 'tahun,semester', NULL, FALSE);
+            $this->data['item'] = $this->item_m->get_new($jenis);
         }
         
         // Set up the form
@@ -78,13 +41,17 @@ class Aktual extends Admin_Controller
         // Process the form
         if ($this->form_validation->run() == TRUE) {
             $data = $this->item_m->array_from_post(array(
-                        'tahun',
-                        'semester',
-                        'locked',
-                        'active'
+                        'id_periode',
+                        'kode',
+                        'nama',
+                        'satuan',
+                        'jenis',
+                        'harga_pagu',
+                        'harga_oe'
                     ));
+            if($id=='new'){ $id = NULL; }
             $this->item_m->save($data, $id);
-            redirect('app/item');
+            redirect('app/aktual/index/'.$jenis);
         }
         
         // Load the view
@@ -94,10 +61,11 @@ class Aktual extends Admin_Controller
         $this->load->view('app/_layout_main', $this->data);
     }
 
-    public function delete ($id)
+    public function delete ($param)
     {
+        list($jenis, $id) = explode('-', $param);
         $this->item_m->delete($id);
-        redirect('app/aktual');
+        redirect('app/aktual/index/'.$jenis);
     }
 
 }

@@ -2,11 +2,12 @@
     <h4>Data Aktual - Item : <?php echo $jenis; ?></h4>
 </div>
 <section_custom>
-    <?php echo btn_add('app/item/edit'); ?>
+    <?php echo btn_add('app/aktual/edit/'.$jenis.'-new'); ?>
     <table id="example" class="table table-striped table-bordered table-hover table-condensed">
         <thead>
             <tr id="header1">
                 <th>Kode</th>
+                <th>Periode</th>
                 <th>Nama</th>
                 <th>Satuan</th>
                 <th>Harga Pagu</th>
@@ -17,14 +18,15 @@
         <tbody>
         <?php if(count($item)): foreach($item as $it): ?>	
             <tr>
-                <td><?php echo anchor('app/item/edit/' . $it->id, $it->kode); ?></td>
+                <td><?php echo anchor('app/aktual/edit/' . $jenis .'-'. $it->id, $it->kode); ?></td>
+                <td><?php echo $it->periode; ?></td>
                 <td><?php echo $it->nama; ?></td>
                 <td><?php echo $it->satuan; ?></td>
                 <td style="text-align: right;"><?php echo number_format($it->harga_pagu, 2, ',', '.'); ?></td>
                 <td style="text-align: right;"><?php echo number_format($it->harga_oe, 2, ',', '.'); ?></td>
                 <td id="actions1">
-                    <?php echo btn_edit('app/item/edit/' . $it->id); ?>
-                    <?php echo btn_delete('app/item/delete/' . $it->id); ?>
+                    <?php echo btn_edit('app/aktual/edit/' . $jenis .'-'. $it->id); ?>
+                    <?php echo btn_delete('app/aktual/delete/' . $jenis .'-'. $it->id); ?>
                 </td>
             </tr>
         <?php endforeach; ?>
