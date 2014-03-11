@@ -74,55 +74,34 @@ CREATE TABLE `ci_sessions` (
   KEY `last_activity_idx` (`last_activity`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-INSERT INTO ci_sessions VALUES("c4d84ee39bd6094cd1034aeba640871c","::1","Mozilla/5.0 (Windows NT 6.1; WOW64; rv:27.0) Gecko/20100101 Firefox/27.0","1394434223","a:6:{s:9:\"user_data\";s:0:\"\";s:8:\"username\";s:9:\"firmantok\";s:5:\"email\";s:21:\"fir_man_tok@yahoo.com\";s:2:\"id\";s:1:\"2\";s:8:\"id_group\";s:1:\"2\";s:8:\"loggedin\";b:1;}");
+INSERT INTO ci_sessions VALUES("35993be127ec9fb1fa7ef21e48d2c5f4","::1","Mozilla/5.0 (Windows NT 6.1; WOW64; rv:27.0) Gecko/20100101 Firefox/27.0","1394512911","");
 
 
 
-DROP TABLE item_anggaran;
+DROP TABLE item;
 
-CREATE TABLE `item_anggaran` (
-  `kode` varchar(10) NOT NULL,
-  `id_periode` int(11) NOT NULL,
-  `nama` varchar(25) NOT NULL,
-  `kode_satuan` varchar(2) NOT NULL,
-  `kode_jenis_item` varchar(2) NOT NULL,
-  `harga_pagu` decimal(25,2) NOT NULL,
-  `harga_oe` decimal(25,2) NOT NULL,
-  `created_by` varchar(25) CHARACTER SET latin1 NOT NULL,
-  `modified_by` varchar(25) CHARACTER SET latin1 NOT NULL,
-  `created_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `modified_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  PRIMARY KEY (`kode`),
+CREATE TABLE `item` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `kode` varchar(11) NOT NULL,
+  `id_periode` int(11) DEFAULT NULL,
+  `nama` varchar(150) NOT NULL,
+  `jenis` varchar(50) NOT NULL,
+  `satuan` varchar(15) NOT NULL,
+  `harga_pagu` decimal(17,2) DEFAULT NULL,
+  `harga_oe` decimal(17,2) DEFAULT NULL,
+  `created_by` varchar(25) DEFAULT NULL,
+  `modified_by` varchar(25) DEFAULT NULL,
+  `created_time` timestamp NULL DEFAULT NULL,
+  `modified_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
   KEY `fk_periode_item` (`id_periode`),
-  KEY `fk_jenis_item` (`kode_jenis_item`),
-  KEY `fk_satuan_item` (`kode_satuan`),
-  CONSTRAINT `fk_satuan_item` FOREIGN KEY (`kode_satuan`) REFERENCES `satuan_item` (`kode`) ON UPDATE CASCADE,
-  CONSTRAINT `fk_jenis_item` FOREIGN KEY (`kode_jenis_item`) REFERENCES `jenis_item` (`kode`) ON UPDATE CASCADE,
   CONSTRAINT `fk_periode_item` FOREIGN KEY (`id_periode`) REFERENCES `periode` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
-INSERT INTO item_anggaran VALUES("GH","2","Mie Goreng","1","UP","100000.00","10000.00","firmantok","firmantok","2014-03-10 14:13:46","2014-03-09 10:22:15");
-INSERT INTO item_anggaran VALUES("MJ","2","Mie Goreng","1","AL","100000.00","100000.00","firmantok","firmantok","2014-03-10 14:13:50","2014-03-09 10:33:08");
-
-
-
-DROP TABLE jenis_item;
-
-CREATE TABLE `jenis_item` (
-  `kode` varchar(2) NOT NULL,
-  `jenis` varchar(20) NOT NULL,
-  `created_by` varchar(25) CHARACTER SET latin1 NOT NULL,
-  `modified_by` varchar(25) CHARACTER SET latin1 NOT NULL,
-  `created_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `modified_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  PRIMARY KEY (`kode`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-INSERT INTO jenis_item VALUES("AH","Analisa Harga","firmantok","firmantok","2014-03-10 01:33:12","2014-03-08 07:45:46");
-INSERT INTO jenis_item VALUES("AL","Alat","firmantok","firmantok","2014-03-10 01:33:38","2014-03-08 07:39:35");
-INSERT INTO jenis_item VALUES("LS","Lumpsum","firmantok","firmantok","2014-03-10 01:33:46","0000-00-00 00:00:00");
-INSERT INTO jenis_item VALUES("ST","Satuan","firmantok","firmantok","2014-03-10 01:33:20","2014-03-08 07:27:48");
-INSERT INTO jenis_item VALUES("UP","Upah","firmantok","firmantok","2014-03-10 01:33:33","2014-03-08 07:27:08");
+INSERT INTO item VALUES("1","L01","2","Mandor","upah","Org/Hari","1350000.00","1350000.00","firmantok","firmantok","0000-00-00 00:00:00","2014-03-11 09:55:48");
+INSERT INTO item VALUES("2","E01","2","Sewa Mesin Bor","alat","hari","1350000.00","1350000.00","firmantok","firmantok","2014-03-10 00:00:00","2014-03-11 09:22:22");
+INSERT INTO item VALUES("3","M001","2","Pasir Urug","satuan","M3","1350000.00","1350000.00","firmantok","firmantok","2014-03-10 00:00:00","2014-03-11 09:22:24");
+INSERT INTO item VALUES("4","LS001","2","Pekerjaan Uit Set","lumpsum","ls","0.00","0.00","firmantok","firmantok","2014-03-10 00:00:00","2014-03-11 09:22:29");
 
 
 
@@ -197,32 +176,21 @@ CREATE TABLE `menu` (
   PRIMARY KEY (`id_menu`)
 ) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8;
 
-INSERT INTO menu VALUES("1","Dashboard","app/dashboard","2","6","","+1+2+3+","app/dashboard","app/dashboard");
-INSERT INTO menu VALUES("2","Pages","app/page","2","6","","+1+2+3+","app/page","app/page");
-INSERT INTO menu VALUES("3","Order Pages","app/page/order","2","6","","+1+2+3+","app/page/order","app/page/order");
-INSERT INTO menu VALUES("4","News Articles","app/article","2","6","","+1+2+3+","app/article","app/article");
-INSERT INTO menu VALUES("5","Users","app/user","2","6","","+1+2+3+","app/user","app/user");
-INSERT INTO menu VALUES("6","Web","","1","0","","+1+2+3+","","");
+INSERT INTO menu VALUES("5","Users","app/user","2","7","","+1+2+3+","app/user","app/user");
 INSERT INTO menu VALUES("7","Master","","1","0","","+1+2+3+","","");
-INSERT INTO menu VALUES("14","Kabupaten/Kota","app/kabkot","2","7","","+1+2+3+","app/kabkot","app/kabkot");
-INSERT INTO menu VALUES("15","Provinsi","app/provinsi","2","7","","+1+2+3+","app/provinsi","app/provinsi");
-INSERT INTO menu VALUES("20","Group","app/group","2","6","","+1+2+3+","app/group","app/group");
-INSERT INTO menu VALUES("21","Menu Privilege","app/group/access","2","6","","+1+2+3+","app/group/access","app/group/access");
+INSERT INTO menu VALUES("20","Group","app/group","2","7","","+1+2+3+","app/group","app/group");
+INSERT INTO menu VALUES("21","Menu Privilege","app/group/access","2","7","","+1+2+3+","app/group/access","app/group/access");
 INSERT INTO menu VALUES("35","Periode","app/periode","2","7","","+1+2+3+","app/periode","app/periode");
-INSERT INTO menu VALUES("36","Jenis Item","app/jenis_item","2","7","","+1+2+3+","app/jenis_item","app/jenis_item");
-INSERT INTO menu VALUES("38","Satuan Item","app/satuan_item","2","7","","+1+2+3+","app/satuan_item","app/satuan_item");
 INSERT INTO menu VALUES("39","Data Anggaran","","1","0","","+1+2+3+","","");
-INSERT INTO menu VALUES("40","Upah","app/data_anggaran/index/up","2","39","","+1+2+3+","app/data_anggaran/up","app/data_anggaran/up");
-INSERT INTO menu VALUES("41","Alat","app/data_anggaran/index/al","2","39","","+1+2+3+","app/data_anggaran/al","app/data_anggaran/al");
-INSERT INTO menu VALUES("42","Satuan","app/data_anggaran/index/st","2","39","","+1+2+3+","app/data_anggaran/st","app/data_anggaran/st");
-INSERT INTO menu VALUES("43","Analisa Harga","app/data_anggaran/index/ah","2","39","","+1+2+3+","app/data_anggaran/ah","app/data_anggaran/ah");
-INSERT INTO menu VALUES("44","Lumpsum","app/data_anggaran/index/ls","2","39","","+1+2+3+","app/data_anggaran/ls","app/data_anggaran/ls");
+INSERT INTO menu VALUES("40","Upah","app/anggaran/index/upah","2","39","","+1+2+3+","app/anggaran/upah","app/anggaran/upah");
+INSERT INTO menu VALUES("41","Alat","app/anggaran/index/alat","2","39","","+1+2+3+","app/anggaran/alat","app/anggaran/alat");
+INSERT INTO menu VALUES("42","Satuan","app/anggaran/index/satuan","2","39","","+1+2+3+","app/anggaran/satuan","app/anggaran/satuan");
+INSERT INTO menu VALUES("44","Lumpsum","app/anggaran/index/lumpsum","2","39","","+1+2+3+","app/anggaran/lumpsum","app/anggaran/lumpsum");
 INSERT INTO menu VALUES("47","Data Aktual","","1","0","","+1+2+3+","","");
-INSERT INTO menu VALUES("48","Upah","app/data_aktual/index/up","2","47","","+1+2+3+","app/data_aktual/up","app/data_aktual/up");
-INSERT INTO menu VALUES("49","Alat","app/data_aktual/index/al","2","47","","+1+2+3+","app/data_aktual/al","app/data_aktual/al");
-INSERT INTO menu VALUES("50","Satuan","app/data_aktual/index/st","2","47","","+1+2+3+","app/data_aktual/st","app/data_aktual/st");
-INSERT INTO menu VALUES("51","Analisa Harga","app/data_aktual/index/ah","2","47","","+1+2+3+","app/data_aktual/ah","app/data_aktual/ah");
-INSERT INTO menu VALUES("52","Lumpsum","app/data_aktual/index/ls","2","47","","+1+2+3+","app/data_aktual/ls","app/data_aktual/ls");
+INSERT INTO menu VALUES("48","Upah","app/aktual/upah","2","47","","+1+2+3+","app/aktual/upah","app/aktual/upah");
+INSERT INTO menu VALUES("49","Alat","app/aktual/alat","2","47","","+1+2+3+","app/aktual/alat","app/aktual/alat");
+INSERT INTO menu VALUES("50","Satuan","app/aktual/satuan","2","47","","+1+2+3+","app/aktual/satuan","app/aktual/satuan");
+INSERT INTO menu VALUES("52","Lumpsum","app/aktual/lumpsum","2","47","","+1+2+3+","app/aktual/lumpsum","app/aktual/lumpsum");
 
 
 
@@ -1458,8 +1426,8 @@ CREATE TABLE `periode` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `tahun` year(4) NOT NULL,
   `semester` tinyint(11) NOT NULL,
-  `locked` varchar(2) CHARACTER SET latin1 NOT NULL,
-  `active` varchar(2) CHARACTER SET latin1 NOT NULL,
+  `locked` varchar(2) NOT NULL,
+  `active` varchar(2) NOT NULL,
   `created_by` varchar(25) CHARACTER SET latin1 NOT NULL,
   `modified_by` varchar(25) CHARACTER SET latin1 NOT NULL,
   `created_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -1485,18 +1453,6 @@ CREATE TABLE `provinsi` (
 INSERT INTO provinsi VALUES("2","Jawa Barat");
 INSERT INTO provinsi VALUES("3","Jawa Tengah");
 INSERT INTO provinsi VALUES("1","Jawa Timur");
-
-
-
-DROP TABLE satuan_item;
-
-CREATE TABLE `satuan_item` (
-  `kode` varchar(2) NOT NULL,
-  `satuan` varchar(15) NOT NULL,
-  PRIMARY KEY (`kode`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-INSERT INTO satuan_item VALUES("1","CM");
 
 
 
@@ -1527,13 +1483,10 @@ CREATE TABLE `users` (
   UNIQUE KEY `email_UNIQUE` (`email`),
   KEY `fk_users_group_idx` (`id_group`),
   CONSTRAINT `fk_users_group` FOREIGN KEY (`id_group`) REFERENCES `users_group` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 INSERT INTO users VALUES("1","admin@yahoo.com","20ff0e5362d014396deca7c20641d6c1643927a319e95a7f5433012a06a3183d1c0368b5a1265e9ea4427d39b67983502785cd34d0deb65c19db455f46885869","admin","1");
 INSERT INTO users VALUES("2","fir_man_tok@yahoo.com","20ff0e5362d014396deca7c20641d6c1643927a319e95a7f5433012a06a3183d1c0368b5a1265e9ea4427d39b67983502785cd34d0deb65c19db455f46885869","firmantok","2");
-INSERT INTO users VALUES("3","agus@yahoo.com","f2dc977623006f1f1cc33097bbc31a9366008324f1e9eca17292eee8160f6020cb9d4d8d94ffcdfc1100385b1837fbcb625f70e1353122d6b9d4b2e64e74870a","agus","2");
-INSERT INTO users VALUES("4","hendro@yahoo.com","4fc11a554600a636544e8a919929244b7a05369da3498edf65c824d0ed8deadb309261fdb0b640c370a4e47e6f131f94b7268c79552b5f15981f616e858b6cd2","hendro","3");
-INSERT INTO users VALUES("5","fajar@yahoo.com","92e513d64fe8e8d1afb49484d242c511388edc303b24f09f3e7ca7fb94aace37adcd09819bcb63b4d0e1d5fa25631abaab1913b118aa726836b1c41473b414f7","fajar","2");
 
 
 
@@ -1548,12 +1501,8 @@ CREATE TABLE `users_group` (
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 INSERT INTO users_group VALUES("2","Administrator");
+INSERT INTO users_group VALUES("3","Perencanaan");
 INSERT INTO users_group VALUES("1","Super Administrator");
-INSERT INTO users_group VALUES("3","User Balai BKSDA Jatim");
-INSERT INTO users_group VALUES("5","User Banyuwangi");
-INSERT INTO users_group VALUES("6","User Jember");
-INSERT INTO users_group VALUES("4","User Jombang");
-INSERT INTO users_group VALUES("7","User Malang");
 
 
 
