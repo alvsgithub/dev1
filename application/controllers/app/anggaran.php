@@ -12,7 +12,7 @@ class Anggaran extends Admin_Controller
     public function index ($jenis = NULL)
     {
         $this->data['options_periode'] = $this->periode_m->get();
-        $this->data['item'] = $this->item_m->get_by("jenis = '$jenis'"); // Fetch all provinsi with limit offset
+        $this->data['item'] = $this->item_m->get_item_by($jenis); // Fetch all provinsi with limit offset
         $this->data['jenis'] = $jenis;
         $this->data['subview'] = 'app/master/anggaran/index'; // Load view
 //        dump($this->data['pagination']);
