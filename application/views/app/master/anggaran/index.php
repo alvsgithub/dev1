@@ -2,16 +2,12 @@
     <h4>Data Anggaran - Item : <?php echo $jenis; ?></h4>
 </div>
 <section_custom>
-    <select name="id_periode" style="width: 100px;">
-        <?php foreach($options_periode as $p){ ?>
-        <option value="<?php echo $p->id; ?>"><?php echo $p->tahun.' | '.$p->semester; ?></option>
-        <?php } ?>
-    </select>
     <?php echo btn_add('app/anggaran/edit/'.$jenis.'-new'); ?>
     <table id="example" class="table table-striped table-bordered table-hover table-condensed">
         <thead>
             <tr id="header1">
                 <th>Kode</th>
+                <th>Periode</th>
                 <th>Nama</th>
                 <th>Satuan</th>
                 <th>Harga Pagu</th>
@@ -23,6 +19,7 @@
         <?php if(count($item)): foreach($item as $it): ?>	
             <tr>
                 <td><?php echo anchor('app/anggaran/edit/' . $jenis .'-'. $it->id, $it->kode); ?></td>
+                <td><?php echo $it->periode; ?></td>
                 <td><?php echo $it->nama; ?></td>
                 <td><?php echo $it->satuan; ?></td>
                 <td style="text-align: right;"><?php echo number_format($it->harga_pagu, 2, ',', '.'); ?></td>
@@ -39,10 +36,10 @@
                 </tr>
         <?php endif; ?>	
         </tbody>
+        
     </table>
     
 </section_custom>
-
-<!-- @End Of File item/index.php */ -->
-<!-- @Created By : Muhammad Rizki A */ -->
+<script>
+</script>
 
