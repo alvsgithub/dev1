@@ -2,6 +2,11 @@
     <h4>Data Anggaran - Item : <?php echo $jenis; ?></h4>
 </div>
 <section_custom>
+    <select name="id_periode" style="width: 100px;">
+        <?php foreach($options_periode as $p){ ?>
+        <option value="<?php echo $p->id; ?>"><?php echo $p->tahun.' | '.$p->semester; ?></option>
+        <?php } ?>
+    </select>
     <?php echo btn_add('app/anggaran/edit/'.$jenis.'-new'); ?>
     <table id="example" class="table table-striped table-bordered table-hover table-condensed">
         <thead>
