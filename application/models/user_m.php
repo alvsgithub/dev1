@@ -2,6 +2,7 @@
 class User_M extends MY_Model
 {
     protected $_table_name = 'users';
+    protected $_primary_key = 'id';
     protected $_order_by = 'username';
     public $rules = array(
             'username' => array(

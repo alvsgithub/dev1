@@ -2,7 +2,7 @@
 
 //CONFIG FILES
 
-$LocalComputer	= 'rizki';
+$LocalComputer	= 'firman';
 $FileName 		= 'db_rab.sql';
 $Host 			= 'localhost';
 $Username 		= 'root';

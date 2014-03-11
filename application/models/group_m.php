@@ -2,6 +2,7 @@
 class Group_M extends MY_Model
 {
     protected $_table_name = 'users_group';
+    protected $_primary_key = 'id';
     protected $_order_by = 'id';
     public $rules = array(
             'nama_group' => array(

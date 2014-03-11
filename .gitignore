@@ -15,3 +15,4 @@ application/logs/*
 */cache/*
 */cache/!index.html
 >>>>>>> a8853d1a64565887b9f5176422829b2d71f1e107
+/application/
