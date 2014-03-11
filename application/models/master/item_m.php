@@ -57,6 +57,14 @@ class Item_M extends MY_Model
         return $item;
     }
     
+    public function get_item_by($jenis){
+        $this->db->select('item.*, concat(periode.tahun,'.'0'.',periode.semester) as periode', FALSE);
+        $this->db->from('item');
+        $this->db->join('periode', 'periode.id = item.id_periode', 'left');
+        $this->db->where('item.jenis', $jenis);
+        return $this->db->get()->result();
+    }
+    
 }
 
 /* @End Of File item_m.php */
