@@ -74,7 +74,12 @@ CREATE TABLE `ci_sessions` (
   KEY `last_activity_idx` (`last_activity`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-INSERT INTO ci_sessions VALUES("35993be127ec9fb1fa7ef21e48d2c5f4","::1","Mozilla/5.0 (Windows NT 6.1; WOW64; rv:27.0) Gecko/20100101 Firefox/27.0","1394512911","");
+INSERT INTO ci_sessions VALUES("0b2a04fd755427179dba41a26ad21b08","::1","Mozilla/5.0 (Windows NT 6.1; WOW64; rv:27.0) Gecko/20100101 Firefox/27.0","1394517270","");
+INSERT INTO ci_sessions VALUES("9663936df4f4ba24dc330ba0e62302c3","::1","Mozilla/5.0 (Windows NT 6.1; WOW64; rv:27.0) Gecko/20100101 Firefox/27.0","1394517270","");
+INSERT INTO ci_sessions VALUES("17b81ea19ae1cef8c58e4a282108dd7f","::1","Mozilla/5.0 (Windows NT 6.1; WOW64; rv:27.0) Gecko/20100101 Firefox/27.0","1394517424","a:6:{s:9:\"user_data\";s:0:\"\";s:8:\"username\";s:9:\"firmantok\";s:5:\"email\";s:21:\"fir_man_tok@yahoo.com\";s:2:\"id\";s:1:\"2\";s:8:\"id_group\";s:1:\"2\";s:8:\"loggedin\";b:1;}");
+INSERT INTO ci_sessions VALUES("4de7da8f73d64dab13d06f714f2a7390","::1","Mozilla/5.0 (Windows NT 6.1; WOW64; rv:27.0) Gecko/20100101 Firefox/27.0","1394514042","");
+INSERT INTO ci_sessions VALUES("ca208c750276c57d69fcbe8137870f49","::1","Mozilla/5.0 (Windows NT 6.1; WOW64; rv:27.0) Gecko/20100101 Firefox/27.0","1394517264","");
+INSERT INTO ci_sessions VALUES("7b38506393adf0c7579bb8ba9b161196","::1","Mozilla/5.0 (Windows NT 6.1; WOW64; rv:27.0) Gecko/20100101 Firefox/27.0","1394517264","");
 
 
 
@@ -96,7 +101,7 @@ CREATE TABLE `item` (
   PRIMARY KEY (`id`),
   KEY `fk_periode_item` (`id_periode`),
   CONSTRAINT `fk_periode_item` FOREIGN KEY (`id_periode`) REFERENCES `periode` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 INSERT INTO item VALUES("1","L01","2","Mandor","upah","Org/Hari","1350000.00","1350000.00","firmantok","firmantok","0000-00-00 00:00:00","2014-03-11 09:55:48");
 INSERT INTO item VALUES("2","E01","2","Sewa Mesin Bor","alat","hari","1350000.00","1350000.00","firmantok","firmantok","2014-03-10 00:00:00","2014-03-11 09:22:22");
@@ -1483,7 +1488,7 @@ CREATE TABLE `users` (
   UNIQUE KEY `email_UNIQUE` (`email`),
   KEY `fk_users_group_idx` (`id_group`),
   CONSTRAINT `fk_users_group` FOREIGN KEY (`id_group`) REFERENCES `users_group` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 INSERT INTO users VALUES("1","admin@yahoo.com","20ff0e5362d014396deca7c20641d6c1643927a319e95a7f5433012a06a3183d1c0368b5a1265e9ea4427d39b67983502785cd34d0deb65c19db455f46885869","admin","1");
 INSERT INTO users VALUES("2","fir_man_tok@yahoo.com","20ff0e5362d014396deca7c20641d6c1643927a319e95a7f5433012a06a3183d1c0368b5a1265e9ea4427d39b67983502785cd34d0deb65c19db455f46885869","firmantok","2");
@@ -1498,7 +1503,7 @@ CREATE TABLE `users_group` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `nama_group_UNIQUE` (`nama_group`),
   UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 INSERT INTO users_group VALUES("2","Administrator");
 INSERT INTO users_group VALUES("3","Perencanaan");
