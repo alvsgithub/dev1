@@ -70,7 +70,7 @@ class MY_Model extends CI_Model {
     }
     
     public function get_combobox($id = NULL, $single = FALSE, $value = 'id', $label = NULL, $where = NULL, $withNull = TRUE){
-        $this->db->select($value.",".$label);
+        $this->db->select($value.','.$label);
         
         if ($where != NULL)
             $this->db->where($where);
@@ -95,7 +95,12 @@ class MY_Model extends CI_Model {
         if($withNull == TRUE) $options = array(0 => NULL);
         else $options = array();
         foreach ($this->db->get($this->_table_name)->$method() as $data){
-            $options[$data[$value]] = $data[$label];
+            $labelEx = explode(',', $label);
+            $view = '';
+            foreach($labelEx as $l){ 
+                $view .= $data[$l]. ' | ';
+            }
+            $options[$data[$value]] = $view;
         }
         return $options;
     }
