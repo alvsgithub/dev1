@@ -125,11 +125,6 @@ class MY_Model extends CI_Model {
             $id || $data['created_by'] = $this->session->userdata('username');
             $data['modified_by'] = $this->session->userdata('username');
         }
-
-        if ($this->_table_name == 'anggota' && 
-                ($data['id_user'] == '' || $data['id_user'] == '0' || $data['id_user'] === NULL)){
-            $data['id_user'] = NULL;
-        }
         
         // Insert
         if ($id === NULL) {

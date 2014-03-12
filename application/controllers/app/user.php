@@ -10,6 +10,7 @@ class User extends Admin_Controller
 
     public function index ()
     {
+        $this->data['datatables'] = TRUE;
         // Fetch all users
         $this->data['users'] = $this->user_m-> // get_by('id != 1');
             get_ljoin(NULL, FALSE, 'users_group', 'id_group', 'id', 'users.*, b.nama_group', 'users.id != 1');
