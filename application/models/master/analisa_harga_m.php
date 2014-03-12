@@ -39,16 +39,4 @@ class Analisa_harga_M extends MY_Model
         return $analisa_harga;
     }
     
-    public function create()
-	{
-            return $this->db->insert('cek_pal_batas',array(
-                'id_kawasan'=>$this->input->post('id_kawasan',true),
-                'tgl'=>date('Y-m-d',strtotime($this->input->post('tgl',true))),
-                'pal_batas_awal'=>$this->input->post('pal_batas_awal',true),
-                'pal_batas_akhir'=>$this->input->post('pal_batas_akhir',true),
-                'user_insert'=>$this->session->userdata('username'),
-                'time_insert'=>date('Y-m-d H:i:s')
-            ));
-	}
-    
 }
