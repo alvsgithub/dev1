@@ -29,7 +29,7 @@
 <!-- Dialog Form -->
 <div id="dialog-form" class="easyui-dialog" style="width:auto; height:auto; padding: 10px 20px" 
      closed="true" buttons="#dialog-buttons">
-    <form id="fm" methode="post">
+    <form id="fm" method="post">
     <table>
 	<tr>
             <td style="width: 40%">Periode (Tahun Semester)</td>
