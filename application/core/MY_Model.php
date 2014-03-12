@@ -70,7 +70,8 @@ class MY_Model extends CI_Model {
     }
     
     public function get_combobox($id = NULL, $single = FALSE, $value = 'id', $label = NULL, $where = NULL, $withNull = TRUE){
-        $this->db->select($value.','.$label);
+        $this->db->select($value);
+        $this->db->select($label,FALSE);
         
         if ($where != NULL)
             $this->db->where($where);
