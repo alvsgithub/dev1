@@ -71,7 +71,7 @@ class Analisa_harga extends Admin_Controller
 
     public function delete ($param)
     {
-        $this->analisa_m->delete($id);
+        $this->analisa_harga_m->delete($id);
         redirect('app/analisa_harga/index/');
     }
     
@@ -86,8 +86,8 @@ class Analisa_harga extends Admin_Controller
                     'nama',
                     'satuan'
                 ));
-        $this->analisa_harga_m->save($data);
-            
-        echo json_encode(array('success'=>true));
+        if($this->analisa_harga_m->save($data)){   
+            echo json_encode(array('success'=>true));
+        }
     }
 }
