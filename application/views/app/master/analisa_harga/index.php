@@ -60,7 +60,44 @@
     var jenis = '<?php echo $jenis; ?>';
     $('#datagrid').datagrid({ 
         width: $('#div-reg-center').width() * (83/100), height: $(window).height() * (68/100),
-        title: 'Analisa Harga '+jenis, rownumbers:true, singleSelect:true, fitColumns:true, toolbar:'#toolbar'
+        title: 'Analisa Harga '+jenis, rownumbers:true, singleSelect:true, fitColumns:true, toolbar:'#toolbar', sortable:true,
+		url: '<?php echo site_url('app/analisa_harga'); ?>/'+jenis+'?analisa_harga=true',
+		columns:[[
+			{field:'kode',title:'Kode',width:80},
+			{field:'nama',title:'Nama',width:100,sortable:true},
+			{field:'satuan',title:'Satuan',width:80,align:'center',sortable:true}
+		]],
+		view: detailview,
+		detailFormatter:function(index,row){
+			return '<div style="padding:2px"><table class="ddv"></table></div>';
+		},
+		onExpandRow: function(index,row){
+			var ddv = $(this).datagrid('getRowDetail',index).find('table.ddv');
+			ddv.datagrid({
+				url: '<?php echo site_url('app/analisa_harga'); ?>/'+jenis+'?analisa_harga_detail='+row.id,
+				fitColumns:true,
+				singleSelect:true,
+				rownumbers:true,
+				loadMsg:'',
+				height:'auto',
+				columns:[[
+					{field:'kode',title:'Kode',width:200},
+					{field:'nama',title:'Nama',width:100},
+					{field:'satuan',title:'Satuan',width:100},
+					{field:'volume',title:'Volume',width:100,align:'right'},
+					
+				]],
+				onResize:function(){
+					$('#dg').datagrid('fixDetailRowHeight',index);
+				},
+				onLoadSuccess:function(){
+					setTimeout(function(){
+						$('#dg').datagrid('fixDetailRowHeight',index);
+					},0);
+				}
+			});
+			$('#dg').datagrid('fixDetailRowHeight',index);
+		}
     });
     
     

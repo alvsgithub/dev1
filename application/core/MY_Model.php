@@ -150,8 +150,27 @@ class MY_Model extends CI_Model {
             $this->db->update($this->_table_name);
         }        
 
-        return $id;
+		return $id;
     }
+	
+	public function save2($data, $id = NULL){
+	
+		// Set timestamps
+        if ($this->_timestamps == TRUE) {
+            $now = date('Y-m-d H:i:s');
+            $id || $data['created_time'] = $now;
+            $data['modified_time'] = $now;
+        }
+        
+        // Set Logs
+        if ($this->_logs == TRUE) {
+            $id || $data['created_by'] = $this->session->userdata('username');
+            $data['modified_by'] = $this->session->userdata('username');
+        }
+		
+		$this->db->set($data);
+		return $this->db->insert($this->_table_name);
+	}
 
     public function delete($id){
         //$filter = $this->_primary_filter;
@@ -165,8 +184,8 @@ class MY_Model extends CI_Model {
         $this->db->delete($this->_table_name);
     }
 	
-    public function getJson()
-    {
+    public function getJson($where = NULL)
+    {	
         $page = isset($_POST['page']) ? intval($_POST['page']) : 1;
         $rows = isset($_POST['rows']) ? intval($_POST['rows']) : 10;
         $sort = isset($_POST['sort']) ? strval($_POST['sort']) : $this->_order_by;
@@ -178,7 +197,8 @@ class MY_Model extends CI_Model {
         $query = "
                 SELECT 
                     a.*
-                FROM ".$this->_table_name." a";
+                FROM ".$this->_table_name." a
+				WHERE 1 = 1 ".$where;
         $result['total'] = $this->db->query($query)->num_rows();
         $query = $query." ORDER BY $sort $order LIMIT $rows OFFSET $offset"; 
         $query_sort_order_limit_offset = $this->db->query($query);
