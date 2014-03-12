@@ -9,8 +9,14 @@
     <table class="table table-condensed">
         <input name="jenis" value="<?php echo $item->jenis; ?>" type="hidden">
 	<tr>
-            <td style="width: 12%">Periode | Semester |</td>
-            <td><?php echo form_dropdown('id_periode', $options_periode, $item->id_periode); ?></td>
+            <td style="width: 15%">Periode (Tahun Semester)</td>
+            <td>
+                <select name="id_periode">
+                <?php foreach($options_periode as $periode) { ?>
+                    <option value="<?php echo $periode->id; ?>"><?php echo $periode->tahun.'0'.$periode->semester; ?></option>
+                <?php } ?>
+                </select>
+            </td>
 	</tr>
 	<tr>
             <td>Kode</td>
