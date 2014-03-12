@@ -1,4 +1,4 @@
-<?php $this->load->view('components/page_head');?>
+<?php $this->load->view('components/page_head'); ?>
 <body>
 
 <div class="container" style="border: 0px solid red;">
