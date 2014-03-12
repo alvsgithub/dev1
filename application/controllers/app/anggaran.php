@@ -11,6 +11,7 @@ class Anggaran extends Admin_Controller
 
     public function index ($jenis = NULL)
     {
+        $this->data['datatables'] = TRUE;
         $this->data['options_periode'] = $this->periode_m->get();
         $this->data['item'] = $this->item_m->get_item_by($jenis); // Fetch all provinsi with limit offset
         $this->data['jenis'] = $jenis;
@@ -24,12 +25,12 @@ class Anggaran extends Admin_Controller
         list($jenis, $id) = explode('-', $param);
         if ($id != 'new') {
             $this->data['item'] = $this->item_m->get($id);
-            $this->data['options_periode'] = $this->periode_m->get_combobox(NULL, FALSE, 'id', 'tahun,semester', NULL, FALSE);
+            $this->data['options_periode'] = $this->periode_m->get();
 //            dump($this->data['item']);
             count($this->data['item']) || $this->data['errors'][] = 'item could not be found';
         }
         else {
-            $this->data['options_periode'] = $this->periode_m->get_combobox(NULL, FALSE, 'id', 'tahun,semester', NULL, FALSE);
+            $this->data['options_periode'] = $this->periode_m->get();
             $this->data['item'] = $this->item_m->get_new($jenis);
         }
         

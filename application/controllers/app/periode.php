@@ -5,11 +5,13 @@ class Periode extends Admin_Controller
     public function __construct ()
     {
         parent::__construct();
+        $this->data['datatables'] = TRUE;
         $this->load->model('master/periode_m');
     }
 
     public function index ()
     {
+        $this->data['datatables'] = TRUE;
         $this->data['periode'] = $this->periode_m->get(); // Fetch all provinsi with limit offset
         $this->data['subview'] = 'app/master/periode/index'; // Load view
 //        dump($this->data['pagination']);

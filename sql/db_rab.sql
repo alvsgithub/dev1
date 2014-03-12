@@ -1,3 +1,49 @@
+DROP TABLE analisa_harga;
+
+CREATE TABLE `analisa_harga` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `kode` varchar(11) NOT NULL,
+  `nama` varchar(150) DEFAULT NULL,
+  `satuan` varchar(25) NOT NULL,
+  `id_periode` int(11) NOT NULL,
+  `created_by` varchar(11) DEFAULT NULL,
+  `modified_by` varchar(11) DEFAULT NULL,
+  `created_time` timestamp NULL DEFAULT NULL,
+  `modified_time` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_ah_periode` (`id_periode`),
+  CONSTRAINT `fk_ah_periode` FOREIGN KEY (`id_periode`) REFERENCES `periode` (`id`) ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+
+INSERT INTO analisa_harga VALUES("1","qwe","asd","0","2","firmantok","firmantok","2014-03-12 12:58:51","2014-03-12 12:58:51");
+INSERT INTO analisa_harga VALUES("2","r","t","0","2","firmantok","firmantok","2014-03-12 13:02:13","2014-03-12 13:02:13");
+INSERT INTO analisa_harga VALUES("3","q","q","0","2","firmantok","firmantok","2014-03-12 13:02:34","2014-03-12 13:02:34");
+INSERT INTO analisa_harga VALUES("7","d","fr","0","2","firmantok","firmantok","2014-03-12 13:49:40","2014-03-12 13:49:40");
+INSERT INTO analisa_harga VALUES("8","wqqwe","wqqwe","0","2","firmantok","firmantok","2014-03-12 14:01:13","2014-03-12 14:01:13");
+
+
+
+DROP TABLE analisa_harga_detail;
+
+CREATE TABLE `analisa_harga_detail` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_analisa` int(11) NOT NULL,
+  `id_item` int(11) NOT NULL,
+  `volume` decimal(9,2) NOT NULL,
+  `created_by` varchar(11) DEFAULT NULL,
+  `modified_by` varchar(11) DEFAULT NULL,
+  `created_time` timestamp NULL DEFAULT NULL,
+  `modified_time` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_ahd_ah` (`id_analisa`),
+  KEY `fk_ahd_item` (`id_item`),
+  CONSTRAINT `fk_ahd_ah` FOREIGN KEY (`id_analisa`) REFERENCES `analisa_harga` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_ahd_item` FOREIGN KEY (`id_item`) REFERENCES `item` (`id`) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+
 DROP TABLE articles;
 
 CREATE TABLE `articles` (
@@ -74,12 +120,8 @@ CREATE TABLE `ci_sessions` (
   KEY `last_activity_idx` (`last_activity`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-INSERT INTO ci_sessions VALUES("0b2a04fd755427179dba41a26ad21b08","::1","Mozilla/5.0 (Windows NT 6.1; WOW64; rv:27.0) Gecko/20100101 Firefox/27.0","1394517270","");
-INSERT INTO ci_sessions VALUES("9663936df4f4ba24dc330ba0e62302c3","::1","Mozilla/5.0 (Windows NT 6.1; WOW64; rv:27.0) Gecko/20100101 Firefox/27.0","1394517270","");
-INSERT INTO ci_sessions VALUES("17b81ea19ae1cef8c58e4a282108dd7f","::1","Mozilla/5.0 (Windows NT 6.1; WOW64; rv:27.0) Gecko/20100101 Firefox/27.0","1394517424","a:6:{s:9:\"user_data\";s:0:\"\";s:8:\"username\";s:9:\"firmantok\";s:5:\"email\";s:21:\"fir_man_tok@yahoo.com\";s:2:\"id\";s:1:\"2\";s:8:\"id_group\";s:1:\"2\";s:8:\"loggedin\";b:1;}");
-INSERT INTO ci_sessions VALUES("4de7da8f73d64dab13d06f714f2a7390","::1","Mozilla/5.0 (Windows NT 6.1; WOW64; rv:27.0) Gecko/20100101 Firefox/27.0","1394514042","");
-INSERT INTO ci_sessions VALUES("ca208c750276c57d69fcbe8137870f49","::1","Mozilla/5.0 (Windows NT 6.1; WOW64; rv:27.0) Gecko/20100101 Firefox/27.0","1394517264","");
-INSERT INTO ci_sessions VALUES("7b38506393adf0c7579bb8ba9b161196","::1","Mozilla/5.0 (Windows NT 6.1; WOW64; rv:27.0) Gecko/20100101 Firefox/27.0","1394517264","");
+INSERT INTO ci_sessions VALUES("448bc25ac0638ddbf1e15cefdd8d198d","::1","Mozilla/5.0 (Windows NT 6.1; WOW64; rv:27.0) Gecko/20100101 Firefox/27.0","1394613912","");
+INSERT INTO ci_sessions VALUES("1112151eb4bfcf0425fd55b93a98a007","::1","Mozilla/5.0 (Windows NT 6.1; WOW64; rv:27.0) Gecko/20100101 Firefox/27.0","1394613926","a:6:{s:9:\"user_data\";s:0:\"\";s:8:\"username\";s:9:\"firmantok\";s:5:\"email\";s:21:\"fir_man_tok@yahoo.com\";s:2:\"id\";s:1:\"2\";s:8:\"id_group\";s:1:\"2\";s:8:\"loggedin\";b:1;}");
 
 
 
@@ -101,12 +143,13 @@ CREATE TABLE `item` (
   PRIMARY KEY (`id`),
   KEY `fk_periode_item` (`id_periode`),
   CONSTRAINT `fk_periode_item` FOREIGN KEY (`id_periode`) REFERENCES `periode` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
-INSERT INTO item VALUES("1","L01","2","Mandor","upah","Org/Hari","1350000.00","1350000.00","firmantok","firmantok","0000-00-00 00:00:00","2014-03-11 09:55:48");
+INSERT INTO item VALUES("1","L01","2","Mandor","upah","Org/Hari","1150000.00","1150000.00","firmantok","firmantok","0000-00-00 00:00:00","2014-03-11 14:38:36");
 INSERT INTO item VALUES("2","E01","2","Sewa Mesin Bor","alat","hari","1350000.00","1350000.00","firmantok","firmantok","2014-03-10 00:00:00","2014-03-11 09:22:22");
 INSERT INTO item VALUES("3","M001","2","Pasir Urug","satuan","M3","1350000.00","1350000.00","firmantok","firmantok","2014-03-10 00:00:00","2014-03-11 09:22:24");
 INSERT INTO item VALUES("4","LS001","2","Pekerjaan Uit Set","lumpsum","ls","0.00","0.00","firmantok","firmantok","2014-03-10 00:00:00","2014-03-11 09:22:29");
+INSERT INTO item VALUES("5","L09","3","Tes","upah","M<sup>2</sup>","1000.00","1000.00","firmantok","firmantok","2014-03-11 00:00:00","2014-03-11 21:35:39");
 
 
 
@@ -179,7 +222,7 @@ CREATE TABLE `menu` (
   `slug_left` varchar(45) DEFAULT NULL,
   `slug_top` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id_menu`)
-) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8;
 
 INSERT INTO menu VALUES("5","Users","app/user","2","7","","+1+2+3+","app/user","app/user");
 INSERT INTO menu VALUES("7","Master","","1","0","","+1+2+3+","","");
@@ -192,10 +235,13 @@ INSERT INTO menu VALUES("41","Alat","app/anggaran/index/alat","2","39","","+1+2+
 INSERT INTO menu VALUES("42","Satuan","app/anggaran/index/satuan","2","39","","+1+2+3+","app/anggaran/satuan","app/anggaran/satuan");
 INSERT INTO menu VALUES("44","Lumpsum","app/anggaran/index/lumpsum","2","39","","+1+2+3+","app/anggaran/lumpsum","app/anggaran/lumpsum");
 INSERT INTO menu VALUES("47","Data Aktual","","1","0","","+1+2+3+","","");
-INSERT INTO menu VALUES("48","Upah","app/aktual/upah","2","47","","+1+2+3+","app/aktual/upah","app/aktual/upah");
-INSERT INTO menu VALUES("49","Alat","app/aktual/alat","2","47","","+1+2+3+","app/aktual/alat","app/aktual/alat");
-INSERT INTO menu VALUES("50","Satuan","app/aktual/satuan","2","47","","+1+2+3+","app/aktual/satuan","app/aktual/satuan");
+INSERT INTO menu VALUES("48","Upah","app/aktual/index/upah","2","47","","+1+2+3+","app/aktual/upah","app/aktual/upah");
+INSERT INTO menu VALUES("49","Alat","app/aktual/index/alat","2","47","","+1+2+3+","app/aktual/alat","app/aktual/alat");
+INSERT INTO menu VALUES("50","Satuan","app/aktual/index/satuan","2","47","","+1+2+3+","app/aktual/satuan","app/aktual/satuan");
 INSERT INTO menu VALUES("52","Lumpsum","app/aktual/lumpsum","2","47","","+1+2+3+","app/aktual/lumpsum","app/aktual/lumpsum");
+INSERT INTO menu VALUES("55","Analisa Harga","","1","0","","+1+2+3+","","");
+INSERT INTO menu VALUES("58","Anggaran","app/analisa_harga/anggaran","2","55","","+1+2+3+","","");
+INSERT INTO menu VALUES("60","Aktual","app/analisa_harga/aktual","2","55","","+1+2+3+","","");
 
 
 
