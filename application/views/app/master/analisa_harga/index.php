@@ -29,7 +29,11 @@
 <!-- Dialog Form -->
 <div id="dialog-form" class="easyui-dialog" style="width:auto; height:auto; padding: 10px 20px" 
      closed="true" buttons="#dialog-buttons">
+<<<<<<< HEAD
     <form id="fm" method="post">
+=======
+    <form id="fm" method="post" novalidate>
+>>>>>>> 7d3e455ea72616728fe899fce29a155a02927825
     <table>
 	<tr>
             <td style="width: 40%">Periode (Tahun Semester)</td>
@@ -47,10 +51,6 @@
             <td>Satuan</td>
             <td><input type="text" name="satuan" class="easyui-validatebox" required="true" size="13" maxlength="10" /></td>
 	</tr>
-        <tr>
-            <td></td>
-            <td></td>
-        </tr>
     </table>
     </form>
 </div>
