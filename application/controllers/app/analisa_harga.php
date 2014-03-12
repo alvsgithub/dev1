@@ -39,8 +39,10 @@ class Analisa_harga extends Admin_Controller
                     'nama',
                     'satuan'
                 ));
-        if($this->analisa_harga_m->save($data)){   
+        if($this->analisa_harga_m->save($data)){ 
             echo json_encode(array('success'=>true));
+        }else{
+            echo json_encode(array('msg'=>'Data gagal dismpan!!!'));
         }
     }
     

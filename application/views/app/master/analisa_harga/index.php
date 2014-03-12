@@ -99,8 +99,13 @@
                         title: 'Pesan', timeout: 1000, msg: 'Data berhasil disimpan', 
                         style:{ right:'center', top:'center' } 
                     });
-                } else {
-                    $.messager.show({ title: 'Error', msg: result.msg });
+                }else{
+                    $('#dialog-form').dialog('close');
+                    $('#datagrid').datagrid('reload');
+                    $.messager.show({
+                        title: 'Error', msg: result.msg,
+                        style:{ right:'center', top:'center' } 
+                    });
                 }
             }
         });

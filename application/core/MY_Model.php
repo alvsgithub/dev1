@@ -129,6 +129,7 @@ class MY_Model extends CI_Model {
         // Insert
         if ($id === NULL) {
             //!isset($data[$this->_primary_key]) || $data[$this->_primary_key] = NULL;
+            $this->db->db_debug = false;
             $this->db->set($data);
             $this->db->insert($this->_table_name);
             $id = $this->db->insert_id();
@@ -147,7 +148,7 @@ class MY_Model extends CI_Model {
             $this->db->set($data);
             $this->db->where($this->_primary_key, $id);
             $this->db->update($this->_table_name);
-        }
+        }        
 
         return $id;
     }
