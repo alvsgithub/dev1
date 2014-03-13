@@ -20,6 +20,8 @@ class Analisa_harga extends Admin_Controller
 			echo $this->analisa_harga_m->getJson();
 		}else if(isset($_GET['analisa_harga_detail'])){
 			echo $this->analisa_harga_detail_m->getJson('AND a.id_analisa = '.$_GET['analisa_harga_detail']);
+		}else if(isset($_GET['item'])){
+			echo $this->item_m->getJsonOpt();
 		}else{		
 			$this->data['subview'] = 'app/master/analisa_harga/index';
 			$this->load->view('app/_layout_main', $this->data);
@@ -47,16 +49,92 @@ class Analisa_harga extends Admin_Controller
                     'nama',
                     'satuan'
                 ));
-		if($this->analisa_harga_m->save2($data)){
+		if($this->analisa_harga_m->save($data)){
+			echo json_encode(array('success'=>true));
+		}else{
+			echo json_encode(array('msg'=>'error'));
+		}
+    }
+	
+	public function update($id = null)
+    {
+        if(!isset($_POST))	
+            show_404();
+
+        $data = $this->analisa_harga_m->array_from_post(array(
+                    'id_periode',
+                    'kode',
+                    'nama',
+                    'satuan'
+                ));
+		if($this->analisa_harga_m->save($data, $id)){
 			echo json_encode(array('success'=>true));
 		}else{
 			echo json_encode(array('msg'=>'error'));
 		}
     }
     
-    public function delete ($param)
+    public function delete ($id = null)
     {
-        $this->analisa_harga_m->delete($id);
-        redirect('app/analisa_harga/index/');
+		if(!isset($_POST))	
+			show_404();
+				
+		$id = addslashes($_POST['id']);
+        if($this->analisa_harga_m->delete($id)){
+			echo json_encode(array('success'=>true));
+		}else{
+			echo json_encode(array('msg'=>'error'));
+		}
+    }
+	
+	// END OF MASTER // 
+	
+	// DETAIL //
+	
+	public function createDetail($id = NULL)
+    {
+        if(!isset($_POST))	
+            show_404();
+
+        $data = $this->analisa_harga_detail_m->array_from_post(array(
+                    'id_analisa',
+                    'id_item',
+                    'volume'
+                ));
+		$data['id_analisa'] = $id;
+		if($this->analisa_harga_detail_m->save($data)){
+			echo json_encode(array('success'=>true));
+		}else{
+			echo json_encode(array('msg'=>'error'));
+		}
+    }
+	
+	public function updateDetail($id = null)
+    {
+        if(!isset($_POST))	
+            show_404();
+
+        $data = $this->analisa_harga_detail_m->array_from_post(array(
+                    'id_item',
+                    'volume'
+                ));
+		if($this->analisa_harga_detail_m->save($data, $id)){
+			echo json_encode(array('success'=>true));
+		}else{
+			echo json_encode(array('msg'=>'error'));
+		}
+    }
+    
+    public function deleteDetail ($id = null)
+    {
+		if(!isset($_POST))	
+			show_404();
+				
+		$id = addslashes($_POST['id']);
+        if($this->analisa_harga_detail_m->delete($id)){
+			echo json_encode(array('success'=>true));
+		}else{
+			echo json_encode(array('msg'=>'error'));
+		}
     }
 }
