@@ -20,7 +20,9 @@ class Analisa_harga_detail_M extends MY_Model
         $query = "
                 SELECT 
                     a.*,
-					c.kode, c.nama, c.satuan
+					c.kode, c.nama, c.satuan, c.harga_pagu, c.harga_oe,
+					(c.harga_pagu*a.volume) AS total_harga_pagu,
+					(c.harga_oe*a.volume) AS total_harga_oe
                 FROM ".$this->_table_name." a
 				LEFT JOIN analisa_harga b ON b.id = a.id
 				LEFt JOIN item c ON c.id = a.id_item
@@ -30,6 +32,10 @@ class Analisa_harga_detail_M extends MY_Model
         $query_sort_order_limit_offset = $this->db->query($query);
         foreach ($query_sort_order_limit_offset->result() as $row)
         {
+			$row->harga_pagu = number_format($row->harga_pagu, 2, '.', ',');
+			$row->total_harga_pagu = number_format($row->total_harga_pagu, 2, '.', ',');
+			$row->harga_oe = number_format($row->harga_oe, 2, '.', ',');
+			$row->total_harga_oe = number_format($row->total_harga_oe, 2, '.', ',');
             array_push($rowsd, $row);
         }
         $result['rows'] = $rowsd;

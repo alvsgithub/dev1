@@ -64,8 +64,57 @@ class Item_M extends MY_Model
         $this->db->where('item.jenis', $jenis);
         return $this->db->get()->result();
     }
+	
+	
+	public function getJsonOpt()
+	{
+
+		$q = isset($_POST['q']) ? strval($_POST['q']) : '';    
+		$q = strtoupper($q);
+		
+		$page = isset($_POST['page']) ? intval($_POST['page']) : 1;
+		$rows = isset($_POST['rows']) ? intval($_POST['rows']) : 10;
+		$sort = isset($_POST['sort']) ? strval($_POST['sort']) : $this->_primary_key;
+		$order = isset($_POST['order']) ? strval($_POST['order']) : 'asc';
+		$offset = ($page-1) * $rows;
+		
+		$result = array();
+		$rowsd = array();
+		$query = "
+
+			SELECT 
+				a.id, a.kode, a.nama, a.satuan, upper(a.jenis) AS jenis
+			FROM ".$this->_table_name." a 
+			WHERE 1=1 AND 
+
+				(upper(a.kode) LIKE '%$q%' OR 
+
+				 upper(a.nama) LIKE '%$q%' OR 
+
+				 upper(a.satuan) LIKE '%$q%')";
+
+		$result['total'] = $this->db->query($query)->num_rows();
+
+		$query = $query." ORDER BY $sort $order LIMIT $rows OFFSET $offset"; 
+
+		$query_sort_order_limit_offset = $this->db->query($query);
+
+		foreach ($query_sort_order_limit_offset->result() as $row)
+		{
+//                $row->waktu = date("d-m-Y",strtotime($row->waktu));
+			array_push($rowsd, $row);
+		}
+
+		$result['rows'] = $rowsd;
+		
+		// $fp = fopen('get_data_kawasan.json', 'w');
+
+		// fwrite($fp, json_encode($result));
+
+		// fclose($fp);
+
+		return json_encode($result);
+
+	}
     
 }
-
-/* @End Of File item_m.php */
-/* @Created By : Muhammad Rizki A */
