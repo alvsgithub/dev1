@@ -1,57 +1,30 @@
 var detailview = $.extend({}, $.fn.datagrid.defaults.view, {
-	addExpandColumn: function(target, index){
-		var opts = $.data(target, 'datagrid').options;
-		if (index >= 0){
-			_add(index);
-		} else {
-			var length = $(target).datagrid('getRows').length;
-			for(var i=0; i<length; i++){
-				_add(i);
-			}
-		}
-		
-		function _add(rowIndex){
-			var tr = opts.finder.getTr(target, rowIndex, 'body', 1);
-			if (tr.find('span.datagrid-row-expander').length){return;}	// the expander is already exists
-			var cc = [];
-			cc.push('<td>');
-			cc.push('<div style="text-align:center;width:25px;height:16px;">');
-			cc.push('<span class="datagrid-row-expander datagrid-row-expand" style="display:inline-block;width:16px;height:16px;cursor:pointer;" />');
-			cc.push('</div>');
-			cc.push('</td>');
-			if (tr.is(':empty')){
-				tr.html(cc.join(''));
-			} else if (tr.children('td.datagrid-td-rownumber').length){
-				$(cc.join('')).insertAfter(tr.children('td.datagrid-td-rownumber'));
-			} else {
-				$(cc.join('')).insertBefore(tr.children('td:first'));
-			}
-			$(target).datagrid('fixRowHeight', rowIndex);
-			tr.find('span.datagrid-row-expander').unbind('.datagrid').bind('click.datagrid', function(e){
-				var rowIndex = $(this).closest('tr').attr('datagrid-row-index');
-				if ($(this).hasClass('datagrid-row-expand')){
-					$(target).datagrid('expandRow', rowIndex);
-				} else {
-					$(target).datagrid('collapseRow', rowIndex);
-				}
-				$(target).datagrid('fixRowHeight');
-				return false;
-			});
-		}
-	},
-	
 	render: function(target, container, frozen){
 		var state = $.data(target, 'datagrid');
 		var opts = state.options;
+		if (frozen){
+			if (!(opts.rownumbers || (opts.frozenColumns && opts.frozenColumns.length))){
+				return;
+			}
+		}
+		
 		var rows = state.data.rows;
 		var fields = $(target).datagrid('getColumnFields', frozen);
 		var table = [];
+		table.push('<table class="datagrid-btable" cellspacing="0" cellpadding="0" border="0"><tbody>');
 		for(var i=0; i<rows.length; i++) {
-			table.push('<table class="datagrid-btable" cellspacing="0" cellpadding="0" border="0"><tbody>');
-			
 			// get the class and style attributes for this row
-			var cls = (i % 2 && opts.striped) ? 'class="datagrid-row datagrid-row-alt"' : 'class="datagrid-row"';
-			var styleValue = opts.rowStyler ? opts.rowStyler.call(target, i, rows[i]) : '';
+			var css = opts.rowStyler ? opts.rowStyler.call(target, i, rows[i]) : '';
+			var classValue = '';
+			var styleValue = '';
+			if (typeof css == 'string'){
+				styleValue = css;
+			} else if (css){
+				classValue = css['class'] || '';
+				styleValue = css['style'] || '';
+			}
+			
+			var cls = 'class="datagrid-row ' + (i % 2 && opts.striped ? 'datagrid-row-alt ' : ' ') + classValue + '"';
 			var style = styleValue ? 'style="' + styleValue + '"' : '';
 			var rowId = state.rowIdPrefix + '-' + (frozen?1:2) + '-' + i;
 			table.push('<tr id="' + rowId + '" datagrid-row-index="' + i + '" ' + cls + ' ' + style + '>');
@@ -74,10 +47,81 @@ var detailview = $.extend({}, $.fn.datagrid.defaults.view, {
 			table.push('</td>');
 			table.push('</tr>');
 			
-			table.push('</tbody></table>');
 		}
+		table.push('</tbody></table>');
 		
 		$(container).html(table.join(''));
+	},
+	
+	renderRow: function(target, fields, frozen, rowIndex, rowData){
+		var opts = $.data(target, 'datagrid').options;
+		
+		var cc = [];
+		if (frozen && opts.rownumbers){
+			var rownumber = rowIndex + 1;
+			if (opts.pagination){
+				rownumber += (opts.pageNumber-1)*opts.pageSize;
+			}
+			cc.push('<td class="datagrid-td-rownumber"><div class="datagrid-cell-rownumber">'+rownumber+'</div></td>');
+		}
+		for(var i=0; i<fields.length; i++){
+			var field = fields[i];
+			var col = $(target).datagrid('getColumnOption', field);
+			if (col){
+				var value = rowData[field];	// the field value
+				var css = col.styler ? (col.styler(value, rowData, rowIndex)||'') : '';
+				var classValue = '';
+				var styleValue = '';
+				if (typeof css == 'string'){
+					styleValue = css;
+				} else if (cc){
+					classValue = css['class'] || '';
+					styleValue = css['style'] || '';
+				}
+				var cls = classValue ? 'class="' + classValue + '"' : '';
+				var style = col.hidden ? 'style="display:none;' + styleValue + '"' : (styleValue ? 'style="' + styleValue + '"' : '');
+				
+				cc.push('<td field="' + field + '" ' + cls + ' ' + style + '>');
+				
+				if (col.checkbox){
+					style = '';
+				} else if (col.expander){
+					style = "text-align:center;height:16px;";
+				} else {
+					style = styleValue;
+					if (col.align){style += ';text-align:' + col.align + ';'}
+					if (!opts.nowrap){
+						style += ';white-space:normal;height:auto;';
+					} else if (opts.autoRowHeight){
+						style += ';height:auto;';
+					}
+				}
+				
+				cc.push('<div style="' + style + '" ');
+				if (col.checkbox){
+					cc.push('class="datagrid-cell-check ');
+				} else {
+					cc.push('class="datagrid-cell ' + col.cellClass);
+				}
+				cc.push('">');
+				
+				if (col.checkbox){
+					cc.push('<input type="checkbox" name="' + field + '" value="' + (value!=undefined ? value : '') + '">');
+				} else if (col.expander) {
+					//cc.push('<div style="text-align:center;width:16px;height:16px;">');
+					cc.push('<span class="datagrid-row-expander datagrid-row-expand" style="display:inline-block;width:16px;height:16px;cursor:pointer;" />');
+					//cc.push('</div>');
+				} else if (col.formatter){
+					cc.push(col.formatter(value, rowData, rowIndex));
+				} else {
+					cc.push(value);
+				}
+				
+				cc.push('</div>');
+				cc.push('</td>');
+			}
+		}
+		return cc.join('');
 	},
 	
 	insertRow: function(target, index, row){
@@ -105,23 +149,18 @@ var detailview = $.extend({}, $.fn.datagrid.defaults.view, {
 		_insert(true);
 		_insert(false);
 		
-		this.addExpandColumn(target, index);
 		this.canUpdateDetail = true;
 		
 		function _insert(frozen){
 			var v = frozen ? view1 : view2;
 			var tr = v.find('tr[datagrid-row-index='+index+']');
-			var table = tr.parents('table:first');
 			
-			var newTable = $('<table cellspacing="0" cellpadding="0" border="0"><tbody></tbody></table>');
 			if (isAppend){
-				newTable.insertAfter(table);
 				var newDetail = tr.next().clone();
+				tr.insertAfter(tr.next());
 			} else {
-				newTable.insertBefore(table);
 				var newDetail = tr.next().next().clone();
 			}
-			tr.appendTo(newTable.children('tbody'));
 			newDetail.insertAfter(tr);
 			newDetail.hide();
 			if (!frozen){
@@ -134,7 +173,7 @@ var detailview = $.extend({}, $.fn.datagrid.defaults.view, {
 		var opts = $.data(target, 'datagrid').options;
 		var dc = $.data(target, 'datagrid').dc;
 		var tr = opts.finder.getTr(target, index);
-		tr.parent().parent().remove();
+		tr.next().remove();
 		$.fn.datagrid.defaults.view.deleteRow.call(this, target, index);
 		dc.body2.triggerHandler('scroll');
 	},
@@ -144,7 +183,6 @@ var detailview = $.extend({}, $.fn.datagrid.defaults.view, {
 		var opts = $.data(target, 'datagrid').options;
 		var cls = $(target).datagrid('getExpander', rowIndex).attr('class');
 		$.fn.datagrid.defaults.view.updateRow.call(this, target, rowIndex, row);
-		this.addExpandColumn.call(this, target, rowIndex);
 		$(target).datagrid('getExpander', rowIndex).attr('class',cls);
 		
 		// update the detail content
@@ -155,26 +193,72 @@ var detailview = $.extend({}, $.fn.datagrid.defaults.view, {
 		}
 	},
 	
+	bindEvents: function(target){
+		var state = $.data(target, 'datagrid');
+		var dc = state.dc;
+		var opts = state.options;
+		var body = dc.body1.add(dc.body2);
+		var clickHandler = ($.data(body[0],'events')||$._data(body[0],'events')).click[0].handler;
+		body.unbind('click').bind('click', function(e){
+			var tt = $(e.target);
+			var tr = tt.closest('tr.datagrid-row');
+			if (!tr.length){return}
+			if (tt.hasClass('datagrid-row-expander')){
+				var rowIndex = parseInt(tr.attr('datagrid-row-index'));
+				if (tt.hasClass('datagrid-row-expand')){
+					$(target).datagrid('expandRow', rowIndex);
+				} else {
+					$(target).datagrid('collapseRow', rowIndex);
+				}
+				$(target).datagrid('fixRowHeight');
+				
+			} else {
+				clickHandler(e);
+			}
+			e.stopPropagation();
+		});
+	},
+	
 	onBeforeRender: function(target){
-		var opts = $.data(target, 'datagrid').options;
-		var dc = $.data(target, 'datagrid').dc;
-		var panel = $(target).datagrid('getPanel');
+		var state = $.data(target, 'datagrid');
+		var opts = state.options;
+		var dc = state.dc;
+		var t = $(target);
+		var hasExpander = false;
+		var fields = t.datagrid('getColumnFields',true).concat(t.datagrid('getColumnFields'));
+		for(var i=0; i<fields.length; i++){
+			var col = t.datagrid('getColumnOption', fields[i]);
+			if (col.expander){
+				hasExpander = true;
+				break;
+			}
+		}
+		if (!hasExpander){
+			if (opts.frozenColumns && opts.frozenColumns.length){
+				opts.frozenColumns[0].splice(0,0,{field:'_expander',expander:true,width:24,resizable:false,fixed:true});
+			} else {
+				opts.frozenColumns = [[{field:'_expander',expander:true,width:24,resizable:false,fixed:true}]];
+			}
+			
+			var t = dc.view1.children('div.datagrid-header').find('table');
+			var td = $('<td rowspan="'+opts.frozenColumns.length+'"><div class="datagrid-header-expander" style="width:24px;"></div></td>');
+			if ($('tr',t).length == 0){
+				td.wrap('<tr></tr>').parent().appendTo($('tbody',t));
+			} else if (opts.rownumbers){
+				td.insertAfter(t.find('td:has(div.datagrid-header-rownumber)'));
+			} else {
+				td.prependTo(t.find('tr:first'));
+			}
+		}
 		
-		var t = dc.view1.children('div.datagrid-header').find('table');
-		if (t.find('div.datagrid-header-expander').length){
-			return;
-		}
-		var td = $('<td rowspan="'+opts.frozenColumns.length+'"><div class="datagrid-header-expander" style="width:25px;"></div></td>');
-		if ($('tr',t).length == 0){
-			td.wrap('<tr></tr>').parent().appendTo($('tbody',t));
-		} else if (opts.rownumbers){
-			td.insertAfter(t.find('td:has(div.datagrid-header-rownumber)'));
-		} else {
-			td.prependTo(t.find('tr:first'));
-		}
+		var that = this;
+		setTimeout(function(){
+			that.bindEvents(target);
+		},0);
 	},
 	
 	onAfterRender: function(target){
+		var that = this;
 		var state = $.data(target, 'datagrid');
 		var dc = state.dc;
 		var opts = state.options;
@@ -208,10 +292,10 @@ var detailview = $.extend({}, $.fn.datagrid.defaults.view, {
 			state.onResize.call(panel, width, height);
 		};
 		
-		this.addExpandColumn(target);
 		this.canUpdateDetail = true;	// define if to update the detail content when 'updateRow' method is called;
 		
-		dc.footer1.find('span.datagrid-row-expander').css('visibility', 'hidden');
+		var footer = dc.footer1.add(dc.footer2);
+		footer.find('span.datagrid-row-expander').css('visibility', 'hidden');
 		$(target).datagrid('resize');
 	}
 });
@@ -220,6 +304,9 @@ $.extend($.fn.datagrid.methods, {
 	fixDetailRowHeight: function(jq, index){
 		return jq.each(function(){
 			var opts = $.data(this, 'datagrid').options;
+			if (!(opts.rownumbers || (opts.frozenColumns && opts.frozenColumns.length))){
+				return;
+			}
 			var dc = $.data(this, 'datagrid').dc;
 			var tr1 = opts.finder.getTr(this, index, 'body', 1).next();
 			var tr2 = opts.finder.getTr(this, index, 'body', 2).next();
@@ -236,7 +323,7 @@ $.extend($.fn.datagrid.methods, {
 	},
 	getExpander: function(jq, index){	// get row expander object
 		var opts = $.data(jq[0], 'datagrid').options;
-		return opts.finder.getTr(jq[0], index, 'body', 1).find('span.datagrid-row-expander');
+		return opts.finder.getTr(jq[0], index).find('span.datagrid-row-expander');
 	},
 	// get row detail container
 	getRowDetail: function(jq, index){
