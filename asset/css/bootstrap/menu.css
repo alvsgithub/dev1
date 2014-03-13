@@ -24,6 +24,7 @@
 }
 .menu-icon {
   position: absolute;
+  position: relative; 
   width: 16px;
   height: 16px;
   left: 2px;
