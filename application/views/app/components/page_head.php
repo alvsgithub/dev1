@@ -10,7 +10,7 @@
     <link href="<?php echo site_url('asset/css/datepicker.css'); ?>" rel="stylesheet">
     <link href="<?php echo site_url('asset/css/icon.css');?>" rel="stylesheet">
     
-    <script src="<?php echo site_url('asset/js/jquery-1.7.2.min.js'); ?>"></script>
+    <script src="<?php echo site_url('asset/js/jquery-1.8.3.min.js'); ?>"></script>
     <script src="<?php echo site_url('asset/js/bootstrap.min.js'); ?>"></script>
     <script src="<?php echo site_url('asset/js/bootstrap-datepicker.js'); ?>"></script>
     <script src="<?php echo site_url('asset/js/jquery.easyui.min.js'); ?>"></script>
