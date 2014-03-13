@@ -36,12 +36,12 @@ class Item_M extends MY_Model
         'harga_pagu' => array(
             'field' => 'harga_pagu', 
             'label' => 'Harga Pagu',
-            'rules' => 'trim|required|xss_clean|numeric'
+            'rules' => 'trim|xss_clean|numeric'
         ),
         'harga_oe' => array(
             'field' => 'harga_oe', 
             'label' => 'Harga OE',
-            'rules' => 'trim|required|xss_clean|numeric'
+            'rules' => 'trim|xss_clean|numeric'
         )
     );
 
@@ -53,7 +53,7 @@ class Item_M extends MY_Model
         $item->jenis = $jenis;
         $item->satuan = '';
         $item->harga_pagu = '';
-        $item->harga_oe = '';
+        $item->harga_oe = '0';
         return $item;
     }
     

@@ -46,8 +46,7 @@ class Anggaran extends Admin_Controller
                         'nama',
                         'satuan',
                         'jenis',
-                        'harga_pagu',
-                        'harga_oe'
+                        'harga_pagu'
                     ));
             if($id=='new'){ $id = NULL; }
             $this->item_m->save($data, $id);

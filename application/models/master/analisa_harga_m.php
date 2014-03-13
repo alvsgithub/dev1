@@ -47,6 +47,14 @@ class Analisa_harga_M extends MY_Model
         $order = isset($_POST['order']) ? strval($_POST['order']) : 'DESC';
         $offset = ($page-1) * $rows;
 
+		$filter = isset($_POST['filter']) ? strval($_POST['filter']) : '';
+		if($filter!='') {
+			list($field, $value) = explode('|', $filter);
+		    $filter = "AND upper(".$field.") like upper('%".$value."%')";
+		}else {
+		    $filter = '';
+		}
+		
         $result = array();
         $rowsd = array();
         $query = "
@@ -55,7 +63,8 @@ class Analisa_harga_M extends MY_Model
 					(SELECT COALESCE(SUM(c.harga_pagu*b.volume),0) FROM analisa_harga_detail b LEFT JOIN item c ON c.id = b.id_item WHERE b.id_analisa = a.id) AS harga_pagu,
 					(SELECT COALESCE(SUM(c.harga_oe*b.volume),0) FROM analisa_harga_detail b LEFT JOIN item c ON c.id = b.id_item WHERE b.id_analisa = a.id) AS harga_oe
                 FROM ".$this->_table_name." a
-				WHERE 1 = 1 ".$where;
+				LEFT JOIN periode p ON p.id = a.id_periode
+				WHERE 1 = 1 ".$where." ".$filter;
         $result['total'] = $this->db->query($query)->num_rows();
         $query = $query." ORDER BY $sort $order LIMIT $rows OFFSET $offset"; 
         $query_sort_order_limit_offset = $this->db->query($query);

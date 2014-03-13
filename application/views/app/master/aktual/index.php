@@ -10,7 +10,6 @@
         <?php } ?>
     </select>
     <span id="space"> &nbsp;&nbsp;&nbsp; </span>
-    <?php echo btn_add('app/aktual/edit/'.$jenis.'-new'); ?>
     
     <table id="example" class="table table-striped table-bordered table-hover table-condensed">
         <thead>
@@ -35,7 +34,6 @@
                 <td style="text-align: right;"><?php echo number_format($it->harga_oe, 2, ',', '.'); ?></td>
                 <td id="actions1">
                     <?php echo btn_edit('app/aktual/edit/' . $jenis .'-'. $it->id); ?>
-                    <?php echo btn_delete('app/aktual/delete/' . $jenis .'-'. $it->id); ?>
                 </td>
             </tr>
         <?php endforeach; ?>

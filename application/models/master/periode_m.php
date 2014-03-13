@@ -3,7 +3,7 @@ class Periode_M extends MY_Model
 {
     protected $_table_name = 'periode';
     protected $_primary_key = 'id';
-    protected $_order_by = 'id';
+    protected $_order_by = 'active';
     protected $_timestamps = TRUE;
     protected $_logs = TRUE;
 
@@ -39,6 +39,27 @@ class Periode_M extends MY_Model
         return $periode;
     }
     
+	public function get($id = NULL, $single = FALSE){
+        if ($id != NULL) {
+            //$filter = $this->_primary_filter;
+            //$id = $filter($id);
+            $this->db->where($this->_primary_key, $id);
+            $method = 'row';
+        }
+        elseif($single == TRUE) {
+            $method = 'row';
+        }
+        else {
+            $method = 'result';
+        }
+
+        if (!count($this->db->ar_orderby)) {
+            $this->db->order_by($this->_order_by, 'DESC');
+            $this->db->order_by('modified_time', 'DESC');
+        }
+        return $this->db->get($this->_table_name)->$method();
+    }
+	
 }
 
 /* @End Of File periode_m.php */
