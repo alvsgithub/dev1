@@ -111,7 +111,10 @@ class Analisa_harga extends Admin_Controller
                 ));
 		$data['id_analisa'] = $id;
 		if($this->analisa_harga_detail_m->save($data)){
-			echo json_encode(array('success'=>true));
+			$data_item['harga_pagu'] = $this->input->post('harga_pagu');
+			if($this->item_m->save($data_item, $data['id_item'])){
+				echo json_encode(array('success'=>true));
+			}
 		}else{
 			echo json_encode(array('msg'=>'error'));
 		}
@@ -127,7 +130,15 @@ class Analisa_harga extends Admin_Controller
                     'volume'
                 ));
 		if($this->analisa_harga_detail_m->save($data, $id)){
-			echo json_encode(array('success'=>true));
+			if($this->input->post('harga_pagu') != 0){
+				$data_item['harga_pagu'] = $this->input->post('harga_pagu');
+			}
+			if($this->input->post('harga_oe') != 0){
+				$data_item['harga_oe'] = $this->input->post('harga_oe');
+			}
+			if($this->item_m->save($data_item, $data['id_item'])){
+				echo json_encode(array('success'=>true));
+			}
 		}else{
 			echo json_encode(array('msg'=>'error'));
 		}

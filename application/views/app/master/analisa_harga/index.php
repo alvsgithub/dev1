@@ -78,16 +78,29 @@
 		<td>:</td>
 		<td><input id="sd" name="satuan" class="easyui-validatebox" readonly="true" size="13" /></td>
 	</tr>
+	<?php if($jenis == 'Anggaran') { ?>
+	<tr>
+		<td>Harga Pagu</td>
+		<td>:</td>
+		<td><input id="pd" name="harga_pagu" class="easyui-numberbox" precision="2" decimalSeparator="." groupSeparator="," size="13" style="text-align:right;" /></td>
+	</tr>
+	<?php } else { ?>
+	<tr>
+		<td>Harga OE</td>
+		<td>:</td>
+		<td><input id="od" name="harga_oe" class="easyui-numberbox" precision="2" decimalSeparator="." groupSeparator="," size="13" style="text-align:right;"/></td>
+	</tr>
+	<?php } ?>
 	<tr>
 		<td>Volume</td>
 		<td>:</td>
-		<td><input name="volume" class="easyui-numberbox" required="true" precision="2" decimalSeparator="." groupSeparator="," min="0" size="13"/></td>
+		<td><input name="volume" class="easyui-numberbox" required="true" precision="3" decimalSeparator="." groupSeparator="," min="0" size="13" style="text-align:right;" /></td>
 	</tr>
     </table>
     </form>
 </div>
 <div id="dialog-dbuttons"> 
-    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveDetail();">Simpan</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-save" onclick="saveDetail();">Simpan</a>
     <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dialog-dform').dialog('close');">Batal</a>
 </div>
 </section_easyui>
@@ -179,23 +192,7 @@
 			}
 		});
     
-		$('#id_item').combogrid({
-			panelWidth: 500, panelHeight: 310,
-			url:'<?php echo site_url('app/analisa_harga/anggaran'); ?>?item=true',
-			idField:'id',textField:'kode',
-			mode:'remote',fitColumns:true, sortable:true, nowrap:false,
-			pagination:true, pageSize:'5', pageList:'[5,10,15,20]',
-			columns:[[
-				{field:'kode',title:'Kode',width:80,sortable:true},
-				{field:'nama',title:'Nama',width:150,sortable:true},
-				{field:'satuan',title:'Satuan',width:70,sortable:true},
-				{field:'jenis',title:'Jenis',width:80,sortable:true}
-			]],
-			onClickRow:function(index, row){
-				document.getElementById('nd').value = row.nama;
-				document.getElementById('sd').value = row.satuan;
-			}
-		});
+		
 		
 		$('#id_periode').combobox({
 			onChange:function(newValue,oldValue){
@@ -204,6 +201,7 @@
 				});
 			}
 		});
+		
 	});
 	
     function doSearch(value,name){
@@ -270,12 +268,15 @@
 	// -- DETAIL -- //
 	
 	function addDetail(id){
+		loadCombogridItem();
         $('#dialog-dform').dialog({ closed: false, cache: false, modal: true, width: $('#div-reg-center').width() * (60/100), height: $(window).height() * (70/100) }).dialog('setTitle','Add - Komponen Analisa Harga');
         $('#fmd').form('clear');
         url = '<?php echo site_url('app/analisa_harga/createDetail'); ?>/'+id;
+		
     }
 
     function editDetail(id2,id){
+		loadCombogridItem();
 		$('#datagrid').datagrid('selectRow',id);
 		$('#ddatagrid-'+id).datagrid('selectRow',id2);
 		var row = $('#ddatagrid-'+id).datagrid('getSelected');
@@ -314,12 +315,13 @@
                 var result = eval('('+result+')');
                 if(result.success){
                     $('#dialog-dform').dialog('close');
-					var selected = $('#datagrid').datagrid('getSelected');
-                    var index = $('#datagrid').datagrid('getRowIndex', selected);
-					var selected2 = $('#ddatagrid-'+index).datagrid('getSelected');
-                    var index2 = $('#ddatagrid-'+index).datagrid('getRowIndex', selected2);
-					$('#datagrid').datagrid('reload', index);
-					$('#ddatagrid-'+index).datagrid('reload', index2);
+					// var selected = $('#datagrid').datagrid('getSelected');
+                    // var index = $('#datagrid').datagrid('getRowIndex', selected);
+					// var selected2 = $('#ddatagrid-'+index).datagrid('getSelected');
+                    // var index2 = $('#ddatagrid-'+index).datagrid('getRowIndex', selected2);
+					// $('#datagrid').datagrid('reload', index);
+					// $('#ddatagrid-'+index).datagrid('reload', index2);
+					$('#datagrid').datagrid('reload');
                     $.messager.show({ 
                         title: 'Info', timeout: 1000, msg: 'Success', 
                         style:{ right:'center', top:'center' } 
@@ -331,5 +333,29 @@
         });
     }
     
+	function loadCombogridItem(){
+		$('#id_item').combogrid({
+			panelWidth: 500, panelHeight: 310,
+			url:'<?php echo site_url('app/analisa_harga/anggaran'); ?>?item=true',
+			idField:'id',textField:'kode',
+			mode:'remote',fitColumns:false,sortable:true,nowrap:false,
+			pagination:true, pageSize:'5', pageList:'[5,10,15,20]',
+			columns:[[
+				{field:'kode',title:'Kode',width:80,sortable:true},
+				{field:'nama',title:'Nama',width:150,sortable:true},
+				{field:'satuan',title:'Satuan',width:70,sortable:true,align:'center'},
+				{field:'harga_pagu',title:'Harga Pagu',width:100,sortable:true,align:'right'},
+				{field:'harga_oe',title:'Harga OE',width:100,sortable:true,align:'right'},
+				{field:'jenis',title:'Jenis',width:80,sortable:true}
+			]],
+			onClickRow:function(index, row){
+				document.getElementById('nd').value = row.nama;
+				document.getElementById('sd').value = row.satuan;
+				$('#pd').numberbox('setValue', row.harga_pagu);
+				$('#od').numberbox('setValue', row.harga_oe);
+			}
+		});
+	}
+	
 </script>
 

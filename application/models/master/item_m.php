@@ -83,7 +83,8 @@ class Item_M extends MY_Model
 		$query = "
 
 			SELECT 
-				a.id, a.kode, a.nama, a.satuan, upper(a.jenis) AS jenis
+				a.id, a.kode, a.nama, a.satuan, upper(a.jenis) AS jenis,
+				a.harga_pagu, a.harga_oe
 			FROM ".$this->_table_name." a 
 			WHERE 1=1 AND 
 
@@ -102,6 +103,8 @@ class Item_M extends MY_Model
 		foreach ($query_sort_order_limit_offset->result() as $row)
 		{
 //                $row->waktu = date("d-m-Y",strtotime($row->waktu));
+			$row->harga_pagu = number_format($row->harga_pagu, 2, '.', ',');
+			$row->harga_oe = number_format($row->harga_oe, 2, '.', ',');
 			array_push($rowsd, $row);
 		}
 
