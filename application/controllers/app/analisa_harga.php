@@ -73,7 +73,6 @@ class Analisa_harga extends Admin_Controller
                     'nama',
                     'satuan'
                 ));
-<<<<<<< HEAD
 
         if($this->analisa_harga_m->save($data)){ 
             echo json_encode(array('success'=>true));
@@ -82,9 +81,7 @@ class Analisa_harga extends Admin_Controller
         }
 
 		if($this->analisa_harga_m->save2($data)){
-=======
 		if($this->analisa_harga_m->save($data, $id)){
->>>>>>> 602cdc958aee48c4e697761556d55b80235125a4
 			echo json_encode(array('success'=>true));
 		}else{
 			echo json_encode(array('msg'=>'error'));
