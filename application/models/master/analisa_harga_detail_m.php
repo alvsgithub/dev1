@@ -11,7 +11,7 @@ class Analisa_harga_detail_M extends MY_Model
     {	
         $page = isset($_POST['page']) ? intval($_POST['page']) : 1;
         $rows = isset($_POST['rows']) ? intval($_POST['rows']) : 10;
-        $sort = isset($_POST['sort']) ? strval($_POST['sort']) : $this->_order_by;
+        $sort = isset($_POST['sort']) ? strval($_POST['sort']) : 'c.jenis';
         $order = isset($_POST['order']) ? strval($_POST['order']) : 'DESC';
         $offset = ($page-1) * $rows;
 
@@ -19,7 +19,7 @@ class Analisa_harga_detail_M extends MY_Model
         $rowsd = array();
         $query = "
                 SELECT 
-                    a.*,
+                    a.*, c.jenis,
 					c.kode, c.nama, c.satuan, c.harga_pagu, c.harga_oe,
 					(c.harga_pagu*a.volume) AS total_harga_pagu,
 					(c.harga_oe*a.volume) AS total_harga_oe
@@ -30,8 +30,21 @@ class Analisa_harga_detail_M extends MY_Model
         $result['total'] = $this->db->query($query)->num_rows();
         $query = $query." ORDER BY $sort $order LIMIT $rows OFFSET $offset"; 
         $query_sort_order_limit_offset = $this->db->query($query);
-        foreach ($query_sort_order_limit_offset->result() as $row)
+        
+		$u = TRUE; $a = TRUE; $sl = TRUE;
+		foreach ($query_sort_order_limit_offset->result() as $row)
         {
+			if($row->jenis == 'upah' AND $u == TRUE) {
+				array_push($rowsd, array('kode' => 'TENAGA', 'nama' => '') );
+				$u = FALSE;
+			}else if($row->jenis = 'alat' AND $a == TRUE){
+				array_push($rowsd, array('kode' => 'ALAT', 'nama' => '' ) );
+				$a = FALSE;
+			}else if(($row->jenis = 'satuan' OR $row->jenis == 'lumpsum') AND $sl == TRUE){
+				array_push($rowsd, array('kode' => 'BAHAN', 'nama' => '' ) );
+				$sl = FALSE;
+			}
+
 			$row->harga_pagu = number_format($row->harga_pagu, 2, '.', ',');
 			$row->total_harga_pagu = number_format($row->total_harga_pagu, 2, '.', ',');
 			$row->harga_oe = number_format($row->harga_oe, 2, '.', ',');

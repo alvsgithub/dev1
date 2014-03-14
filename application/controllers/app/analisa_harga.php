@@ -14,7 +14,6 @@ class Analisa_harga extends Admin_Controller
     {
         $this->data['jenis'] = 'Anggaran';
         $this->data['options_periode'] = $this->periode_m->get();
-        // $this->data['analisa_harga'] = $this->analisa_harga_m->get();  
 
 		if(isset($_GET['analisa_harga'])){
 			echo $this->analisa_harga_m->getJson('AND a.id_periode = '.$_GET['analisa_harga']);
@@ -33,7 +32,6 @@ class Analisa_harga extends Admin_Controller
     {
         $this->data['jenis'] = 'Aktual';
         $this->data['options_periode'] = $this->periode_m->get();
-        $this->data['analisa_harga'] = $this->analisa_harga_m->get();
 		
 		if(isset($_GET['analisa_harga'])){
 			echo $this->analisa_harga_m->getJson('AND a.id_periode = '.$_GET['analisa_harga']);

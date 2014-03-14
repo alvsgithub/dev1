@@ -159,14 +159,16 @@
 						{field:'kode',title:'Kode',width:80, sortable:true,
 							formatter:function(value2,row2,index2){
 								var strReturn = value2;
-								if(jenis == 'Anggaran'){
+								if(jenis == 'Anggaran' && row2.nama != ''){									
 									strReturn += 
 									'<div style="float:right;"><a href="javascript:void(0)" class="icon-edit2" onclick="editDetail('+index2+","+index+');" title="Edit"></a>'+
 									'&nbsp;&nbsp;&nbsp;'+
 									'<a href="javascript:void(0)" class="icon-trash" onclick="delDetail('+index2+","+index+')" title="Delete"></a></div>';
 									return strReturn;
-								}else{
+								}else if (jenis == 'Aktual' && row2.nama != ''){
 									strReturn += '<div style="float:right;"><a href="javascript:void(0)" class="icon-edit2" onclick="editDetail('+index2+","+index+');" title="Edit"></a></div>';
+									return strReturn;
+								}else{
 									return strReturn;
 								}
 							}
