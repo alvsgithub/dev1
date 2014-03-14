@@ -59,7 +59,7 @@
     var url;
     var jenis = '<?php echo $jenis; ?>';
     $('#datagrid').datagrid({ 
-        width: $('#div-reg-center').width() * (83/100), height: $(window).height() * (68/100),
+        width: $('#div-reg-center').width() * (79/100), height: $('#div-reg-center').height() * (83/100),
         title: 'Analisa Harga '+jenis, rownumbers:true, singleSelect:true, fitColumns:true, toolbar:'#toolbar', sortable:true,
 		url: '<?php echo site_url('app/analisa_harga'); ?>/'+jenis+'?analisa_harga=true',
 		columns:[[

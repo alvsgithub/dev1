@@ -47,19 +47,18 @@ class Analisa_harga extends Admin_Controller
                     'nama',
                     'satuan'
                 ));
-<<<<<<< HEAD
+
         if($this->analisa_harga_m->save($data)){ 
             echo json_encode(array('success'=>true));
         }else{
             echo json_encode(array('msg'=>'Data gagal dismpan!!!'));
         }
-=======
+
 		if($this->analisa_harga_m->save2($data)){
 			echo json_encode(array('success'=>true));
 		}else{
 			echo json_encode(array('msg'=>'error'));
 		}
->>>>>>> e6426b5be89c9388964bf83b24ee8f51e3533a1a
     }
     
     public function delete ($param)
