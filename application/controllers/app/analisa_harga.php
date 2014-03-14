@@ -65,7 +65,7 @@ class Analisa_harga extends Admin_Controller
 	
 	public function update($id = null)
     {
-        if(!isset($_POST))	
+        if(!isset($_POST))
             show_404();
 
         $data = $this->analisa_harga_m->array_from_post(array(
@@ -81,16 +81,17 @@ class Analisa_harga extends Admin_Controller
         }
 
 		if($this->analisa_harga_m->save2($data)){
-		if($this->analisa_harga_m->save($data, $id)){
-			echo json_encode(array('success'=>true));
-		}else{
-			echo json_encode(array('msg'=>'error'));
+			if($this->analisa_harga_m->save($data, $id)){
+				echo json_encode(array('success'=>true));
+			}else{
+				echo json_encode(array('msg'=>'error'));
+			}
 		}
     }
     
-    public function delete ($id = null)
+    public function delete($id = NULL)
     {
-		if(!isset($_POST))	
+		if(!isset($_POST))
 			show_404();
 				
 		$id = addslashes($_POST['id']);
@@ -101,13 +102,11 @@ class Analisa_harga extends Admin_Controller
 		}
     }
 	
-	// END OF MASTER // 
-	
-	// DETAIL //
+	//END OF MASTER DETAIL
 	
 	public function createDetail($id = NULL)
     {
-        if(!isset($_POST))	
+        if(!isset($_POST))
             show_404();
 
         $data = $this->analisa_harga_detail_m->array_from_post(array(
