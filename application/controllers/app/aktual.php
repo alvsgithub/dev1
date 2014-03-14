@@ -47,7 +47,6 @@ class Aktual extends Admin_Controller
                         'nama',
                         'satuan',
                         'jenis',
-                        'harga_pagu',
                         'harga_oe'
                     ));
             if($id=='new'){ $id = NULL; }

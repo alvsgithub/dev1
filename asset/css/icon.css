@@ -48,44 +48,29 @@
 }
 .icon-sum{
 	background:url('icons/sum.png') no-repeat center center;
-}
-.icon-tip{
+}.icon-tip{
 	background:url('icons/tip.png') no-repeat center center;
-}
-.icon-filter{
+}.icon-filter{
 	background:url('icons/filter.png') no-repeat center center;
-}
-
-
-.icon-mini-add{
+}.icon-mini-add{
     background:url('icons/mini_add.png') no-repeat center center;
-}
-.icon-mini-edit{
+}.icon-mini-edit{
     background:url('icons/mini_edit.png') no-repeat center center;
-}
-.icon-mini-refresh{
+}.icon-mini-refresh{
     background:url('icons/mini_refresh.png') no-repeat center center;
-}
-.icon-pdf{
+}.icon-pdf{
     background:url('icons/pdf.png') no-repeat center center;
-}
-.icon-xls{
+}.icon-xls{
     background:url('icons/excel.png') no-repeat center center;
-}
-
-.icon-building{
+}.icon-building{
     background:url('icons/building-medium.png') no-repeat center center;
-}
-.icon-address{
+}.icon-address{
     background:url('icons/address-book-open.png') no-repeat center center;
-}
-.icon-license{
+}.icon-license{
     background:url('icons/license_manager.png') no-repeat center center;
-}
-.icon-city2{
+}.icon-city2{
     background:url('icons/city (2).png') no-repeat center center;
-}
-.icon-kepala{
+}.icon-kepala{
     background:url('icons/kepala.png') no-repeat center center;
 }.icon-categories{
     background:url('icons/categories.png') no-repeat center center;
@@ -93,4 +78,12 @@
     background:url('icons/city.png') no-repeat center center;
 }.icon-old_thunderbird_v2{
     background:url('icons/old_thunderbird_v2.png') no-repeat center center;
+}.icon-menu{
+    background:url('icons/menu_grid.png') no-repeat center center;
+}.icon-edit2{
+    background:url('icons/edit.png') no-repeat center center;
+}.icon-trash{
+    background:url('icons/Trash-can-icon.png') no-repeat center center;
+}.icon-add2{
+    background:url('icons/Add-icon.png') no-repeat center center;
 }

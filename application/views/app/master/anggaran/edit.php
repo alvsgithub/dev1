@@ -1,5 +1,5 @@
 <div class="modal-header">
-    <h4><?php echo empty($item->kode) ? 'Add a new Item - '.$item->jenis : 'Edit Item - '.$item->jenis.' : '. $item->kode; ?></h4>
+    <h4><?php echo empty($item->kode) ? 'Add a new Item Anggaran - '.$item->jenis : 'Edit Item Anggaran - '.$item->jenis.' : '. $item->kode; ?></h4>
 </div>
 <section_custom>
 <div class="alert-error">
@@ -32,11 +32,7 @@
 	</tr>
 	<tr>
             <td>Harga Pagu</td>
-            <td><?php echo form_input('harga_pagu', set_value('harga_pagu', $item->harga_pagu)); ?></td>
-	</tr>
-	<tr>
-            <td>Harga OE</td>
-            <td><?php echo form_input('harga_oe', set_value('harga_oe', $item->harga_oe)); ?></td>
+            <td><?php echo form_input('harga_pagu', set_value('harga_pagu', $item->harga_pagu), 'style="text-align:right"'); ?></td>
 	</tr>
 	<tr>
             <td></td>

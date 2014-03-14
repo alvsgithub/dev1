@@ -152,25 +152,6 @@ class MY_Model extends CI_Model {
 
 		return $id;
     }
-	
-	public function save2($data, $id = NULL){
-	
-		// Set timestamps
-        if ($this->_timestamps == TRUE) {
-            $now = date('Y-m-d H:i:s');
-            $id || $data['created_time'] = $now;
-            $data['modified_time'] = $now;
-        }
-        
-        // Set Logs
-        if ($this->_logs == TRUE) {
-            $id || $data['created_by'] = $this->session->userdata('username');
-            $data['modified_by'] = $this->session->userdata('username');
-        }
-		
-		$this->db->set($data);
-		return $this->db->insert($this->_table_name);
-	}
 
     public function delete($id){
         //$filter = $this->_primary_filter;
@@ -181,7 +162,7 @@ class MY_Model extends CI_Model {
         }
         $this->db->where($this->_primary_key, $id);
         $this->db->limit(1);
-        $this->db->delete($this->_table_name);
+        return $this->db->delete($this->_table_name);
     }
 	
     public function getJson($where = NULL)

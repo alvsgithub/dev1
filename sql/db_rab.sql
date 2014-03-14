@@ -13,13 +13,10 @@ CREATE TABLE `analisa_harga` (
   PRIMARY KEY (`id`),
   KEY `fk_ah_periode` (`id_periode`),
   CONSTRAINT `fk_ah_periode` FOREIGN KEY (`id_periode`) REFERENCES `periode` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8;
 
-INSERT INTO analisa_harga VALUES("1","qwe","asd","0","2","firmantok","firmantok","2014-03-12 12:58:51","2014-03-12 12:58:51");
-INSERT INTO analisa_harga VALUES("2","r","t","0","2","firmantok","firmantok","2014-03-12 13:02:13","2014-03-12 13:02:13");
-INSERT INTO analisa_harga VALUES("3","q","q","0","2","firmantok","firmantok","2014-03-12 13:02:34","2014-03-12 13:02:34");
-INSERT INTO analisa_harga VALUES("7","d","fr","0","2","firmantok","firmantok","2014-03-12 13:49:40","2014-03-12 13:49:40");
-INSERT INTO analisa_harga VALUES("8","wqqwe","wqqwe","0","2","firmantok","firmantok","2014-03-12 14:01:13","2014-03-12 14:01:13");
+INSERT INTO analisa_harga VALUES("35","M150","Bisa","m<sup>3</sup>","2","","firmantok","","2014-03-13 17:12:55");
+INSERT INTO analisa_harga VALUES("38","AN-01","ANalisa Pe","m<sup>3</sup>","2","firmantok","firmantok","2014-03-13 18:03:42","2014-03-13 18:13:07");
 
 
 
@@ -30,8 +27,8 @@ CREATE TABLE `analisa_harga_detail` (
   `id_analisa` int(11) NOT NULL,
   `id_item` int(11) NOT NULL,
   `volume` decimal(9,2) NOT NULL,
-  `created_by` varchar(11) DEFAULT NULL,
-  `modified_by` varchar(11) DEFAULT NULL,
+  `created_by` varchar(20) DEFAULT NULL,
+  `modified_by` varchar(20) DEFAULT NULL,
   `created_time` timestamp NULL DEFAULT NULL,
   `modified_time` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -39,8 +36,10 @@ CREATE TABLE `analisa_harga_detail` (
   KEY `fk_ahd_item` (`id_item`),
   CONSTRAINT `fk_ahd_ah` FOREIGN KEY (`id_analisa`) REFERENCES `analisa_harga` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_ahd_item` FOREIGN KEY (`id_item`) REFERENCES `item` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
+INSERT INTO analisa_harga_detail VALUES("2","35","3","1.23","firmantok","firmantok","2014-03-13 12:00:14","2014-03-13 14:22:00");
+INSERT INTO analisa_harga_detail VALUES("5","35","2","0.90","firmantok","firmantok","2014-03-13 13:12:01","2014-03-13 14:01:05");
 
 
 
@@ -120,8 +119,8 @@ CREATE TABLE `ci_sessions` (
   KEY `last_activity_idx` (`last_activity`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-INSERT INTO ci_sessions VALUES("448bc25ac0638ddbf1e15cefdd8d198d","::1","Mozilla/5.0 (Windows NT 6.1; WOW64; rv:27.0) Gecko/20100101 Firefox/27.0","1394613912","");
-INSERT INTO ci_sessions VALUES("1112151eb4bfcf0425fd55b93a98a007","::1","Mozilla/5.0 (Windows NT 6.1; WOW64; rv:27.0) Gecko/20100101 Firefox/27.0","1394613926","a:6:{s:9:\"user_data\";s:0:\"\";s:8:\"username\";s:9:\"firmantok\";s:5:\"email\";s:21:\"fir_man_tok@yahoo.com\";s:2:\"id\";s:1:\"2\";s:8:\"id_group\";s:1:\"2\";s:8:\"loggedin\";b:1;}");
+INSERT INTO ci_sessions VALUES("82667066234c4a13db891347158e6162","::1","Mozilla/5.0 (Windows NT 6.1; WOW64; rv:27.0) Gecko/20100101 Firefox/27.0","1394703452","a:6:{s:9:\"user_data\";s:0:\"\";s:8:\"username\";s:9:\"firmantok\";s:5:\"email\";s:21:\"fir_man_tok@yahoo.com\";s:2:\"id\";s:1:\"2\";s:8:\"id_group\";s:1:\"2\";s:8:\"loggedin\";b:1;}");
+INSERT INTO ci_sessions VALUES("d1dc0d2238ddee348f1f26f37a448b8f","::1","Mozilla/5.0 (Windows NT 6.1; WOW64; rv:27.0) Gecko/20100101 Firefox/27.0","1394727398","a:6:{s:9:\"user_data\";s:0:\"\";s:8:\"username\";s:9:\"firmantok\";s:5:\"email\";s:21:\"fir_man_tok@yahoo.com\";s:2:\"id\";s:1:\"2\";s:8:\"id_group\";s:1:\"2\";s:8:\"loggedin\";b:1;}");
 
 
 
@@ -135,7 +134,7 @@ CREATE TABLE `item` (
   `jenis` varchar(50) NOT NULL,
   `satuan` varchar(15) NOT NULL,
   `harga_pagu` decimal(17,2) DEFAULT NULL,
-  `harga_oe` decimal(17,2) DEFAULT NULL,
+  `harga_oe` decimal(17,2) NOT NULL DEFAULT '0.00',
   `created_by` varchar(25) DEFAULT NULL,
   `modified_by` varchar(25) DEFAULT NULL,
   `created_time` timestamp NULL DEFAULT NULL,
@@ -145,8 +144,8 @@ CREATE TABLE `item` (
   CONSTRAINT `fk_periode_item` FOREIGN KEY (`id_periode`) REFERENCES `periode` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
-INSERT INTO item VALUES("1","L01","2","Mandor","upah","Org/Hari","1150000.00","1150000.00","firmantok","firmantok","0000-00-00 00:00:00","2014-03-11 14:38:36");
-INSERT INTO item VALUES("2","E01","2","Sewa Mesin Bor","alat","hari","1350000.00","1350000.00","firmantok","firmantok","2014-03-10 00:00:00","2014-03-11 09:22:22");
+INSERT INTO item VALUES("1","L01","2","Mandor","upah","Org/Hari","1150000.00","1050000.00","firmantok","firmantok","0000-00-00 00:00:00","2014-03-13 17:43:59");
+INSERT INTO item VALUES("2","E01","2","Sewa Mesin Bor","alat","hari","1550000.00","1250000.00","firmantok","firmantok","2014-03-10 00:00:00","2014-03-13 17:41:18");
 INSERT INTO item VALUES("3","M001","2","Pasir Urug","satuan","M3","1350000.00","1350000.00","firmantok","firmantok","2014-03-10 00:00:00","2014-03-11 09:22:24");
 INSERT INTO item VALUES("4","LS001","2","Pekerjaan Uit Set","lumpsum","ls","0.00","0.00","firmantok","firmantok","2014-03-10 00:00:00","2014-03-11 09:22:29");
 INSERT INTO item VALUES("5","L09","3","Tes","upah","M<sup>2</sup>","1000.00","1000.00","firmantok","firmantok","2014-03-11 00:00:00","2014-03-11 21:35:39");
@@ -1486,8 +1485,8 @@ CREATE TABLE `periode` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
-INSERT INTO periode VALUES("2","2014","1","T","T","firmantok","firmantok","2014-03-09 21:58:18","2014-03-10 09:58:18");
-INSERT INTO periode VALUES("3","2015","2","T","T","firmantok","firmantok","2014-03-09 21:58:32","2014-03-10 09:58:32");
+INSERT INTO periode VALUES("2","2014","1","T","Y","firmantok","firmantok","2014-03-13 17:06:10","2014-03-13 17:06:34");
+INSERT INTO periode VALUES("3","2015","1","T","T","firmantok","firmantok","2014-03-13 16:49:08","2014-03-13 16:49:32");
 
 
 
@@ -1534,10 +1533,11 @@ CREATE TABLE `users` (
   UNIQUE KEY `email_UNIQUE` (`email`),
   KEY `fk_users_group_idx` (`id_group`),
   CONSTRAINT `fk_users_group` FOREIGN KEY (`id_group`) REFERENCES `users_group` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 INSERT INTO users VALUES("1","admin@yahoo.com","20ff0e5362d014396deca7c20641d6c1643927a319e95a7f5433012a06a3183d1c0368b5a1265e9ea4427d39b67983502785cd34d0deb65c19db455f46885869","admin","1");
 INSERT INTO users VALUES("2","fir_man_tok@yahoo.com","20ff0e5362d014396deca7c20641d6c1643927a319e95a7f5433012a06a3183d1c0368b5a1265e9ea4427d39b67983502785cd34d0deb65c19db455f46885869","firmantok","2");
+INSERT INTO users VALUES("3","tes@yahoo.com","97e874cf6391c72c9db0c6276d4217aa77aa3b230cb79455698a8d14b8fb064e650cdeb888d60523b5b9e7aeaee6f7cde9013c07d85dbe0f23d988970cee5909","tes","3");
 
 
 
