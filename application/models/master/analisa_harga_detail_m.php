@@ -35,13 +35,13 @@ class Analisa_harga_detail_M extends MY_Model
 		foreach ($query_sort_order_limit_offset->result() as $row)
         {
 			if($row->jenis == 'upah' AND $u == TRUE) {
-				array_push($rowsd, array('kode' => 'TENAGA', 'nama' => '') );
+				array_push($rowsd, array('kode' => '<B>TENAGA</B>', 'nama' => '') );
 				$u = FALSE;
 			}else if($row->jenis = 'alat' AND $a == TRUE){
-				array_push($rowsd, array('kode' => 'ALAT', 'nama' => '' ) );
+				array_push($rowsd, array('kode' => '<B>ALAT</B>', 'nama' => '' ) );
 				$a = FALSE;
 			}else if(($row->jenis = 'satuan' OR $row->jenis == 'lumpsum') AND $sl == TRUE){
-				array_push($rowsd, array('kode' => 'BAHAN', 'nama' => '' ) );
+				array_push($rowsd, array('kode' => '<B>BAHAN</B>', 'nama' => '' ) );
 				$sl = FALSE;
 			}
 
