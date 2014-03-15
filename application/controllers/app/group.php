@@ -10,7 +10,8 @@ class Group extends Admin_Controller
 
     public function index ()
     {
-        
+        $this->data['datatables'] = TRUE;
+		
         // Fetch all groups
         $this->data['groups'] = $this->group_m->get_by('id != 1 AND id != 2');
 
