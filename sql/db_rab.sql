@@ -26,7 +26,7 @@ CREATE TABLE `analisa_harga_detail` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_analisa` int(11) NOT NULL,
   `id_item` int(11) NOT NULL,
-  `volume` decimal(9,2) NOT NULL,
+  `volume` decimal(9,3) NOT NULL,
   `created_by` varchar(20) DEFAULT NULL,
   `modified_by` varchar(20) DEFAULT NULL,
   `created_time` timestamp NULL DEFAULT NULL,
@@ -36,10 +36,14 @@ CREATE TABLE `analisa_harga_detail` (
   KEY `fk_ahd_item` (`id_item`),
   CONSTRAINT `fk_ahd_ah` FOREIGN KEY (`id_analisa`) REFERENCES `analisa_harga` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_ahd_item` FOREIGN KEY (`id_item`) REFERENCES `item` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
-INSERT INTO analisa_harga_detail VALUES("2","35","3","1.23","firmantok","firmantok","2014-03-13 12:00:14","2014-03-13 14:22:00");
-INSERT INTO analisa_harga_detail VALUES("5","35","2","0.90","firmantok","firmantok","2014-03-13 13:12:01","2014-03-13 14:01:05");
+INSERT INTO analisa_harga_detail VALUES("2","35","3","1.230","firmantok","firmantok","2014-03-13 12:00:14","2014-03-13 14:22:00");
+INSERT INTO analisa_harga_detail VALUES("9","38","2","3.000","firmantok","firmantok","2014-03-14 08:15:31","2014-03-14 08:15:31");
+INSERT INTO analisa_harga_detail VALUES("10","38","1","12.000","firmantok","firmantok","2014-03-14 08:17:44","2014-03-14 08:17:44");
+INSERT INTO analisa_harga_detail VALUES("11","35","1","1.230","firmantok","firmantok","2014-03-14 08:33:27","2014-03-14 08:33:27");
+INSERT INTO analisa_harga_detail VALUES("12","38","3","2.450","firmantok","firmantok","2014-03-14 08:38:20","2014-03-14 08:38:20");
+INSERT INTO analisa_harga_detail VALUES("13","38","4","1.230","firmantok","firmantok","2014-03-14 08:38:41","2014-03-14 08:38:41");
 
 
 
@@ -119,8 +123,9 @@ CREATE TABLE `ci_sessions` (
   KEY `last_activity_idx` (`last_activity`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-INSERT INTO ci_sessions VALUES("82667066234c4a13db891347158e6162","::1","Mozilla/5.0 (Windows NT 6.1; WOW64; rv:27.0) Gecko/20100101 Firefox/27.0","1394703452","a:6:{s:9:\"user_data\";s:0:\"\";s:8:\"username\";s:9:\"firmantok\";s:5:\"email\";s:21:\"fir_man_tok@yahoo.com\";s:2:\"id\";s:1:\"2\";s:8:\"id_group\";s:1:\"2\";s:8:\"loggedin\";b:1;}");
-INSERT INTO ci_sessions VALUES("d1dc0d2238ddee348f1f26f37a448b8f","::1","Mozilla/5.0 (Windows NT 6.1; WOW64; rv:27.0) Gecko/20100101 Firefox/27.0","1394727398","a:6:{s:9:\"user_data\";s:0:\"\";s:8:\"username\";s:9:\"firmantok\";s:5:\"email\";s:21:\"fir_man_tok@yahoo.com\";s:2:\"id\";s:1:\"2\";s:8:\"id_group\";s:1:\"2\";s:8:\"loggedin\";b:1;}");
+INSERT INTO ci_sessions VALUES("6d3f1e90618b390023ec45c850893b38","::1","Mozilla/5.0 (Windows NT 6.1; WOW64; rv:27.0) Gecko/20100101 Firefox/27.0","1394762796","");
+INSERT INTO ci_sessions VALUES("10dd5fc9e3f0f87878c2662553f34bdf","::1","Mozilla/5.0 (Windows NT 6.1; WOW64; rv:27.0) Gecko/20100101 Firefox/27.0","1394776304","");
+INSERT INTO ci_sessions VALUES("969968035928cb589203f2f4ec81e0e8","::1","Mozilla/5.0 (Windows NT 6.1; WOW64; rv:27.0) Gecko/20100101 Firefox/27.0","1394776305","");
 
 
 
@@ -144,10 +149,10 @@ CREATE TABLE `item` (
   CONSTRAINT `fk_periode_item` FOREIGN KEY (`id_periode`) REFERENCES `periode` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
-INSERT INTO item VALUES("1","L01","2","Mandor","upah","Org/Hari","1150000.00","1050000.00","firmantok","firmantok","0000-00-00 00:00:00","2014-03-13 17:43:59");
-INSERT INTO item VALUES("2","E01","2","Sewa Mesin Bor","alat","hari","1550000.00","1250000.00","firmantok","firmantok","2014-03-10 00:00:00","2014-03-13 17:41:18");
-INSERT INTO item VALUES("3","M001","2","Pasir Urug","satuan","M3","1350000.00","1350000.00","firmantok","firmantok","2014-03-10 00:00:00","2014-03-11 09:22:24");
-INSERT INTO item VALUES("4","LS001","2","Pekerjaan Uit Set","lumpsum","ls","0.00","0.00","firmantok","firmantok","2014-03-10 00:00:00","2014-03-11 09:22:29");
+INSERT INTO item VALUES("1","L01","2","Mandor","upah","Org/Hari","1355.00","1050000.00","firmantok","firmantok","0000-00-00 00:00:00","2014-03-14 08:33:27");
+INSERT INTO item VALUES("2","E01","2","Sewa Mesin Bor","alat","hari","9000.00","5550.00","firmantok","firmantok","2014-03-10 00:00:00","2014-03-14 08:15:31");
+INSERT INTO item VALUES("3","M001","2","Pasir Urug","satuan","M3","1350000.00","1350000.00","firmantok","firmantok","2014-03-10 00:00:00","2014-03-14 08:38:20");
+INSERT INTO item VALUES("4","LS001","2","Pekerjaan Uit Set","lumpsum","ls","2000.00","0.00","firmantok","firmantok","2014-03-10 00:00:00","2014-03-14 08:38:41");
 INSERT INTO item VALUES("5","L09","3","Tes","upah","M<sup>2</sup>","1000.00","1000.00","firmantok","firmantok","2014-03-11 00:00:00","2014-03-11 21:35:39");
 
 
