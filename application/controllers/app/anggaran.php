@@ -67,32 +67,22 @@ class Anggaran extends Admin_Controller
         redirect('app/anggaran/index/'.$jenis);
     }
 
-	
 	public function run_import(){
-        // $file   = explode('.',$_FILES['file']['db_rab']);
-        // $length = count($file);
-        // if($file[$length -1] == 'xlsx' || $file[$length -1] == 'xls'){//jagain barangkali uploadnya selain file excel :-)
-            // $tmp    = $_FILES['database']['tmp'];//Baca dari tmp folder jadi file ga perlu jadi sampah di server :-p
-			
+        $file   = explode('.',$_FILES['item']['name']);
+        $length = count($file);
+        if($file[$length -1] == 'xlsx' || $file[$length -1] == 'xls'){//jagain barangkali uploadnya selain file excel :-)
+            $tmp    = $_FILES['item']['tmp_name'];//Baca dari tmp folder jadi file ga perlu jadi sampah di server :-p
+			$file_type    = $_FILES['item']['type'];
 			$this->load->library('excel');
-			$inputFileType = 'Excel5';
-			$inputFileName = 'localhost/rab/tmp/Book1.xls';
-			
-			$read = new PHPExcel();
-			
 			/**  Create a new Reader of the type defined in $inputFileType  **/
-			$read = PHPExcel_IOFactory::createReader($inputFileType);
+			$file_type  = PHPExcel_IOFactory::identify($tmp);
+            $read = PHPExcel_IOFactory::createReader($file_type);
 			/**  Advise the Reader that we only want to load cell data  **/
 			$read->setReadDataOnly(true);
+            $read->setLoadAllSheets();
 			/**  Load $inputFileName to a PHPExcel Object  **/
-			$excel = $read->load($inputFileName);
-
-			
-            // $this->load->library('excel');//Load library excelnya
-            // $read   = PHPExcel_IOFactory::createReader($tmp);
-            // $read->setReadDataOnly(true);
-            // $excel  = $read->load($tmp);
-            $sheets = $read->listWorksheetNames($inputFileName);//baca semua sheet yang ada
+			$excel = $read->load($tmp);
+            $sheets = $read->listWorksheetNames($tmp);//baca semua sheet yang ada
             foreach($sheets as $sheet){
                 if($this->db->table_exists($sheet)){//check sheet-nya itu nama table ape bukan, kalo bukan buang aja... nyampah doank :-p
                     $_sheet = $excel->setActiveSheetIndexByName($sheet);//Kunci sheetnye biar kagak lepas :-p
@@ -112,10 +102,10 @@ class Anggaran extends Admin_Controller
                     }
                 }
             }
-        // }else{
-            // exit('do not allowed to upload');//pesan error tipe file tidak tepat
-        // }
-        // redirect('app/anggaran/index/anggaran');
+        }else{
+            exit('do not allowed to upload');//pesan error tipe file tidak tepat
+        }
+        redirect('app/anggaran/index/upah');
     }
 }
 
