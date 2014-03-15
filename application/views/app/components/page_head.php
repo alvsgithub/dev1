@@ -20,7 +20,7 @@
     <script src="<?php echo site_url('asset/js/jloader.js'); ?>"></script>
     
 	<?php if(isset($edatagrid) && $edatagrid === TRUE): ?>
-	<script src="<?php echo site_url('asset/js/jquery.edatagrid.js'); ?>"></script>
+	   <script src="<?php echo site_url('asset/js/jquery.edatagrid.js'); ?>"></script>
 	<?php endif; ?>
 	
     <?php if(isset($datatables) && $datatables === TRUE): ?>
@@ -30,8 +30,8 @@
     <?php endif; ?>
     
     <?php if(isset($sortable) && $sortable === TRUE): ?>
-    <script src="<?php echo site_url('asset/js/jquery-ui-1.9.1.custom.min.js'); ?>"></script>
-    <script src="<?php echo site_url('asset/js/jquery.mjs.nestedSortable.js'); ?>"></script>
+        <script src="<?php echo site_url('asset/js/jquery-ui-1.9.1.custom.min.js'); ?>"></script>
+        <script src="<?php echo site_url('asset/js/jquery.mjs.nestedSortable.js'); ?>"></script>
     <?php endif; ?>
     
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
