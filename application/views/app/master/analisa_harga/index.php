@@ -149,7 +149,7 @@
 			url: '<?php echo site_url('app/analisa_harga'); ?>/'+jenis+'?analisa_harga='+p, nowrap:false,
 			pagination:true, pageSize:10, pageList:[10,20,50,100],
 			columns:[[
-				{field:'kode',title:'Kode',width:80,
+				{field:'kode',title:'Kode',width:80,sortable:true,
 					formatter:function(value,row,index){
 						var strReturn = value;
 						if(jenis == 'Anggaran'){
@@ -183,7 +183,7 @@
 			onExpandRow: function(index,row){
 				$('#ddatagrid-'+index).datagrid({
 					url: '<?php echo site_url('app/analisa_harga'); ?>/'+jenis+'?analisa_harga_detail='+row.id,
-					fitColumns:true, singleSelect:true, rownumbers:true, nowrap:false, sortable:true,
+					fitColumns:true, singleSelect:true, nowrap:false, sortable:true,
 					pagination:true, pageSize:5, pageList:[5,10, 20, 50],
 					loadMsg:'Please Wait', height:'auto',
 					columns:[[

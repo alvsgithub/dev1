@@ -11,6 +11,7 @@
     </select>
     <span id="space"> &nbsp;&nbsp;&nbsp; </span>
     <?php echo btn_add('app/anggaran/edit/'.$jenis.'-new'); ?>    
+       
     
     <table id="example" class="table table-striped table-bordered table-hover table-condensed">
         <thead>
@@ -47,7 +48,34 @@
         </tbody>
     </table>
     
+	<form id="form_import" method="post" action="<?php site_url('app/anggaran/run_import'); ?>">
+		<input type="file" name="item">
+		<input type="submit" value="Submit">
+	</form>
+	
+	
+	<?php  // echo form_open_multipart('chapter') . "\n"; ?>
+	<!-- <table>
+	  <tr>
+	  <td><input type="file" id="file_upload" name="userfile" size="20" /></td>
+	  </tr>
+	   <tr>
+	   <td>&nbsp;</td>
+	   <td valign="top" >
+	   <?php // echo form_submit('submit', 'Upload'); ?></td>
+	 </tr>
+	</table>
+	<?php // echo form_close(); ?>
+	<?php
+	// if ($this->session->flashdata('msg_excel')){
+	?>
+	<div class="msg"><?php// echo $this->session->flashdata('msg_excel'); ?></div>
+	<?php // } ?>
+	-->
 </section_custom>
 <script>
+	function import(){
+		window.open('<?php echo site_url('app/anggaran/run_import') ?>';
+	}
 </script>
 
