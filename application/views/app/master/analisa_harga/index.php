@@ -108,7 +108,6 @@
 <script type="text/javascript">
     var url;
     var jenis = '<?php echo $jenis; ?>';
-<<<<<<< HEAD
     $('#datagrid').datagrid({ 
         width: $('#div-reg-center').width() * (79/100), height: $('#div-reg-center').height() * (83/100),
         title: 'Analisa Harga '+jenis, rownumbers:true, singleSelect:true, fitColumns:true, toolbar:'#toolbar', sortable:true,
@@ -140,7 +139,6 @@
 				]],
 				onResize:function(){
 					$('#dg').datagrid('fixDetailRowHeight',index);
-=======
 	var i;
 	var p = document.getElementById('id_periode').value;
 	
@@ -172,7 +170,6 @@
 							return strReturn;
 						}
 					}
->>>>>>> 602cdc958aee48c4e697761556d55b80235125a4
 				},
 				{field:'nama',title:'Nama',width:150,sortable:true},
 				{field:'satuan',title:'Satuan',width:80,align:'center',sortable:true},
@@ -240,19 +237,19 @@
 		
 	});
 	
-    function doSearch(value,name){
+    function doSearch(value,name) {
         $('#datagrid').datagrid('load', {
             filter : $('#sb').searchbox('getName')+'|'+$('#sb').searchbox('getValue')
         });
     }
     
-    function add(){
+    function add() {
         $('#dialog-form').dialog({ closed: false, cache: false, modal: true, width: $('#div-reg-center').width() * (60/100), height: $(window).height() * (70/100) }).dialog('setTitle','Add - Analisa Harga');
         $('#fm').form('clear');
         url = '<?php echo site_url('app/analisa_harga/create'); ?>?id_periode='+$('#id_periode').combobox('getValue');
     }
 
-    function edit(id){
+    function edit(id) {
 		$('#datagrid').datagrid('selectRow',id);
 		var row = $('#datagrid').datagrid('getSelected');
 		$('#fm').form('load',row);
@@ -260,7 +257,7 @@
 		url = '<?php echo site_url('app/analisa_harga/update'); ?>/'+row.id;
     }
 	
-	function del(id){
+	function del(id) {
 		$('#datagrid').datagrid('selectRow',id);
         var row = $('#datagrid').datagrid('getSelected');
         if (row){
@@ -281,7 +278,7 @@
         }
     }
 	
-    function save(){
+    function save() {
         $('#fm').form('submit',{
             url: url,
             onSubmit: function(){ return $(this).form('validate'); },
@@ -301,17 +298,14 @@
         });
     }
 	
-	// -- DETAIL -- //
-	
-	function addDetail(id){
+	function addDetail(id) {
 		loadCombogridItem();
         $('#dialog-dform').dialog({ closed: false, cache: false, modal: true, width: $('#div-reg-center').width() * (60/100), height: $(window).height() * (70/100) }).dialog('setTitle','Add - Komponen Analisa Harga');
         $('#fmd').form('clear');
         url = '<?php echo site_url('app/analisa_harga/createDetail'); ?>/'+id;
-		
     }
 
-    function editDetail(id2,id){
+    function editDetail(id2,id) {
 		loadCombogridItem();
 		$('#datagrid').datagrid('selectRow',id);
 		$('#ddatagrid-'+id).datagrid('selectRow',id2);
@@ -321,7 +315,7 @@
 		url = '<?php echo site_url('app/analisa_harga/updateDetail'); ?>/'+row.id;
     }
 	
-	function delDetail(id2,id){
+	function delDetail(id2,id) {
 		$('#datagrid').datagrid('selectRow',id);
 		$('#ddatagrid-'+id).datagrid('selectRow',id2);
         var row = $('#ddatagrid-'+id).datagrid('getSelected');
@@ -343,7 +337,7 @@
         }
     }
 	
-    function saveDetail(){
+    function saveDetail() {
         $('#fmd').form('submit',{
             url: url,
             onSubmit: function(){ return $(this).form('validate'); },
@@ -362,7 +356,6 @@
                         title: 'Info', timeout: 1000, msg: 'Success', 
                         style:{ right:'center', top:'center' } 
                     });
-<<<<<<< HEAD
                 }else{
                     $('#dialog-form').dialog('close');
                     $('#datagrid').datagrid('reload');
@@ -370,10 +363,8 @@
                         title: 'Error', msg: result.msg,
                         style:{ right:'center', top:'center' } 
                     });
-=======
                 } else {
                     $.messager.alert({ title: 'Error', msg: result.msg });
->>>>>>> 602cdc958aee48c4e697761556d55b80235125a4
                 }
             }
         });
