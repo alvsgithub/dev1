@@ -48,8 +48,9 @@
     </table>
     
     <form id="form_import" method="post" action="<?php echo site_url('app/anggaran/run_import') ?>" enctype="multipart/form-data" role="form">
-        <input type="file" id="import" name="item"></td>
-        <input type="submit"  value="Import" name="save" /></td>         
+        <td><input type="file" id="import" name="item"></td>
+        <td><input type="hidden" value="periode" name="periode"></td> 
+        <td><input type="submit" value="Import" name="save" /></td>         
     </form>
 
 	
