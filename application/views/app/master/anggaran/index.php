@@ -17,6 +17,7 @@
             <tr id="header1">
                 <th>Kode</th>
                 <th>Periode</th>
+                <th style='display:none;'>Id Periode</th>
                 <th>Nama</th>
                 <th>Satuan</th>
                 <th>Harga Pagu</th>
@@ -29,6 +30,7 @@
             <tr>
                 <td><?php echo anchor('app/anggaran/edit/' . $jenis .'-'. $it->id, $it->kode); ?></td>
                 <td><?php echo $it->periode; ?></td>
+                <td id='get_id_periode' style='display:none;'><?php echo $it->id_periode; ?></td>
                 <td><?php echo $it->nama; ?></td>
                 <td><?php echo $it->satuan; ?></td>
                 <td style="text-align: right;"><?php echo number_format($it->harga_pagu, 2, ',', '.'); ?></td>
@@ -49,12 +51,10 @@
     
     <form id="form_import" method="post" action="<?php echo site_url('app/anggaran/run_import') ?>" enctype="multipart/form-data" role="form">
         <td><input type="file" id="import" name="item"></td>
-        <td><input type="hidden" value="periode" name="periode"></td> 
-        <td><input type="submit" value="Import" name="save" /></td>         
+        <td><input type="hidden" id='post_id_periode' value="periode" name="periode"></td> 
+        <td><input id="import_item" type="button" value="Import" name="save" /></td>         
     </form>
 
-	
-	
 	<?php  // echo form_open_multipart('chapter') . "\n"; ?>
 	<!-- <table>
 	  <tr>
@@ -74,9 +74,13 @@
 	<?php // } ?>
 	-->
 </section_custom>
-<script>
-	function import(){
-		window.open('<?php echo site_url('app/anggaran/run_import') ?>';
-	}
+<script type="text/javascript">
+
+    $('#import_item').click(function() {
+        var txt = $('#get_id_periode').text();
+        $("#post_id_periode").val(txt);
+        $('#form_import').submit();
+    });
+
 </script>
 

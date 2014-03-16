@@ -105,6 +105,13 @@
 </div>
 </section_easyui>
 
+<form id="form_import" method="post" action="<?php echo site_url('app/analisa_harga/run_import') ?>" enctype="multipart/form-data" role="form">
+    <td><input type="file" id="import" name="analisa_harga"></td>
+    <td><input type="hidden" value="periode" name="periode"></td> 
+    <td><input type="submit" value="Import" name="save" /></td>         
+</form>
+
+
 <script type="text/javascript">
     var url;
     var jenis = '<?php echo $jenis; ?>';
