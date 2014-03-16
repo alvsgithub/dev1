@@ -206,7 +206,10 @@ $(document).ready(function() {
         $('#id_periode').appendTo('div.dataTables_filter');
         $('#space').appendTo('div.dataTables_filter');
         $('#addb').appendTo('div.dataTables_filter');
-        
+        // $('#space2').appendTo('div.dataTables_filter');
+        // $('#labelImport').appendTo('div.dataTables_filter');
+        // $('#import_browse').appendTo('div.dataTables_filter');
+        // $('#import_button').appendTo('div.dataTables_filter');
         
         // filter periode
         oTable.fnFilter( document.getElementById('id_periode').value, 1 );

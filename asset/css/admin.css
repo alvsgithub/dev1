@@ -1,8 +1,6 @@
-
-
 tr#header1 { 
     border: 3px solid blue;
-    background-color:#fff3ce;
+    background-color:#e9fefd;
 }
 th#actions1 {
     text-align: center;
@@ -67,11 +65,16 @@ ol.sortable {
     width: 71px; 
     height: 71px;
     border: 0px solid red;
-    margin: 10px 30px;
+
+	margin-top:20px;
+	/* margin-bottom:10px; */
+	/* margin-right:5px; */
+	margin-left:35px;
+
+	vertical-align:center;
     float:left;
-    background: url(../images/logo_kehutanan_70.png) no-repeat;
+    /* background: url(../images/logo_kehutanan_70.png) no-repeat; */
     background-size: 70px;
-    
 }
 ._title {
     width: 600px;
@@ -89,4 +92,17 @@ ol.sortable {
 ._title p{
     font-size:12px;
     color: #fff;
+}
+
+#bg-footer{
+	color:#000;
+	background-color:#178acc;
+    background-image:-moz-linear-gradient(top,#2fa4e7,#178acc);
+    background-image:-webkit-gradient(linear,0 0,0 100%,from(#2fa4e7),to(#178acc));
+    background-image:-webkit-linear-gradient(top,#2fa4e7,#178acc);
+    background-image:-o-linear-gradient(top,#2fa4e7,#178acc);
+    background-image:linear-gradient(to bottom,#2fa4e7,#178acc);
+    background-repeat:repeat-x;
+    border-color:#000;
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff2fa4e7',endColorstr='#ff178acc',GradientType=0)
 }

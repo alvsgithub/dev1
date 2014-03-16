@@ -29,7 +29,7 @@
                 $('#tr').treegrid({ 
                     title:'Menu & Privilige - Group : '+row.nama_group, url:'<?php echo site_url('app/group/access/'); ?>?menu=true',
                     idField: 'id_menu', treeField: 'nama_menu', fitColumns:true, animate:true, lines:true, rownumbers:false,
-                    width: $('#div-reg-center').width() * (58/100), height: $(window).height() * (70/100),
+                    width: $('#div-reg-center').width() * (55/100), height: $(window).height() * (65/100),
                     columns:[[ 
                         {field:'nama_menu',title:'Nama Menu',width:300,
                             formatter:function(value,row,index){

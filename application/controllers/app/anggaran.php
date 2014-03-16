@@ -68,11 +68,16 @@ class Anggaran extends Admin_Controller
     }
 
 	public function run_import(){
+<<<<<<< HEAD
         $id_periode = $this->
+=======
+		$id_periode = $this->input->post('periode');
+>>>>>>> 1228ed385a51e7be2da09771f21f889de0bce8d3
         $file   = explode('.',$_FILES['item']['name']);
         $length = count($file);
         if($file[$length -1] == 'xlsx' || $file[$length -1] == 'xls'){//jagain barangkali uploadnya selain file excel :-)
             $tmp    = $_FILES['item']['tmp_name'];//Baca dari tmp folder jadi file ga perlu jadi sampah di server :-p
+<<<<<<< HEAD
             $file_type    = $_FILES['item']['type'];
             $this->load->library('excel');
             /**  Create a new Reader of the type defined in $inputFileType  **/
@@ -83,6 +88,18 @@ class Anggaran extends Admin_Controller
             $read->setLoadAllSheets();
             /**  Load $inputFileName to a PHPExcel Object  **/
             $excel = $read->load($tmp);
+=======
+			$file_type    = $_FILES['item']['type'];
+			$this->load->library('excel');
+			/**  Create a new Reader of the type defined in $inputFileType  **/
+			$file_type  = PHPExcel_IOFactory::identify($tmp);
+            $read = PHPExcel_IOFactory::createReader($file_type);
+			/**  Advise the Reader that we only want to load cell data  **/
+			$read->setReadDataOnly(true);
+            $read->setLoadAllSheets();
+			/**  Load $inputFileName to a PHPExcel Object  **/
+			$excel = $read->load($tmp);
+>>>>>>> 1228ed385a51e7be2da09771f21f889de0bce8d3
             $sheets = $read->listWorksheetNames($tmp);//baca semua sheet yang ada
             foreach($sheets as $sheet){
                 if($this->db->table_exists($sheet)){//check sheet-nya itu nama table ape bukan, kalo bukan buang aja... nyampah doank :-p
@@ -93,12 +110,25 @@ class Anggaran extends Admin_Controller
                     $sql    = array();
                     $maxCol = range('A',$maxCol);
                     foreach($maxCol as $key => $coloumn){
+<<<<<<< HEAD
                         $field[$key]    = $_sheet->getCell($coloumn.'1')->getCalculatedValue();//Kolom pertama sebagai field list pada table
+=======
+                        $field[$key] = $_sheet->getCell($coloumn.'1')->getCalculatedValue();//Kolom pertama sebagai field list pada table
+>>>>>>> 1228ed385a51e7be2da09771f21f889de0bce8d3
                     }
                     for($i = 2; $i <= $maxRow; $i++){
                         foreach($maxCol as $k => $coloumn){
                             $sql[$field[$k]]  = $_sheet->getCell($coloumn.$i)->getCalculatedValue();
                         }
+<<<<<<< HEAD
+=======
+						$sql['id_periode'] = $id_periode;
+						$sql['created_by'] = $this->session->userdata('username');
+						$sql['modified_by'] = $this->session->userdata('username');
+						$sql['created_time'] = date('Y-m-d H:i:s');
+						$sql['modified_time'] = date('Y-m-d H:i:s');
+						
+>>>>>>> 1228ed385a51e7be2da09771f21f889de0bce8d3
                         $this->db->insert($sheet,$sql);//ribet banget tinggal insert doank...
                     }
                 }
@@ -106,7 +136,11 @@ class Anggaran extends Admin_Controller
         }else{
             exit('do not allowed to upload');//pesan error tipe file tidak tepat
         }
+<<<<<<< HEAD
         redirect('app/anggaran/index/upah');        
+=======
+        redirect('app/anggaran/index/upah');
+>>>>>>> 1228ed385a51e7be2da09771f21f889de0bce8d3
     }
 }
 
