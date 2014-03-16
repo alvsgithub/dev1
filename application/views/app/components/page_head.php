@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title><?php echo $meta_title; ?></title>
-    
+	
     <link href="<?php echo site_url('asset/css/bootstrap/easyui.css');?>" rel="stylesheet">
     <link href="<?php echo site_url('asset/css/bootstrap.min.css'); ?>" rel="stylesheet">
     <link href="<?php echo site_url('asset/css/admin.css'); ?>" rel="stylesheet">
