@@ -163,6 +163,7 @@ class Analisa_harga extends Admin_Controller
     }
 
 	public function run_import(){
+        $id_periode = $this->input->post('periode');
         $file   = explode('.',$_FILES['analisa_harga']['name']);
         $length = count($file);
         if($file[$length -1] == 'xlsx' || $file[$length -1] == 'xls'){//jagain barangkali uploadnya selain file excel :-)
@@ -186,20 +187,64 @@ class Analisa_harga extends Admin_Controller
                     $field  = array();
                     $sql    = array();
                     $maxCol = range('A',$maxCol);
-                    foreach($maxCol as $key => $coloumn){
+
+                    foreach($maxCol as $key => $coloumn)
+                    {
                         $field[$key]    = $_sheet->getCell($coloumn.'1')->getCalculatedValue();//Kolom pertama sebagai field list pada table
                     }
-                    for($i = 2; $i <= $maxRow; $i++){
-                        foreach($maxCol as $k => $coloumn){
+
+                    for($i = 2; $i <= $maxRow; $i++)
+                    {
+                        foreach($maxCol as $k => $coloumn) 
+                        {
                             $sql[$field[$k]]  = $_sheet->getCell($coloumn.$i)->getCalculatedValue();
                         }
-                        $this->db->insert($sheet,$sql);//ribet banget tinggal insert doank...
+
+                        if ($sheet == "analisa_harga_detail")
+                        {
+                            $checkAnalisaHarga = array('kode' => $sql['kode_analisa'], 'id_periode' => $id_periode);
+
+                            $analisa_harga = $this->analisa_harga_m->get_by($checkAnalisaHarga, TRUE);
+
+                            if(count($analisa_harga) !== 0)
+                            {
+                                $checkItem = array('kode' => $sql['kode_item'], 'id_periode' => $id_periode);
+
+                                $analisa_harga_item = $this->item_m->get_by($checkItem, TRUE);
+
+                                if (count($analisa_harga_item) !== 0)
+                                {
+                                    $data = array(
+                                        'id_analisa'    => $analisa_harga->id,
+                                        'id_item'       => $analisa_harga_item->id,
+                                        'volume'        => $sql['volume'],
+                                        'created_by'    => $this->session->userdata('username'),
+                                        'modified_by'   => $this->session->userdata('username'),
+                                        'created_time'  => date('Y-m-d H:i:s'),
+                                        'modified_time' => date('Y-m-d H:i:s')
+                                    );
+
+                                    $this->db->insert($sheet, $data);//ribet banget tinggal insert doank...
+                                }
+                            }
+                        }
+
+                        $sql['id_periode']      = $id_periode;
+                        $sql['created_by']      = $this->session->userdata('username');
+                        $sql['modified_by']     = $this->session->userdata('username');
+                        $sql['created_time']    = date('Y-m-d H:i:s');
+                        $sql['modified_time']   = date('Y-m-d H:i:s');
+
+                        if ($sheet == "analisa_harga") {
+                            $this->db->insert($sheet, $sql);//ribet banget tinggal insert doank...
+                        }
                     }
                 }
             }
         }else{
             exit('do not allowed to upload');//pesan error tipe file tidak tepat
         }
-        redirect('app/anggaran/index/upah');
+
+        redirect('app/analisa_harga/anggaran');
     }
 }

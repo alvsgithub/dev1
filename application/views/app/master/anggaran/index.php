@@ -17,7 +17,7 @@
         <span id="space"> &nbsp;&nbsp;&nbsp; </span>
         <!-- <span id="space2"> &nbsp; </span> -->
         
-    <?php echo btn_add('app/anggaran/edit/'.$jenis.'-new'); ?>    
+    <?php echo btn_add('app/anggaran/edit/'.$jenis.'-new'); ?>
     
     <table id="example" class="table table-striped table-bordered table-hover table-condensed">
         <thead>
