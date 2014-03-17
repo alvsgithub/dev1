@@ -6,7 +6,7 @@ class Analisa_harga_detail_M extends MY_Model
     protected $_order_by = 'id';
     protected $_timestamps = TRUE;
     protected $_logs = TRUE;
-	
+
 	public function getJson($where = NULL)
     {	
         $page = isset($_POST['page']) ? intval($_POST['page']) : 1;

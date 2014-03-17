@@ -67,22 +67,22 @@ class Anggaran extends Admin_Controller
         redirect('app/anggaran/index/'.$jenis);
     }
 
-	public function run_import(){
-		$id_periode = $this->input->post('periode');
+    public function run_import(){
+        $id_periode = $this->input->post('periode');
         $file   = explode('.',$_FILES['item']['name']);
         $length = count($file);
         if($file[$length -1] == 'xlsx' || $file[$length -1] == 'xls'){//jagain barangkali uploadnya selain file excel :-)
             $tmp    = $_FILES['item']['tmp_name'];//Baca dari tmp folder jadi file ga perlu jadi sampah di server :-p
-			$file_type    = $_FILES['item']['type'];
-			$this->load->library('excel');
-			/**  Create a new Reader of the type defined in $inputFileType  **/
-			$file_type  = PHPExcel_IOFactory::identify($tmp);
+            $file_type    = $_FILES['item']['type'];
+            $this->load->library('excel');
+            /**  Create a new Reader of the type defined in $inputFileType  **/
+            $file_type  = PHPExcel_IOFactory::identify($tmp);
             $read = PHPExcel_IOFactory::createReader($file_type);
-			/**  Advise the Reader that we only want to load cell data  **/
-			$read->setReadDataOnly(true);
+            /**  Advise the Reader that we only want to load cell data  **/
+            $read->setReadDataOnly(true);
             $read->setLoadAllSheets();
-			/**  Load $inputFileName to a PHPExcel Object  **/
-			$excel = $read->load($tmp);
+            /**  Load $inputFileName to a PHPExcel Object  **/
+            $excel = $read->load($tmp);
             $sheets = $read->listWorksheetNames($tmp);//baca semua sheet yang ada
             foreach($sheets as $sheet){
                 if($this->db->table_exists($sheet)){//check sheet-nya itu nama table ape bukan, kalo bukan buang aja... nyampah doank :-p
@@ -99,12 +99,12 @@ class Anggaran extends Admin_Controller
                         foreach($maxCol as $k => $coloumn){
                             $sql[$field[$k]]  = $_sheet->getCell($coloumn.$i)->getCalculatedValue();
                         }
-						$sql['id_periode'] = $id_periode;
-						$sql['created_by'] = $this->session->userdata('username');
-						$sql['modified_by'] = $this->session->userdata('username');
-						$sql['created_time'] = date('Y-m-d H:i:s');
-						$sql['modified_time'] = date('Y-m-d H:i:s');
-						
+                        $sql['id_periode'] = $id_periode;
+                        $sql['created_by'] = $this->session->userdata('username');
+                        $sql['modified_by'] = $this->session->userdata('username');
+                        $sql['created_time'] = date('Y-m-d H:i:s');
+                        $sql['modified_time'] = date('Y-m-d H:i:s');
+                        
                         $this->db->insert($sheet,$sql);//ribet banget tinggal insert doank...
                     }
                 }

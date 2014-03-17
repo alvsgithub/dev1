@@ -1,10 +1,13 @@
-<section_easyui>  
+<form style='margin-left: 10px; margin-top: 10px; margin-bottom: -5px;' id="form_import" method="post" action="<?php echo site_url('app/analisa_harga/run_import') ?>" enctype="multipart/form-data" role="form">
+    <input type="hidden" id="periode" name="periode">
+    <input type="file" id="import_browse" name="analisa_harga" class="easyui-linkbutton" onChange="document.getElementById('periode').value = document.getElementById('id_periode').value;this.form.submit();">
+</form>
 
+<section_easyui>  
 <div id="toolbar">
     <table cellpadding="0" cellspacing="0" style="width:100%">
         <tr>
             <td style="padding-left:2px">
-			
 				Periode (Tahun Semester) : 
 				<select id="id_periode" name="id_periode" class="easyui-combobox" style="width: 80px;">
 				<?php foreach($options_periode as $periode) { ?>
@@ -113,7 +116,7 @@
 	
 	$(function (){
 		$('#datagrid').datagrid({ 
-			width: 'auto', height: $(window).height() * (68/100),
+			width: 'auto', height: 'auto',
 			title: 'Analisa Harga '+jenis, rownumbers:true, singleSelect:true, fitColumns:true, toolbar:'#toolbar', sortable:true,
 			url: '<?php echo site_url('app/analisa_harga'); ?>/'+jenis+'?analisa_harga='+p, nowrap:false,
 			pagination:true, pageSize:10, pageList:[10,20,50,100],
@@ -360,4 +363,3 @@
 	}
 	
 </script>
-

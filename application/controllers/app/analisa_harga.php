@@ -65,7 +65,7 @@ class Analisa_harga extends Admin_Controller
 	
 	public function update($id = null)
     {
-        if(!isset($_POST))	
+        if(!isset($_POST))
             show_404();
 
         $data = $this->analisa_harga_m->array_from_post(array(
@@ -73,16 +73,25 @@ class Analisa_harga extends Admin_Controller
                     'nama',
                     'satuan'
                 ));
-		if($this->analisa_harga_m->save($data, $id)){
-			echo json_encode(array('success'=>true));
-		}else{
-			echo json_encode(array('msg'=>'error'));
+
+        if($this->analisa_harga_m->save($data)){ 
+            echo json_encode(array('success'=>true));
+        }else{
+            echo json_encode(array('msg'=>'Data gagal dismpan!!!'));
+        }
+
+		if($this->analisa_harga_m->save2($data)){
+			if($this->analisa_harga_m->save($data, $id)){
+				echo json_encode(array('success'=>true));
+			}else{
+				echo json_encode(array('msg'=>'error'));
+			}
 		}
     }
     
-    public function delete ($id = null)
+    public function delete($id = NULL)
     {
-		if(!isset($_POST))	
+		if(!isset($_POST))
 			show_404();
 				
 		$id = addslashes($_POST['id']);
@@ -93,13 +102,11 @@ class Analisa_harga extends Admin_Controller
 		}
     }
 	
-	// END OF MASTER // 
-	
-	// DETAIL //
+	//END OF MASTER DETAIL
 	
 	public function createDetail($id = NULL)
     {
-        if(!isset($_POST))	
+        if(!isset($_POST))
             show_404();
 
         $data = $this->analisa_harga_detail_m->array_from_post(array(
@@ -153,5 +160,91 @@ class Analisa_harga extends Admin_Controller
 		}else{
 			echo json_encode(array('msg'=>'error'));
 		}
+    }
+
+	public function run_import(){
+        $id_periode = $this->input->post('periode');
+        $file   = explode('.',$_FILES['analisa_harga']['name']);
+        $length = count($file);
+        if($file[$length -1] == 'xlsx' || $file[$length -1] == 'xls'){//jagain barangkali uploadnya selain file excel :-)
+            $tmp    = $_FILES['analisa_harga']['tmp_name'];//Baca dari tmp folder jadi file ga perlu jadi sampah di server :-p
+			$file_type    = $_FILES['analisa_harga']['type'];
+			$this->load->library('excel');
+			/**  Create a new Reader of the type defined in $inputFileType  **/
+			$file_type  = PHPExcel_IOFactory::identify($tmp);
+            $read = PHPExcel_IOFactory::createReader($file_type);
+			/**  Advise the Reader that we only want to load cell data  **/
+			$read->setReadDataOnly(true);
+            $read->setLoadAllSheets();
+			/**  Load $inputFileName to a PHPExcel Object  **/
+			$excel = $read->load($tmp);
+            $sheets = $read->listWorksheetNames($tmp);//baca semua sheet yang ada
+            foreach($sheets as $sheet){
+                if($this->db->table_exists($sheet)){//check sheet-nya itu nama table ape bukan, kalo bukan buang aja... nyampah doank :-p
+                    $_sheet = $excel->setActiveSheetIndexByName($sheet);//Kunci sheetnye biar kagak lepas :-p
+                    $maxRow = $_sheet->getHighestRow();
+                    $maxCol = $_sheet->getHighestColumn();
+                    $field  = array();
+                    $sql    = array();
+                    $maxCol = range('A',$maxCol);
+
+                    foreach($maxCol as $key => $coloumn)
+                    {
+                        $field[$key]    = $_sheet->getCell($coloumn.'1')->getCalculatedValue();//Kolom pertama sebagai field list pada table
+                    }
+
+                    for($i = 2; $i <= $maxRow; $i++)
+                    {
+                        foreach($maxCol as $k => $coloumn) 
+                        {
+                            $sql[$field[$k]]  = $_sheet->getCell($coloumn.$i)->getCalculatedValue();
+                        }
+
+                        if ($sheet == "analisa_harga_detail")
+                        {
+                            $checkAnalisaHarga = array('kode' => $sql['kode_analisa'], 'id_periode' => $id_periode);
+
+                            $analisa_harga = $this->analisa_harga_m->get_by($checkAnalisaHarga, TRUE);
+
+                            if(count($analisa_harga) !== 0)
+                            {
+                                $checkItem = array('kode' => $sql['kode_item'], 'id_periode' => $id_periode);
+
+                                $analisa_harga_item = $this->item_m->get_by($checkItem, TRUE);
+
+                                if (count($analisa_harga_item) !== 0)
+                                {
+                                    $data = array(
+                                        'id_analisa'    => $analisa_harga->id,
+                                        'id_item'       => $analisa_harga_item->id,
+                                        'volume'        => $sql['volume'],
+                                        'created_by'    => $this->session->userdata('username'),
+                                        'modified_by'   => $this->session->userdata('username'),
+                                        'created_time'  => date('Y-m-d H:i:s'),
+                                        'modified_time' => date('Y-m-d H:i:s')
+                                    );
+
+                                    $this->db->insert($sheet, $data);//ribet banget tinggal insert doank...
+                                }
+                            }
+                        }
+
+                        $sql['id_periode']      = $id_periode;
+                        $sql['created_by']      = $this->session->userdata('username');
+                        $sql['modified_by']     = $this->session->userdata('username');
+                        $sql['created_time']    = date('Y-m-d H:i:s');
+                        $sql['modified_time']   = date('Y-m-d H:i:s');
+
+                        if ($sheet == "analisa_harga") {
+                            $this->db->insert($sheet, $sql);//ribet banget tinggal insert doank...
+                        }
+                    }
+                }
+            }
+        }else{
+            exit('do not allowed to upload');//pesan error tipe file tidak tepat
+        }
+
+        redirect('app/analisa_harga/anggaran');
     }
 }
