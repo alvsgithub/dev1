@@ -13,10 +13,8 @@ CREATE TABLE `analisa_harga` (
   PRIMARY KEY (`id`),
   KEY `fk_ah_periode` (`id_periode`),
   CONSTRAINT `fk_ah_periode` FOREIGN KEY (`id_periode`) REFERENCES `periode` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO analisa_harga VALUES("35","M150","Bisa","m<sup>3</sup>","2","","firmantok","","2014-03-13 17:12:55");
-INSERT INTO analisa_harga VALUES("38","AN-01","ANalisa Pe","m<sup>3</sup>","2","firmantok","firmantok","2014-03-13 18:03:42","2014-03-13 18:13:07");
 
 
 
@@ -26,7 +24,8 @@ CREATE TABLE `analisa_harga_detail` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_analisa` int(11) NOT NULL,
   `id_item` int(11) NOT NULL,
-  `volume` decimal(9,2) NOT NULL,
+  `no_urut` tinyint(4) NOT NULL,
+  `volume` decimal(9,3) NOT NULL,
   `created_by` varchar(20) DEFAULT NULL,
   `modified_by` varchar(20) DEFAULT NULL,
   `created_time` timestamp NULL DEFAULT NULL,
@@ -36,10 +35,8 @@ CREATE TABLE `analisa_harga_detail` (
   KEY `fk_ahd_item` (`id_item`),
   CONSTRAINT `fk_ahd_ah` FOREIGN KEY (`id_analisa`) REFERENCES `analisa_harga` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_ahd_item` FOREIGN KEY (`id_item`) REFERENCES `item` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO analisa_harga_detail VALUES("2","35","3","1.23","firmantok","firmantok","2014-03-13 12:00:14","2014-03-13 14:22:00");
-INSERT INTO analisa_harga_detail VALUES("5","35","2","0.90","firmantok","firmantok","2014-03-13 13:12:01","2014-03-13 14:01:05");
 
 
 
@@ -119,8 +116,8 @@ CREATE TABLE `ci_sessions` (
   KEY `last_activity_idx` (`last_activity`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-INSERT INTO ci_sessions VALUES("82667066234c4a13db891347158e6162","::1","Mozilla/5.0 (Windows NT 6.1; WOW64; rv:27.0) Gecko/20100101 Firefox/27.0","1394703452","a:6:{s:9:\"user_data\";s:0:\"\";s:8:\"username\";s:9:\"firmantok\";s:5:\"email\";s:21:\"fir_man_tok@yahoo.com\";s:2:\"id\";s:1:\"2\";s:8:\"id_group\";s:1:\"2\";s:8:\"loggedin\";b:1;}");
-INSERT INTO ci_sessions VALUES("d1dc0d2238ddee348f1f26f37a448b8f","::1","Mozilla/5.0 (Windows NT 6.1; WOW64; rv:27.0) Gecko/20100101 Firefox/27.0","1394727398","a:6:{s:9:\"user_data\";s:0:\"\";s:8:\"username\";s:9:\"firmantok\";s:5:\"email\";s:21:\"fir_man_tok@yahoo.com\";s:2:\"id\";s:1:\"2\";s:8:\"id_group\";s:1:\"2\";s:8:\"loggedin\";b:1;}");
+INSERT INTO ci_sessions VALUES("5fbd2cf8a1db756f3ba8d0b3c0bf3650","::1","Mozilla/5.0 (Windows NT 6.1; WOW64; rv:27.0) Gecko/20100101 Firefox/27.0","1394979944","a:6:{s:9:\"user_data\";s:0:\"\";s:8:\"username\";s:9:\"firmantok\";s:5:\"email\";s:21:\"fir_man_tok@yahoo.com\";s:2:\"id\";s:1:\"2\";s:8:\"id_group\";s:1:\"2\";s:8:\"loggedin\";b:1;}");
+INSERT INTO ci_sessions VALUES("d6ee7c2ebf3a72880a65b8853afeddaa","::1","Mozilla/5.0 (Windows NT 6.1; WOW64; rv:27.0) Gecko/20100101 Firefox/27.0","1394988364","");
 
 
 
@@ -142,13 +139,13 @@ CREATE TABLE `item` (
   PRIMARY KEY (`id`),
   KEY `fk_periode_item` (`id_periode`),
   CONSTRAINT `fk_periode_item` FOREIGN KEY (`id_periode`) REFERENCES `periode` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
-INSERT INTO item VALUES("1","L01","2","Mandor","upah","Org/Hari","1150000.00","1050000.00","firmantok","firmantok","0000-00-00 00:00:00","2014-03-13 17:43:59");
-INSERT INTO item VALUES("2","E01","2","Sewa Mesin Bor","alat","hari","1550000.00","1250000.00","firmantok","firmantok","2014-03-10 00:00:00","2014-03-13 17:41:18");
-INSERT INTO item VALUES("3","M001","2","Pasir Urug","satuan","M3","1350000.00","1350000.00","firmantok","firmantok","2014-03-10 00:00:00","2014-03-11 09:22:24");
-INSERT INTO item VALUES("4","LS001","2","Pekerjaan Uit Set","lumpsum","ls","0.00","0.00","firmantok","firmantok","2014-03-10 00:00:00","2014-03-11 09:22:29");
-INSERT INTO item VALUES("5","L09","3","Tes","upah","M<sup>2</sup>","1000.00","1000.00","firmantok","firmantok","2014-03-11 00:00:00","2014-03-11 21:35:39");
+INSERT INTO item VALUES("11","L01","2","Mandor","upah","Org/hari","65000.00","65000.00","firmantok","firmantok","2014-03-16 15:12:04","2014-03-16 15:12:04");
+INSERT INTO item VALUES("12","L02","2","Kepala Tukang Batu","upah","Org/hari","60000.00","60000.00","firmantok","firmantok","2014-03-16 15:12:04","2014-03-16 15:12:04");
+INSERT INTO item VALUES("13","L03","2","Kepala Tukang Kayu","upah","Org/hari","50000.00","50000.00","firmantok","firmantok","2014-03-16 15:12:04","2014-03-16 15:12:04");
+INSERT INTO item VALUES("14","L04","2","Kepala Tukang Besi","upah","Org/hari","60000.00","60000.00","firmantok","firmantok","2014-03-16 15:12:04","2014-03-16 15:12:04");
+INSERT INTO item VALUES("15","L05","2","Kepala Tukang Cat","upah","Org/hari","50000.00","50000.00","firmantok","firmantok","2014-03-16 15:12:04","2014-03-16 15:12:04");
 
 
 
@@ -1519,6 +1516,19 @@ CREATE TABLE `slider` (
 
 
 
+DROP TABLE tahapan;
+
+CREATE TABLE `tahapan` (
+  `id` int(11) NOT NULL,
+  `nama` varchar(100) NOT NULL,
+  `no_urut` tinyint(4) NOT NULL DEFAULT '1',
+  `id_usulan_detail` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+
 DROP TABLE users;
 
 CREATE TABLE `users` (
@@ -1554,6 +1564,43 @@ CREATE TABLE `users_group` (
 INSERT INTO users_group VALUES("2","Administrator");
 INSERT INTO users_group VALUES("3","Perencanaan");
 INSERT INTO users_group VALUES("1","Super Administrator");
+
+
+
+DROP TABLE usulan;
+
+CREATE TABLE `usulan` (
+  `kode` varchar(13) NOT NULL,
+  `nama` varchar(255) NOT NULL,
+  `lokasi` varchar(255) NOT NULL,
+  `status` varchar(50) NOT NULL,
+  `id_periode` int(11) NOT NULL,
+  `created_by` varchar(11) DEFAULT NULL,
+  `modified_by` varchar(11) DEFAULT NULL,
+  `created_time` timestamp NULL DEFAULT NULL,
+  `modified_time` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`kode`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+
+DROP TABLE usulan_detail;
+
+CREATE TABLE `usulan_detail` (
+  `id` int(11) NOT NULL,
+  `versi` int(11) NOT NULL,
+  `id_analisa` int(11) NOT NULL,
+  `kode_usulan` varchar(13) NOT NULL,
+  `created_by` varchar(20) DEFAULT NULL,
+  `modified_by` varchar(20) DEFAULT NULL,
+  `created_time` timestamp NULL DEFAULT NULL,
+  `modified_time` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_detail_usulan` (`kode_usulan`),
+  CONSTRAINT `fk_detail_usulan` FOREIGN KEY (`kode_usulan`) REFERENCES `usulan` (`kode`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 
 
