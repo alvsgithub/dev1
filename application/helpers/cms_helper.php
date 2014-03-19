@@ -141,7 +141,7 @@ function get_left_menu_app ($array, $child = FALSE)
                 // get opened menu
                 $selected_menu = ""; $selected = "";
                 foreach($item['children'] as $sub_item){
-                    if('app/'.$CI->uri->segment(2) == $sub_item['slug_left']){
+                    if('app/'.$CI->uri->segment(2) == $sub_item['slug']){
                         $selected_menu = $item['nama_menu'];
                     }
                 }
