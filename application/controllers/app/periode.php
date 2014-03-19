@@ -73,6 +73,19 @@ class Periode extends Admin_Controller
         $this->periode_m->delete($id);
         redirect('app/periode');
     }
+	
+	public function _active_only_one()
+    {
+        $this->db->where('active', $this->input->post('active'));
+        $periode = $this->periode_m->get();
+
+        if (count($periode)) {
+            $this->form_validation->set_message('_active_only_one', '%s Hanya satu periode yang boleh active');
+            return FALSE;
+        }
+
+        return TRUE;
+    }
 
 }
 

@@ -141,7 +141,7 @@ function get_left_menu_app ($array, $child = FALSE)
                 // get opened menu
                 $selected_menu = ""; $selected = "";
                 foreach($item['children'] as $sub_item){
-                    if('app/'.$CI->uri->segment(2) == $sub_item['slug_left']){
+                    if('app/'.$CI->uri->segment(2) == $sub_item['slug']){
                         $selected_menu = $item['nama_menu'];
                     }
                 }
@@ -153,11 +153,11 @@ function get_left_menu_app ($array, $child = FALSE)
                     if($sub_item['id_parent'] == $item['id_menu']){
                         $str .= '<li>
                                     
-                                    <a href="'.site_url($sub_item['link']).'" plain="true">'
-                                        .$sub_item['nama_menu'].
-                                    '</a>
-                                        
-                                 </li>';
+								<a href="'.site_url($sub_item['link']).'" plain="true">'
+									.$sub_item['nama_menu'].
+								'</a>
+									
+							 </li>';
                     }
                 }
                 $str .= '</ul></div>'. PHP_EOL;

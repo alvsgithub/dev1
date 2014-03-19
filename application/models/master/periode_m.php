@@ -26,7 +26,7 @@ class Periode_M extends MY_Model
         'active' => array(
             'field' => 'active', 
             'label' => 'Active',
-            'rules' => 'trim|required'
+            'rules' => 'trim|required|callback__active_only_one'
         )
     );
 

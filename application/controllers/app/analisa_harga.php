@@ -56,7 +56,7 @@ class Analisa_harga extends Admin_Controller
                     'satuan'
                 ));
 		$data['id_periode'] = $_GET['id_periode'];
-		if($this->analisa_harga_m->save($data)){
+		if($this->analisa_harga_m->save($data) != 0){
 			echo json_encode(array('success'=>true));
 		}else{
 			echo json_encode(array('msg'=>'error'));
@@ -74,19 +74,11 @@ class Analisa_harga extends Admin_Controller
                     'satuan'
                 ));
 
-        if($this->analisa_harga_m->save($data)){ 
+        if($this->analisa_harga_m->save($data, $id) != 0){ 
             echo json_encode(array('success'=>true));
         }else{
             echo json_encode(array('msg'=>'Data gagal dismpan!!!'));
         }
-
-		if($this->analisa_harga_m->save2($data)){
-			if($this->analisa_harga_m->save($data, $id)){
-				echo json_encode(array('success'=>true));
-			}else{
-				echo json_encode(array('msg'=>'error'));
-			}
-		}
     }
     
     public function delete($id = NULL)
