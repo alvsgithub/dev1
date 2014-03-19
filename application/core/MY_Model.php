@@ -131,8 +131,12 @@ class MY_Model extends CI_Model {
             //!isset($data[$this->_primary_key]) || $data[$this->_primary_key] = NULL;
             $this->db->db_debug = false;
             $this->db->set($data);
-            $this->db->insert($this->_table_name);
-            $id = $this->db->insert_id();
+            if ($this->db->insert($this->_table_name)) {
+               $id = TRUE;
+            }else{
+               $id = FALSE;
+            }
+
             if ($TG == TRUE){
                 $this->db->set($data);
                 $this->db->where($this->_primary_key, $id);
