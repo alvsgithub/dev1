@@ -413,12 +413,8 @@
 }
 
 .layout-panel-north {
-	/* background-color: #003399; */
     background: url(../../images/a.jpg) no-repeat center; 
-    /* background-repeat: repeat-x; */
-    /* background-size: 100% 100%; */
 }
-
 .layout-expand {
   position: absolute;
   padding: 0px;
