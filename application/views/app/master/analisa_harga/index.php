@@ -81,6 +81,11 @@
 		<td>:</td>
 		<td><input id="sd" name="satuan" class="easyui-validatebox" readonly="true" size="13" /></td>
 	</tr>
+	<tr>
+		<td>No Urut</td>
+		<td>:</td>
+		<td><input name="no_urut" class="easyui-numberbox" precion="0" min="1" max="50" size="13" /></td>
+	</tr>
 	<?php if($jenis == 'Anggaran') { ?>
 	<tr>
 		<td>Harga Pagu</td>
@@ -116,7 +121,7 @@
 	
 	$(function (){
 		$('#datagrid').datagrid({ 
-			width: 'auto', height: 'auto',
+			width: 'auto', height: $(window).height() * (62/100),
 			title: 'Analisa Harga '+jenis, rownumbers:true, singleSelect:true, fitColumns:true, toolbar:'#toolbar', sortable:true,
 			url: '<?php echo site_url('app/analisa_harga'); ?>/'+jenis+'?analisa_harga='+p, nowrap:false,
 			pagination:true, pageSize:10, pageList:[10,20,50,100],
@@ -159,6 +164,7 @@
 					pagination:true, pageSize:5, pageList:[5,10, 20, 50],
 					loadMsg:'Please Wait', height:'auto',
 					columns:[[
+						{field:'no_urut',title:'No.',width:20,sortable:true},
 						{field:'kode',title:'Kode',width:80, sortable:true,
 							formatter:function(value2,row2,index2){
 								var strReturn = value2;
@@ -178,6 +184,7 @@
 						},
 						{field:'nama',title:'Nama',width:150,sortable:true},
 						{field:'satuan',title:'Satuan',width:70,sortable:true,align:'center'},
+						{field:'jenis',title:'Jenis',width:70,sortable:true,align:'center'},
 						{field:'volume',title:'Volume',width:75,align:'center',sortable:true},
 						{field:'harga_pagu',title:'Harga Pagu',width:100,align:'right',sortable:true},
 						{field:'total_harga_pagu',title:'Total Harga Pagu',width:100,align:'right',sortable:true},
