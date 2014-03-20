@@ -106,12 +106,13 @@ class Analisa_harga extends Admin_Controller
         $data = $this->analisa_harga_detail_m->array_from_post(array(
                     'id_analisa',
                     'id_item',
-                    'volume'
+                    'volume',
+					'no_urut'
                 ));
         $data['id_analisa'] = $id;
-        if($this->analisa_harga_detail_m->save($data)){
+        if($this->analisa_harga_detail_m->save($data) == TRUE){
             $data_item['harga_pagu'] = $this->input->post('harga_pagu');
-            if($this->item_m->save($data_item, $data['id_item'])){
+            if($this->item_m->save($data_item, $data['id_item']) == TRUE){
                 echo json_encode(array('success'=>true));
             }
         }else{
@@ -126,6 +127,7 @@ class Analisa_harga extends Admin_Controller
 
         $data = $this->analisa_harga_detail_m->array_from_post(array(
                     'id_item',
+					'no_urut',
                     'volume'
                 ));
         if($this->analisa_harga_detail_m->save($data, $id)){
