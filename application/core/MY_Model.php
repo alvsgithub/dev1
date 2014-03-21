@@ -129,7 +129,7 @@ class MY_Model extends CI_Model {
         // Insert
         if ($id === NULL) {
             //!isset($data[$this->_primary_key]) || $data[$this->_primary_key] = NULL;
-            $this->db->db_debug = false;
+            //$this->db->db_debug = false;
             $this->db->set($data);
             if ($this->db->insert($this->_table_name)) {
                $id = TRUE;
@@ -154,7 +154,7 @@ class MY_Model extends CI_Model {
             $this->db->update($this->_table_name);
         }        
 
-		return $id;
+        return $id;
     }
 
     public function delete($id){

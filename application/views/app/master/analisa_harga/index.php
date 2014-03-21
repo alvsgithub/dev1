@@ -277,9 +277,9 @@
         });
     }
 	
-	// -- DETAIL -- //
+    // -- DETAIL -- //
 	
-	function addDetail(id){
+    function addDetail(id){
 		loadCombogridItem();
         $('#dialog-dform').dialog({ closed: false, cache: false, modal: true, width: $('#div-reg-center').width() * (60/100), height: $(window).height() * (70/100) }).dialog('setTitle','Add - Komponen Analisa Harga');
         $('#fmd').form('clear');
