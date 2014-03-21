@@ -85,8 +85,15 @@ ol.sortable {
 }
 
 ._title h2 {
-    font-size:27.5px;
+    font-size:30px;
     color: #fff;
+	text-shadow:
+	1px 1px 0 #CCC,
+	2px 2px 0 #CCC, /* end of 2 level deep grey shadow */
+	3px 3px 0 #444,
+	4px 4px 0 #444,
+	5px 5px 0 #444,
+	6px 6px 0 #444; /* end of 4 level deep dark shadow */
 }
 
 ._title p{
