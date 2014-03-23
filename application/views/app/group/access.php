@@ -14,6 +14,7 @@
         </section_easyui>
     </div>
 </div>    
+
 <script type="text/javascript">
     $(function(){
         var rdgi;

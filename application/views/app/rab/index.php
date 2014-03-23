@@ -37,14 +37,14 @@
     <form id="fm" method="post" novalidate>
     <table>
 	<tr>
-            <td>Nama</td>
-            <td>:</td>
-            <td><input name="nama" class="easyui-validatebox" required="true" size="13" maxlength="20" /></td>
+		<td>Nama</td>
+		<td>:</td>
+		<td><input name="nama" class="easyui-validatebox" required="true" size="13" maxlength="20" /></td>
 	</tr>
 	<tr>
-            <td>Lokasi</td>
-            <td>:</td>
-            <td><input name="lokasi" class="easyui-validatebox" required="true" size="13" maxlength="15" /></td>
+		<td>Lokasi</td>
+		<td>:</td>
+		<td><input name="lokasi" class="easyui-validatebox" required="true" size="13" maxlength="15" /></td>
 	</tr>
     </table>
     </form>
@@ -61,20 +61,11 @@
      closed="true" buttons="#dialog-dbuttons">
     <div class="easyui-tabs" style="width:auto;height:auto">
 	<div title="Rincian" style="padding:10px">
-		<table id="dg-rab" class="easyui-datagrid" style="widht: auto;height:auto;"></table>
+		<table id="dg-tahapan" style="widht: auto;height:auto;"></table>
 	</div>
 	<div title="Dokumen" style="padding:10px">
 		Upload Document.
 	</div>
-	</div>
-	<div id="toolbar-dg-rab" >
-		<table cellpadding="0" cellspacing="0" style="width:100%">
-			<tr>
-				<td style="padding-left:2px">		
-					<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add2" plain="true" onclick="add();">Add</a>		
-				</td>
-			</tr>
-		</table>
 	</div>
 	<!--<div id="dialog-dbuttons"> 
 		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-save" onclick="saveDetail();">Simpan</a>
@@ -82,44 +73,28 @@
 	</div>-->
 </div>
 
-<!-- Dialog RAB Detail Form -->
-<div id="dialog-detail" class="easyui-dialog" style="width:auto; height:auto; padding: 10px 20px" 
-     closed="true" buttons="#detail-dlg-buttons">
+<!-- Dialog RAB Tahapan Form -->
+<div id="dialog-tahapan" class="easyui-dialog" style="width:auto; height:auto; padding: 10px 20px" 
+     closed="true" buttons="#tahapan-dlg-buttons">
     <form id="fmd" method="post" novalidate>
     <table>
-	<tr>
-		<td>Kode</td>
-		<td>:</td>
-		<td><input id="id_item" name="id_item" required="true"style="width: 500px;" /></td>
-	</tr>
-	<tr>
-		<td>Nama</td>
-		<td>:</td>
-		<td><input id="nd" name="nama" class="easyui-validatebox" readonly="true" size="13" /></td>
-	</tr>
-	<tr>
-		<td>Satuan</td>
-		<td>:</td>
-		<td><input id="sd" name="satuan" class="easyui-validatebox" readonly="true" size="13" /></td>
-	</tr>
 	<tr>
 		<td>No Urut</td>
 		<td>:</td>
 		<td><input name="no_urut" class="easyui-numberbox" precion="0" min="1" max="50" size="13" /></td>
 	</tr>
 	<tr>
-		<td>Volume</td>
+		<td>Nama</td>
 		<td>:</td>
-		<td><input name="volume" class="easyui-numberbox" required="true" precision="3" decimalSeparator="." groupSeparator="," min="0" size="13" style="text-align:right;" /></td>
+		<td><input name="nama" class="easyui-validatebox" size="13" /></td>
 	</tr>
     </table>
     </form>
-	<div id="detail-dlg-dbuttons"> 
-		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-save" onclick="saveDetail();">Simpan</a>
-		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dialog-dform').dialog('close');">Batal</a>
+	<div id="tahapan-dlg-buttons"> 
+		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-save" onclick="saveTahapan();">Simpan</a>
+		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dialog-tahapan').dialog('close');">Batal</a>
 	</div>
 </div>
-
 
 <script type="text/javascript">
     var url;
@@ -138,8 +113,6 @@
                             var strReturn = value;
                             strReturn += 
                             '<div style="float:right;">'+
-                            '<a href="javascript:void(0)" class="icon-add2" onclick="addDetail('+row.kode+');" title="Add Komponen"></a>'+
-                            '&nbsp;&nbsp;&nbsp;'+
                             '<a href="javascript:void(0)" class="icon-edit2" onclick="edit('+index+');" title="Edit"></a>'+
                             '&nbsp;&nbsp;&nbsp;'+
                             '<a href="javascript:void(0)" class="icon-trash" onclick="del('+index+')" title="Delete"></a>'+
@@ -262,7 +235,7 @@
     // -- DETAIL -- //
 	
     function addDetail(id){
-        loadCombogridItem();
+        // loadCombogridItem();
         $('#dialog-dform').dialog({ closed: false, cache: false, modal: true, width: $('#div-reg-center').width() * (60/100), height: $(window).height() * (70/100) }).dialog('setTitle','Add - Komponen Analisa Harga');
         $('#fmd').form('clear');
         url = '<?php echo site_url('app/analisa_harga/createDetail'); ?>/'+id;
@@ -274,63 +247,120 @@
         $('#datagrid').datagrid('selectRow',id);
         $('#ddatagrid-'+id).datagrid('selectRow',id2);
         var row = $('#ddatagrid-'+id).datagrid('getSelected');
-        $('#dg-rab').datagrid({
-			width: 'auto', height: $(window).height() * (60/100),
-			rownumbers:true, singleSelect:true, fitColumns:true, toolbar:'#toolbar-dg-rab', sortable:true,
-			// url: '<?php //echo site_url('app/rab'); ?>/index?rab='+p, nowrap:false,
-			pagination:true, pageSize:10, pageList:[10,20,50,100],
+        $('#dg-tahapan').treegrid({
+			width: 'auto', height: $(window).height() * (70/100),
+			idField: 'id', treeField: 'nama',
+			rownumbers:false, singleSelect:true, fitColumns:true, sortable:true,
+			url: '<?php echo site_url('app/rab'); ?>/index?tahapan='+row.id, nowrap:false,
 			columns:[[
-				{field:'nama',title:'Uraian',width:80,sortable:true},
-				{field:'kode',title:'Kode',width:150,sortable:true},
-				{field:'satuan',title:'Satuan',width:80,align:'center',sortable:true},
-				{field:'volume',title:'Volume',width:100,sortable:true},
+				{field:'no_urut',title:'No.',width:50,sortable:true,align:'center'},
+				{field:'nama',title:'Uraian',width:250,sortable:true},
+				{field:'kode',title:'Kode',width:80,sortable:true},
+				{field:'satuan',title:'Satuan',width:70,align:'center',sortable:true},
+				{field:'volume',title:'Volume',width:60,sortable:true},
 				{field:'harga_pagu',title:'Harga Pagu',width:100,sortable:true},
 				{field:'total_harga_pagu',title:'Total Harga Pagu',width:100,sortable:true},
 				{field:'harga_oe',title:'Harga OE',width:100,sortable:true},
 				{field:'total_harga_oe',title:'Total Harga OE',width:100,sortable:true}
-			]]
+			]],
+			toolbar: [{
+				iconCls: 'icon-add2', text: 'Add Tahapan',
+				handler: function(){ addTahapan(row.id); }
+			}]
 		});
-        $('#dialog-dform').dialog({ closed: false, cache: false, modal: true, width: $('#div-reg-center').width(), height: $(window).height() * (80/100) }).dialog('setTitle','RAB : '+row.kode_usulan+' / Versi '+row.versi);
+        $('#dialog-dform').dialog({ closed: false, cache: false, modal: true, width: $(window).width() * (90/100), height: $(window).height() * (85/100) }).dialog('setTitle','RAB : '+row.kode_usulan+' / Versi '+row.versi);
         url = '<?php echo site_url('app/analisa_harga/updateDetail'); ?>/'+row.id;
     }
 	
-    function delDetail(id2,id){
-        $('#datagrid').datagrid('selectRow',id);
-        $('#ddatagrid-'+id).datagrid('selectRow',id2);
-        var row = $('#ddatagrid-'+id).datagrid('getSelected');
-        if (row){
-            $.messager.confirm('Confirm','You are about to delete a record. This cannot be undone. Are you sure?',function(r){
-                if (r){
-                    $.post('<?php echo site_url('app/analisa_harga/deleteDetail'); ?>',{id:row.id},function(result){
-                        if (result.success){
-                            $('#ddatagrid-'+id).datagrid('reload');
-                            $.messager.show({ title: 'Info', timeout: 1000, msg: 'Success', style:{ right:'center', top:'center' } });
-                        } else {
-                            $.messager.alert({ title: 'Error', msg: result.msg });
-                        }
-                    },'json');
-                }
-            });
-        }else{
-            $.messager.alert({ title: 'Warning', timeout: 1000, msg: 'Select one row..', style:{ right:'center', top:'center' } });
-        }
+    // function delDetail(id2,id){
+        // $('#datagrid').datagrid('selectRow',id);
+        // $('#ddatagrid-'+id).datagrid('selectRow',id2);
+        // var row = $('#ddatagrid-'+id).datagrid('getSelected');
+        // if (row){
+            // $.messager.confirm('Confirm','You are about to delete a record. This cannot be undone. Are you sure?',function(r){
+                // if (r){
+                    // $.post('<?php echo site_url('app/analisa_harga/deleteDetail'); ?>',{id:row.id},function(result){
+                        // if (result.success){
+                            // $('#ddatagrid-'+id).datagrid('reload');
+                            // $.messager.show({ title: 'Info', timeout: 1000, msg: 'Success', style:{ right:'center', top:'center' } });
+                        // } else {
+                            // $.messager.alert({ title: 'Error', msg: result.msg });
+                        // }
+                    // },'json');
+                // }
+            // });
+        // }else{
+            // $.messager.alert({ title: 'Warning', timeout: 1000, msg: 'Select one row..', style:{ right:'center', top:'center' } });
+        // }
+    // }
+	
+    // function saveDetail(){
+        // $('#fmd').form('submit',{
+            // url: url,
+            // onSubmit: function(){ return $(this).form('validate'); },
+            // success: function(result){
+                // var result = eval('('+result+')');
+                // if(result.success){
+                    // $('#dialog-dform').dialog('close');
+					// // var selected = $('#datagrid').datagrid('getSelected');
+                    // // var index = $('#datagrid').datagrid('getRowIndex', selected);
+					// // var selected2 = $('#ddatagrid-'+index).datagrid('getSelected');
+                    // // var index2 = $('#ddatagrid-'+index).datagrid('getRowIndex', selected2);
+					// // $('#datagrid').datagrid('reload', index);
+					// // $('#ddatagrid-'+index).datagrid('reload', index2);
+					// $('#datagrid').datagrid('reload');
+                    // $.messager.show({ 
+                        // title: 'Info', timeout: 1000, msg: 'Success', 
+                        // style:{ right:'center', top:'center' } 
+                    // });
+                // } else {
+                    // $.messager.alert({ title: 'Error', msg: result.msg });
+                // }
+            // }
+        // });
+    // }
+    
+    // function loadCombogridItem(){
+        // $('#id_item').combogrid({
+            // panelWidth: 500, panelHeight: 310,
+            // url:'<?php echo site_url('app/analisa_harga/anggaran'); ?>?item=true',
+            // idField:'id',textField:'kode',
+            // mode:'remote',fitColumns:false,sortable:true,nowrap:false,
+            // pagination:true, pageSize:'5', pageList:'[5,10,15,20]',
+            // columns:[[
+                // {field:'kode',title:'Kode',width:80,sortable:true},
+                // {field:'nama',title:'Nama',width:150,sortable:true},
+                // {field:'satuan',title:'Satuan',width:70,sortable:true,align:'center'},
+                // {field:'harga_pagu',title:'Harga Pagu',width:100,sortable:true,align:'right'},
+                // {field:'harga_oe',title:'Harga OE',width:100,sortable:true,align:'right'},
+                // {field:'jenis',title:'Jenis',width:80,sortable:true}
+            // ]],
+            // onClickRow:function(index, row){
+                // document.getElementById('nd').value = row.nama;
+                // document.getElementById('sd').value = row.satuan;
+                // $('#pd').numberbox('setValue', row.harga_pagu);
+                // $('#od').numberbox('setValue', row.harga_oe);
+            // }
+        // });
+    // }
+	
+	// TAHAPAN //
+	function addTahapan(id){
+        $('#dialog-tahapan').dialog({ closed: false, cache: false, modal: true, width: $('#div-reg-center').width() * (60/100), height: $(window).height() * (70/100) }).dialog('setTitle','Add - Tahapan Usulan RAB');
+        $('#fmd').form('clear');
+        url = '<?php echo site_url('app/rab/createTahapan'); ?>/'+id;
+		
     }
 	
-    function saveDetail(){
+	function saveTahapan(){
         $('#fmd').form('submit',{
             url: url,
             onSubmit: function(){ return $(this).form('validate'); },
             success: function(result){
                 var result = eval('('+result+')');
                 if(result.success){
-                    $('#dialog-dform').dialog('close');
-					// var selected = $('#datagrid').datagrid('getSelected');
-                    // var index = $('#datagrid').datagrid('getRowIndex', selected);
-					// var selected2 = $('#ddatagrid-'+index).datagrid('getSelected');
-                    // var index2 = $('#ddatagrid-'+index).datagrid('getRowIndex', selected2);
-					// $('#datagrid').datagrid('reload', index);
-					// $('#ddatagrid-'+index).datagrid('reload', index2);
-					$('#datagrid').datagrid('reload');
+                    $('#dialog-tahapan').dialog('close');
+					$('#dg-tahapan').treegrid('reload');
                     $.messager.show({ 
                         title: 'Info', timeout: 1000, msg: 'Success', 
                         style:{ right:'center', top:'center' } 
@@ -340,38 +370,5 @@
                 }
             }
         });
-    }
-    
-    function loadCombogridItem(){
-        $('#id_item').combogrid({
-            panelWidth: 500, panelHeight: 310,
-            url:'<?php echo site_url('app/analisa_harga/anggaran'); ?>?item=true',
-            idField:'id',textField:'kode',
-            mode:'remote',fitColumns:false,sortable:true,nowrap:false,
-            pagination:true, pageSize:'5', pageList:'[5,10,15,20]',
-            columns:[[
-                {field:'kode',title:'Kode',width:80,sortable:true},
-                {field:'nama',title:'Nama',width:150,sortable:true},
-                {field:'satuan',title:'Satuan',width:70,sortable:true,align:'center'},
-                {field:'harga_pagu',title:'Harga Pagu',width:100,sortable:true,align:'right'},
-                {field:'harga_oe',title:'Harga OE',width:100,sortable:true,align:'right'},
-                {field:'jenis',title:'Jenis',width:80,sortable:true}
-            ]],
-            onClickRow:function(index, row){
-                document.getElementById('nd').value = row.nama;
-                document.getElementById('sd').value = row.satuan;
-                $('#pd').numberbox('setValue', row.harga_pagu);
-                $('#od').numberbox('setValue', row.harga_oe);
-            }
-        });
-    }
-	
-	// TAHAPAN //
-	function addTahapan(id){
-        loadCombogridItem();
-        $('#dialog-dform').dialog({ closed: false, cache: false, modal: true, width: $('#div-reg-center').width() * (60/100), height: $(window).height() * (70/100) }).dialog('setTitle','Add - Komponen Analisa Harga');
-        $('#fmd').form('clear');
-        url = '<?php echo site_url('app/analisa_harga/createDetail'); ?>/'+id;
-		
     }
 </script>
