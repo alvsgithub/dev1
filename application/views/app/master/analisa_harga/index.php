@@ -46,7 +46,7 @@
 	<tr>
             <td>Nama</td>
 			<td>:</td>
-            <td><input name="nama" class="easyui-validatebox" required="true" size="13" maxlength="10" /></td>
+            <td><input name="nama" class="easyui-validatebox" required="true" size="13" maxlength="50" /></td>
 	</tr>
 	<tr>
             <td>Satuan</td>
@@ -116,105 +116,105 @@
 <script type="text/javascript">
     var url;
     var jenis = '<?php echo $jenis; ?>';
-	var i;
-	var p = document.getElementById('id_periode').value;
-	
-	$(function (){
-		$('#datagrid').datagrid({ 
-			width: 'auto', height: $(window).height() * (62/100),
-			title: 'Analisa Harga '+jenis, rownumbers:true, singleSelect:true, fitColumns:true, toolbar:'#toolbar', sortable:true,
-			url: '<?php echo site_url('app/analisa_harga'); ?>/'+jenis+'?analisa_harga='+p, nowrap:false,
-			pagination:true, pageSize:10, pageList:[10,20,50,100],
-			columns:[[
-				{field:'kode',title:'Kode',width:80,sortable:true,
-					formatter:function(value,row,index){
-						var strReturn = value;
-						if(jenis == 'Anggaran'){
-							strReturn += 
-							'<div style="float:right;">'+
-							'<a href="javascript:void(0)" class="icon-add2" onclick="addDetail('+row.id+');" title="Add Komponen"></a>'+
-							'&nbsp;&nbsp;&nbsp;'+
-							'<a href="javascript:void(0)" class="icon-edit2" onclick="edit('+index+');" title="Edit"></a>'+
-							'&nbsp;&nbsp;&nbsp;'+
-							'<a href="javascript:void(0)" class="icon-trash" onclick="del('+index+')" title="Delete"></a>'+
-							'</div>';
-							return strReturn;
-						}else{
-							strReturn += 
-							'<div style="float:right;">'+
-							'<a href="javascript:void(0)" class="icon-edit2" onclick="edit('+index+');" title="Edit"></a>'+
-							'</div>';
-							return strReturn;
-						}
-					}
-				},
-				{field:'nama',title:'Nama',width:150,sortable:true},
-				{field:'satuan',title:'Satuan',width:80,align:'center',sortable:true},
-				{field:'harga_pagu',title:'Harga Pagu',width:100,align:'right',sortable:true},
-				{field:'harga_oe',title:'Harga OE',width:100,align:'right',sortable:true}
-			]],
-			view: detailview,
-			detailFormatter:function(index,row){
-				return '<div style="padding:2px"><table id="ddatagrid-'+index+'"></table></div>';
-			},
-			onExpandRow: function(index,row){
-				$('#ddatagrid-'+index).datagrid({
-					url: '<?php echo site_url('app/analisa_harga'); ?>/'+jenis+'?analisa_harga_detail='+row.id,
-					fitColumns:true, singleSelect:true, nowrap:false, sortable:true,
-					pagination:true, pageSize:5, pageList:[5,10, 20, 50],
-					loadMsg:'Please Wait', height:'auto',
-					columns:[[
-						{field:'no_urut',title:'No.',width:20,sortable:true},
-						{field:'kode',title:'Kode',width:80, sortable:true,
-							formatter:function(value2,row2,index2){
-								var strReturn = value2;
-								if(jenis == 'Anggaran' && row2.nama != ''){									
-									strReturn += 
-									'<div style="float:right;"><a href="javascript:void(0)" class="icon-edit2" onclick="editDetail('+index2+","+index+');" title="Edit"></a>'+
-									'&nbsp;&nbsp;&nbsp;'+
-									'<a href="javascript:void(0)" class="icon-trash" onclick="delDetail('+index2+","+index+')" title="Delete"></a></div>';
-									return strReturn;
-								}else if (jenis == 'Aktual' && row2.nama != ''){
-									strReturn += '<div style="float:right;"><a href="javascript:void(0)" class="icon-edit2" onclick="editDetail('+index2+","+index+');" title="Edit"></a></div>';
-									return strReturn;
-								}else{
-									return strReturn;
-								}
-							}
-						},
-						{field:'nama',title:'Nama',width:150,sortable:true},
-						{field:'satuan',title:'Satuan',width:70,sortable:true,align:'center'},
-						{field:'jenis',title:'Jenis',width:70,sortable:true,align:'center'},
-						{field:'volume',title:'Volume',width:75,align:'center',sortable:true},
-						{field:'harga_pagu',title:'Harga Pagu',width:100,align:'right',sortable:true},
-						{field:'total_harga_pagu',title:'Total Harga Pagu',width:100,align:'right',sortable:true},
-						{field:'harga_oe',title:'Harga OE',width:100,align:'right',sortable:true},
-						{field:'total_harga_oe',title:'Total Harga OE',width:100,align:'right',sortable:true}
-					]],
-					onResize:function(){
-						$('#datagrid').datagrid('fixDetailRowHeight',index);
-					},
-					onLoadSuccess:function(){
-						setTimeout(function(){
-							$('#datagrid').datagrid('fixDetailRowHeight',index);
-						},0);
-					}
-				});
-				$('#datagrid').datagrid('fixDetailRowHeight',index);
-			}
-		});
+    var i;
+    var p = document.getElementById('id_periode').value;
+
+    $(function (){
+        $('#datagrid').datagrid({ 
+            width: 'auto', height: $(window).height() * (62/100),
+            title: 'Analisa Harga '+jenis, rownumbers:true, singleSelect:true, fitColumns:true, toolbar:'#toolbar', sortable:true,
+            url: '<?php echo site_url('app/analisa_harga'); ?>/'+jenis+'?analisa_harga='+p, nowrap:false,
+            pagination:true, pageSize:10, pageList:[10,20,50,100],
+            columns:[[
+                {field:'kode',title:'Kode',width:80,sortable:true,
+                    formatter:function(value,row,index){
+                        var strReturn = value;
+                        if(jenis == 'Anggaran'){
+                            strReturn += 
+                            '<div style="float:right;">'+
+                            '<a href="javascript:void(0)" class="icon-add2" onclick="addDetail('+row.id+');" title="Add Komponen"></a>'+
+                            '&nbsp;&nbsp;&nbsp;'+
+                            '<a href="javascript:void(0)" class="icon-edit2" onclick="edit('+index+');" title="Edit"></a>'+
+                            '&nbsp;&nbsp;&nbsp;'+
+                            '<a href="javascript:void(0)" class="icon-trash" onclick="del('+index+')" title="Delete"></a>'+
+                            '</div>';
+                            return strReturn;
+                        }else{
+                            strReturn += 
+                            '<div style="float:right;">'+
+                            '<a href="javascript:void(0)" class="icon-edit2" onclick="edit('+index+');" title="Edit"></a>'+
+                            '</div>';
+                            return strReturn;
+                        }
+                    }
+                },
+                {field:'nama',title:'Nama',width:150,sortable:true},
+                {field:'satuan',title:'Satuan',width:80,align:'center',sortable:true},
+                {field:'harga_pagu',title:'Harga Pagu',width:100,align:'right',sortable:true},
+                {field:'harga_oe',title:'Harga OE',width:100,align:'right',sortable:true}
+            ]],
+            view: detailview,
+            detailFormatter:function(index,row){
+                return '<div style="padding:2px"><table id="ddatagrid-'+index+'"></table></div>';
+            },
+            onExpandRow: function(index,row){
+                $('#ddatagrid-'+index).datagrid({
+                    url: '<?php echo site_url('app/analisa_harga'); ?>/'+jenis+'?analisa_harga_detail='+row.id,
+                    fitColumns:true, singleSelect:true, nowrap:false, sortable:true,
+                    pagination:true, pageSize:5, pageList:[5,10, 20, 50],
+                    loadMsg:'Please Wait', height:'auto',
+                    columns:[[
+                            {field:'no_urut',title:'No.',width:20,sortable:true},
+                            {field:'kode',title:'Kode',width:80, sortable:true,
+                                formatter:function(value2,row2,index2){
+                                    var strReturn = value2;
+                                    if(jenis == 'Anggaran' && row2.nama != ''){									
+                                        strReturn += 
+                                        '<div style="float:right;"><a href="javascript:void(0)" class="icon-edit2" onclick="editDetail('+index2+","+index+');" title="Edit"></a>'+
+                                        '&nbsp;&nbsp;&nbsp;'+
+                                        '<a href="javascript:void(0)" class="icon-trash" onclick="delDetail('+index2+","+index+')" title="Delete"></a></div>';
+                                        return strReturn;
+                                    }else if (jenis == 'Aktual' AND row2.nama != ''){
+                                        strReturn += '<div style="float:right;"><a href="javascript:void(0)" class="icon-edit2" onclick="editDetail('+index2+","+index+');" title="Edit"></a></div>';
+                                        return strReturn;
+                                    }else{
+                                        return strReturn;
+                                    }
+                                }
+                            },
+                            {field:'nama',title:'Nama',width:150,sortable:true},
+                            {field:'satuan',title:'Satuan',width:70,sortable:true,align:'center'},
+                            {field:'jenis',title:'Jenis',width:70,sortable:true,align:'center'},
+                            {field:'volume',title:'Volume',width:75,align:'center',sortable:true},
+                            {field:'harga_pagu',title:'Harga Pagu',width:100,align:'right',sortable:true},
+                            {field:'total_harga_pagu',title:'Total Harga Pagu',width:100,align:'right',sortable:true},
+                            {field:'harga_oe',title:'Harga OE',width:100,align:'right',sortable:true},
+                            {field:'total_harga_oe',title:'Total Harga OE',width:100,align:'right',sortable:true}
+                        ]],
+                    onResize:function(){
+                        $('#datagrid').datagrid('fixDetailRowHeight',index);
+                    },
+                    onLoadSuccess:function(){
+                        setTimeout(function(){
+                                $('#datagrid').datagrid('fixDetailRowHeight',index);
+                        },0);
+                    }
+                });
+                $('#datagrid').datagrid('fixDetailRowHeight',index);
+            }
+            });
     
 		
 		
-		$('#id_periode').combobox({
-			onChange:function(newValue,oldValue){
-				$('#datagrid').datagrid({
-					url: '<?php echo site_url('app/analisa_harga'); ?>/'+jenis+'?analisa_harga='+newValue
-				});
-			}
-		});
+        $('#id_periode').combobox({
+            onChange:function(newValue,oldValue){
+                $('#datagrid').datagrid({
+                    url: '<?php echo site_url('app/analisa_harga'); ?>/'+jenis+'?analisa_harga='+newValue
+                });
+            }
+        });
 		
-	});
+    });
 	
     function doSearch(value,name){
         $('#datagrid').datagrid('load', {
@@ -229,15 +229,15 @@
     }
 
     function edit(id){
-		$('#datagrid').datagrid('selectRow',id);
-		var row = $('#datagrid').datagrid('getSelected');
-		$('#fm').form('load',row);
-		$('#dialog-form').dialog({ closed: false, cache: false, modal: true, width: $('#div-reg-center').width() * (60/100), height: $(window).height() * (70/100) }).dialog('setTitle','Edit - Analisa Harga');
-		url = '<?php echo site_url('app/analisa_harga/update'); ?>/'+row.id;
+        $('#datagrid').datagrid('selectRow',id);
+        var row = $('#datagrid').datagrid('getSelected');
+        $('#fm').form('load',row);
+        $('#dialog-form').dialog({ closed: false, cache: false, modal: true, width: $('#div-reg-center').width() * (60/100), height: $(window).height() * (70/100) }).dialog('setTitle','Edit - Analisa Harga');
+        url = '<?php echo site_url('app/analisa_harga/update'); ?>/'+row.id;
     }
 	
-	function del(id){
-		$('#datagrid').datagrid('selectRow',id);
+    function del(id){
+        $('#datagrid').datagrid('selectRow',id);
         var row = $('#datagrid').datagrid('getSelected');
         if (row){
             $.messager.confirm('Confirm','You are about to delete a record. This cannot be undone. Are you sure?',function(r){
@@ -280,7 +280,7 @@
     // -- DETAIL -- //
 	
     function addDetail(id){
-		loadCombogridItem();
+        loadCombogridItem();
         $('#dialog-dform').dialog({ closed: false, cache: false, modal: true, width: $('#div-reg-center').width() * (60/100), height: $(window).height() * (70/100) }).dialog('setTitle','Add - Komponen Analisa Harga');
         $('#fmd').form('clear');
         url = '<?php echo site_url('app/analisa_harga/createDetail'); ?>/'+id;
@@ -297,9 +297,9 @@
 		url = '<?php echo site_url('app/analisa_harga/updateDetail'); ?>/'+row.id;
     }
 	
-	function delDetail(id2,id){
-		$('#datagrid').datagrid('selectRow',id);
-		$('#ddatagrid-'+id).datagrid('selectRow',id2);
+    function delDetail(id2,id){
+        $('#datagrid').datagrid('selectRow',id);
+        $('#ddatagrid-'+id).datagrid('selectRow',id2);
         var row = $('#ddatagrid-'+id).datagrid('getSelected');
         if (row){
             $.messager.confirm('Confirm','You are about to delete a record. This cannot be undone. Are you sure?',function(r){
@@ -327,13 +327,7 @@
                 var result = eval('('+result+')');
                 if(result.success){
                     $('#dialog-dform').dialog('close');
-					// var selected = $('#datagrid').datagrid('getSelected');
-                    // var index = $('#datagrid').datagrid('getRowIndex', selected);
-					// var selected2 = $('#ddatagrid-'+index).datagrid('getSelected');
-                    // var index2 = $('#ddatagrid-'+index).datagrid('getRowIndex', selected2);
-					// $('#datagrid').datagrid('reload', index);
-					// $('#ddatagrid-'+index).datagrid('reload', index2);
-					$('#datagrid').datagrid('reload');
+                    $('#datagrid').datagrid('reload');
                     $.messager.show({ 
                         title: 'Info', timeout: 1000, msg: 'Success', 
                         style:{ right:'center', top:'center' } 
@@ -345,28 +339,28 @@
         });
     }
     
-	function loadCombogridItem(){
-		$('#id_item').combogrid({
-			panelWidth: 500, panelHeight: 310,
-			url:'<?php echo site_url('app/analisa_harga/anggaran'); ?>?item=true',
-			idField:'id',textField:'kode',
-			mode:'remote',fitColumns:false,sortable:true,nowrap:false,
-			pagination:true, pageSize:'5', pageList:'[5,10,15,20]',
-			columns:[[
-				{field:'kode',title:'Kode',width:80,sortable:true},
-				{field:'nama',title:'Nama',width:150,sortable:true},
-				{field:'satuan',title:'Satuan',width:70,sortable:true,align:'center'},
-				{field:'harga_pagu',title:'Harga Pagu',width:100,sortable:true,align:'right'},
-				{field:'harga_oe',title:'Harga OE',width:100,sortable:true,align:'right'},
-				{field:'jenis',title:'Jenis',width:80,sortable:true}
-			]],
-			onClickRow:function(index, row){
-				document.getElementById('nd').value = row.nama;
-				document.getElementById('sd').value = row.satuan;
-				$('#pd').numberbox('setValue', row.harga_pagu);
-				$('#od').numberbox('setValue', row.harga_oe);
-			}
-		});
-	}
+    function loadCombogridItem(){
+        $('#id_item').combogrid({
+            panelWidth: 500, panelHeight: 310,
+            url:'<?php echo site_url('app/analisa_harga/anggaran'); ?>?item=true',
+            idField:'id',textField:'kode',
+            mode:'remote',fitColumns:false,sortable:true,nowrap:false,
+            pagination:true, pageSize:'5', pageList:'[5,10,15,20]',
+            columns:[[
+                {field:'kode',title:'Kode',width:80,sortable:true},
+                {field:'nama',title:'Nama',width:150,sortable:true},
+                {field:'satuan',title:'Satuan',width:70,sortable:true,align:'center'},
+                {field:'harga_pagu',title:'Harga Pagu',width:100,sortable:true,align:'right'},
+                {field:'harga_oe',title:'Harga OE',width:100,sortable:true,align:'right'},
+                {field:'jenis',title:'Jenis',width:80,sortable:true}
+            ]],
+            onClickRow:function(index, row){
+                document.getElementById('nd').value = row.nama;
+                document.getElementById('sd').value = row.satuan;
+                $('#pd').numberbox('setValue', row.harga_pagu);
+                $('#od').numberbox('setValue', row.harga_oe);
+            }
+        });
+    }
 	
 </script>

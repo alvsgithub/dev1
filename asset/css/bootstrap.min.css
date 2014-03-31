@@ -247,14 +247,11 @@ body{
 
 .spanhome{
     width:650px;
-    /* border: 0px solid blueviolet; */
     padding-top: 10px;
     padding-bottom: 10px;
     border-radius: 1px 1px 1px 1px;
     -moz-border-radius: 13px 13px 13px 13px;
     -webkit-border: 13px 13px 13px 13px;
-     /*background: url(../images/main.png);*/ 
-     /*background: url(../images/templatemo_wrapper.png) repeat-y;*/ 
 }
 
 .span14{
@@ -408,7 +405,7 @@ a.text-error:focus{color:#953b39}
 a.text-info:hover,a.text-info:focus{color:#2d6987}
 .text-success{color:#468847}
 a.text-success:hover,a.text-success:focus{
-	color:#356635;
+    color:#356635;
 }
 
  .text-left{
@@ -432,13 +429,12 @@ h8{
     font-size: 25px;
 }
 h1,h2,h3,h4,h5,h6{
-     margin:10px 0;
-     font-family:inherit;
-     font-weight:bold;
-     line-height:20px;
-     /* color:#a79f4f; */
-     color:inherit;
-     text-rendering:optimizelegibility;
+    margin:10px 0;
+    font-family:inherit;
+    font-weight:bold;
+    line-height:20px;
+    color:inherit;
+    text-rendering:optimizelegibility;
 }
 
 h1 small,h2 small,h3 small,h4 small,h5 small,h6 small{
@@ -984,7 +980,7 @@ margin-top:1px;
 .dropdown-submenu:focus>a>[class*=" icon-"]{
  background-image:url("../img/glyphicons-halflings-white.png")
 }
- 
+
  .icon-glass{background-position:0 0}
  .icon-music{background-position:-24px 0}
  .icon-search{background-position:-48px 0}

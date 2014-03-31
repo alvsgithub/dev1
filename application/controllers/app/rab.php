@@ -21,8 +21,10 @@ class Rab extends Admin_Controller
         }else if(isset($_GET['rab_detail'])){
             echo $this->usulan_detail_m->getJson('a.kode_usulan = \''.$_GET['rab_detail'].'\'');
         }else if(isset($_GET['tahapan'])){
-			echo $this->tahapan_m->getJson('a.id_usulan_detail = \''.$_GET['tahapan'].'\'');
-		}else{
+            echo $this->tahapan_m->getJson('a.id_usulan_detail = \''.$_GET['tahapan'].'\'');
+        }else if(isset($_GET['ai'])){
+            echo $this->tahapan_m->getJsonAnalisaItem();
+        }else{
             $this->data['subview'] = 'app/rab/index';
             $this->load->view('app/_layout_main', $this->data);
         }
@@ -62,7 +64,6 @@ class Rab extends Admin_Controller
             show_404();
 
         $data = $this->usulan_m->array_from_post(array(
-                    'kode',
                     'nama',
                     'lokasi'
                 ));
@@ -88,8 +89,32 @@ class Rab extends Admin_Controller
         }
     }
 	
-	// TAHAPAN //
-	public function createTahapan($id = NULL)
+    // TAHAPAN //
+    public function createTahapan($id = NULL)
+    {
+        if(!isset($_POST))
+            show_404();
+        
+        $data = $this->tahapan_m->array_from_post(array(
+                    'no_urut',
+                    'nama',
+                    'id_parent'
+                ));
+        $data['id_usulan_detail'] = $id;
+        if($data['id_parent'] == 0){
+            $data['level'] = '1';
+        }else{
+            $data['level'] = $this->tahapan_m->get_by('id = '.$data['id_parent'], true)->level;
+        }
+        
+        if($this->tahapan_m->save($data) == TRUE){
+            echo json_encode(array('success'=>true));
+        }else{
+            echo json_encode(array('msg'=>'error'));
+        }
+    }
+    
+    public function updateTahapan($id = null)
     {
         if(!isset($_POST))
             show_404();
@@ -98,9 +123,23 @@ class Rab extends Admin_Controller
                     'no_urut',
                     'nama'
                 ));
-        $data['id_usulan_detail'] = $id;
-        if($this->tahapan_m->save($data) == TRUE){
-			echo json_encode(array('success'=>true));
+
+        if($this->tahapan_m->save($data, $id) == TRUE) { 
+            echo json_encode(array('success'=>true));
+        }else{
+            echo json_encode(array('msg'=>'Data gagal dismpan!!!'));
+        }
+    }
+    
+    public function deleteTahapan($id = NULL)
+    {
+        if(!isset($_POST))
+            show_404();
+
+        $id = addslashes($_POST['id']);
+
+        if($this->tahapan_m->delete($id)){
+            echo json_encode(array('success'=>true));
         }else{
             echo json_encode(array('msg'=>'error'));
         }

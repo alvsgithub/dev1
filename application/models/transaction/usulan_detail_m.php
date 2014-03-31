@@ -41,6 +41,8 @@ class Usulan_detail_M extends MY_Model
         $query_sort_order_limit_offset = $this->db->query($query);
         foreach ($query_sort_order_limit_offset->result() as $row)
         {
+            $row->created_time = date("d-m-Y H:i:s",strtotime($row->created_time));
+            $row->modified_time = date("d-m-Y H:i:s",strtotime($row->modified_time));
             array_push($rowsd, $row);
         }
         $result['rows'] = $rowsd;

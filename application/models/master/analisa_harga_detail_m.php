@@ -31,12 +31,12 @@ class Analisa_harga_detail_M extends MY_Model
         $query = $query." ORDER BY $sort $order LIMIT $rows OFFSET $offset"; 
         $query_sort_order_limit_offset = $this->db->query($query);
         
-		foreach ($query_sort_order_limit_offset->result() as $row)
+        foreach ($query_sort_order_limit_offset->result() as $row)
         {
-			$row->harga_pagu = number_format($row->harga_pagu, 2, '.', ',');
-			$row->total_harga_pagu = number_format($row->total_harga_pagu, 2, '.', ',');
-			$row->harga_oe = number_format($row->harga_oe, 2, '.', ',');
-			$row->total_harga_oe = number_format($row->total_harga_oe, 2, '.', ',');
+            $row->harga_pagu = number_format($row->harga_pagu, 2, '.', ',');
+            $row->total_harga_pagu = number_format($row->total_harga_pagu, 2, '.', ',');
+            $row->harga_oe = number_format($row->harga_oe, 2, '.', ',');
+            $row->total_harga_oe = number_format($row->total_harga_oe, 2, '.', ',');
             array_push($rowsd, $row);
         }
         $result['rows'] = $rowsd;

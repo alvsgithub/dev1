@@ -65,59 +65,58 @@ class Item_M extends MY_Model
         return $this->db->get()->result();
     }
 	
-	
-	public function getJsonOpt()
-	{
+    public function getJsonOpt()
+    {
 
-		$q = isset($_POST['q']) ? strval($_POST['q']) : '';    
-		$q = strtoupper($q);
-		
-		$page = isset($_POST['page']) ? intval($_POST['page']) : 1;
-		$rows = isset($_POST['rows']) ? intval($_POST['rows']) : 10;
-		$sort = isset($_POST['sort']) ? strval($_POST['sort']) : $this->_primary_key;
-		$order = isset($_POST['order']) ? strval($_POST['order']) : 'asc';
-		$offset = ($page-1) * $rows;
-		
-		$result = array();
-		$rowsd = array();
-		$query = "
+        $q = isset($_POST['q']) ? strval($_POST['q']) : '';    
+        $q = strtoupper($q);
 
-			SELECT 
-				a.id, a.kode, a.nama, a.satuan, upper(a.jenis) AS jenis,
-				a.harga_pagu, a.harga_oe
-			FROM ".$this->_table_name." a 
-			WHERE 1=1 AND 
+        $page = isset($_POST['page']) ? intval($_POST['page']) : 1;
+        $rows = isset($_POST['rows']) ? intval($_POST['rows']) : 10;
+        $sort = isset($_POST['sort']) ? strval($_POST['sort']) : $this->_primary_key;
+        $order = isset($_POST['order']) ? strval($_POST['order']) : 'asc';
+        $offset = ($page-1) * $rows;
 
-				(upper(a.kode) LIKE '%$q%' OR 
+        $result = array();
+        $rowsd = array();
+        $query = "
 
-				 upper(a.nama) LIKE '%$q%' OR 
+            SELECT 
+                    a.id, a.kode, a.nama, a.satuan, upper(a.jenis) AS jenis,
+                    a.harga_pagu, a.harga_oe
+            FROM ".$this->_table_name." a 
+            WHERE 1=1 AND 
 
-				 upper(a.satuan) LIKE '%$q%')";
+                    (upper(a.kode) LIKE '%$q%' OR 
 
-		$result['total'] = $this->db->query($query)->num_rows();
+                     upper(a.nama) LIKE '%$q%' OR 
 
-		$query = $query." ORDER BY $sort $order LIMIT $rows OFFSET $offset"; 
+                     upper(a.satuan) LIKE '%$q%')";
 
-		$query_sort_order_limit_offset = $this->db->query($query);
+        $result['total'] = $this->db->query($query)->num_rows();
 
-		foreach ($query_sort_order_limit_offset->result() as $row)
-		{
-//                $row->waktu = date("d-m-Y",strtotime($row->waktu));
-			$row->harga_pagu = number_format($row->harga_pagu, 2, '.', ',');
-			$row->harga_oe = number_format($row->harga_oe, 2, '.', ',');
-			array_push($rowsd, $row);
-		}
+        $query = $query." ORDER BY $sort $order LIMIT $rows OFFSET $offset"; 
 
-		$result['rows'] = $rowsd;
-		
-		// $fp = fopen('get_data_kawasan.json', 'w');
+        $query_sort_order_limit_offset = $this->db->query($query);
 
-		// fwrite($fp, json_encode($result));
+        foreach ($query_sort_order_limit_offset->result() as $row)
+        {
+//            $row->waktu = date("d-m-Y",strtotime($row->waktu));
+            $row->harga_pagu = number_format($row->harga_pagu, 2, '.', ',');
+            $row->harga_oe = number_format($row->harga_oe, 2, '.', ',');
+            array_push($rowsd, $row);
+        }
 
-		// fclose($fp);
+        $result['rows'] = $rowsd;
 
-		return json_encode($result);
+        // $fp = fopen('get_data_kawasan.json', 'w');
 
-	}
+        // fwrite($fp, json_encode($result));
+
+        // fclose($fp);
+
+        return json_encode($result);
+
+    }
     
 }
