@@ -202,14 +202,15 @@ $(document).ready(function() {
                     "sSearch": "Search all columns:"
 		}
 	} );
-        $('#labelPeriode').appendTo('div.dataTables_filter');
-        $('#id_periode').appendTo('div.dataTables_filter');
-        $('#space').appendTo('div.dataTables_filter');
-        $('#addb').appendTo('div.dataTables_filter');
-        // $('#space2').appendTo('div.dataTables_filter');
-        // $('#labelImport').appendTo('div.dataTables_filter');
-        // $('#import_browse').appendTo('div.dataTables_filter');
-        // $('#import_button').appendTo('div.dataTables_filter');
+//        $('#labelPeriode').appendTo('div.dataTables_filter');
+//        $('#id_periode').appendTo('div.dataTables_filter');
+//        $('#space').appendTo('div.dataTables_filter');
+//        $('#addb').appendTo('div.dataTables_filter');
+//        $('#space2').appendTo('div.dataTables_filter');
+        $('#tbform').appendTo('div.dataTables_filter');
+//        $('#labelImport').appendTo('div.dataTables_filter');
+//        $('#import_browse').appendTo('div.dataTables_filter');
+//        $('#tmpl-import').appendTo('div.dataTables_filter');
         
         // filter periode
         oTable.fnFilter( document.getElementById('id_periode').value, 1 );
