@@ -86,5 +86,17 @@
     background:url('icons/Trash-can-icon.png') no-repeat center center;
 }.icon-add2{
     background:url('icons/Add-icon.png') no-repeat center center;
+}.icon-folder{
+  background: url('icons/tree_icons.png') no-repeat -209px -1px;
+}.icon-copye{
+  background: url('icons/copy.png') no-repeat center center;
+}.icon-importe{
+  background: url('icons/import.png') no-repeat center center;
+}.icon-previewe{
+  background: url('icons/preview.png') no-repeat center center;
+}.icon-copye2{
+  background: url('icons/copy2.png') no-repeat center center;
+}.icon-detaile{
+  background: url('icons/detail.png') no-repeat;
 }
 
