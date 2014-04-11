@@ -111,51 +111,51 @@ class MY_Model extends CI_Model {
         return $this->get(NULL, $single);
     }
 
-    public function save($data, $id = NULL, $TG = FALSE){
+    public function save($data){
 
         // Set timestamps
         if ($this->_timestamps == TRUE) {
             $now = date('Y-m-d H:i:s');
-            $id || $data['created_time'] = $now;
+            $data['created_time'] = $now;
+        }
+        
+        // Set Logs
+        if ($this->_logs == TRUE) {
+            $data['created_by'] = $this->session->userdata('username');
+        }
+        
+        //!isset($data[$this->_primary_key]) || $data[$this->_primary_key] = NULL;
+        //$this->db->db_debug = FALSE;
+        $this->db->set($data);
+        if ($this->db->insert($this->_table_name)) {
+           return TRUE;
+        }else{
+           return FALSE;
+        }
+        
+    }
+
+    public function update($data, $id){
+        // Set timestamps
+        if ($this->_timestamps == TRUE) {
+            $now = date('Y-m-d H:i:s');
             $data['modified_time'] = $now;
         }
         
         // Set Logs
         if ($this->_logs == TRUE) {
-            $id || $data['created_by'] = $this->session->userdata('username');
             $data['modified_by'] = $this->session->userdata('username');
         }
         
-        // Insert
-        if ($id === NULL) {
-            //!isset($data[$this->_primary_key]) || $data[$this->_primary_key] = NULL;
-            //$this->db->db_debug = false;
-            $this->db->set($data);
-            if ($this->db->insert($this->_table_name)) {
-               $id = TRUE;
-            }else{
-               $id = FALSE;
-            }
-
-            if ($TG == TRUE){
-                $this->db->set($data);
-                $this->db->where($this->_primary_key, $id);
-                $this->db->update($this->_table_name);
-            }
-                
+        $this->db->set($data);
+        $this->db->where($this->_primary_key, $id);
+        if($this->db->update($this->_table_name)){
+            return TRUE;
+        }else{
+            return FALSE;
         }
-        
-        // Update
-        else {
-            //$filter = $this->_primary_filter;
-            //$id = $filter($id);
-            $this->db->set($data);
-            $this->db->where($this->_primary_key, $id);
-            $this->db->update($this->_table_name);
-        }        
-
-        return $id;
     }
+
 
     public function delete($id){
         //$filter = $this->_primary_filter;
@@ -166,7 +166,11 @@ class MY_Model extends CI_Model {
         }
         $this->db->where($this->_primary_key, $id);
         $this->db->limit(1);
-        return $this->db->delete($this->_table_name);
+        if($this->db->delete($this->_table_name)){
+            return true;
+        }else{
+            return false;
+        }
     }
 	
     public function getJson($where = NULL)
@@ -183,7 +187,7 @@ class MY_Model extends CI_Model {
                 SELECT 
                     a.*
                 FROM ".$this->_table_name." a
-				WHERE 1 = 1 ".$where;
+                WHERE 1 = 1 ".$where;
         $result['total'] = $this->db->query($query)->num_rows();
         $query = $query." ORDER BY $sort $order LIMIT $rows OFFSET $offset"; 
         $query_sort_order_limit_offset = $this->db->query($query);
@@ -199,7 +203,11 @@ class MY_Model extends CI_Model {
     public function update_for_trigger($id, $data){
         $this->db->set($data);
         $this->db->where($this->_primary_key, $id);
-        $this->db->update($this->_table_name);
+        if($this->db->update($this->_table_name)){
+            return TRUE;
+        }else{
+            return FALSE;
+        }
     }
     
     public function delete_where($array_where){

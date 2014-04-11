@@ -29,17 +29,8 @@ class Analisa_harga_M extends MY_Model
             'rules' => 'trim|required|xss_clean'
         )
     );
-
-    public function get_new(){
-        $analisa_harga = new stdClass();
-        $analisa_harga->id_periode = '';
-        $analisa_harga->kode = '';
-        $analisa_harga->nama = '';
-        $analisa_harga->satuan = '';
-        return $analisa_harga;
-    }
     
-    public function getJson($where = NULL)
+    public function getJson($id_periode)
     {	
         $page = isset($_POST['page']) ? intval($_POST['page']) : 1;
         $rows = isset($_POST['rows']) ? intval($_POST['rows']) : 10;
@@ -64,14 +55,14 @@ class Analisa_harga_M extends MY_Model
                 (SELECT COALESCE(SUM(c.harga_oe*b.volume),0) FROM analisa_harga_detail b LEFT JOIN item c ON c.id = b.id_item WHERE b.id_analisa = a.id) AS harga_oe
             FROM ".$this->_table_name." a
             LEFT JOIN periode p ON p.id = a.id_periode
-            WHERE 1 = 1 ".$where." ".$filter;
+            WHERE a.id_periode = $id_periode $filter";
         $result['total'] = $this->db->query($query)->num_rows();
         $query = $query." ORDER BY $sort $order LIMIT $rows OFFSET $offset"; 
         $query_sort_order_limit_offset = $this->db->query($query);
         foreach ($query_sort_order_limit_offset->result() as $row)
         {
-            $row->harga_pagu = number_format($row->harga_pagu, 2, '.', ',');
-            $row->harga_oe = number_format($row->harga_oe, 2, '.', ',');
+            $row->harga_pagu = number_format($row->harga_pagu, 2, ',', '.');
+            $row->harga_oe = number_format($row->harga_oe, 2, ',', '.');
             array_push($rowsd, $row);
         }
         $result['rows'] = $rowsd;

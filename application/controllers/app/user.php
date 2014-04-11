@@ -52,7 +52,12 @@ class User extends Admin_Controller
                             'id_group'
                         ));
             $data['password'] = $this->user_m->hash($data['password']);
-            $this->user_m->save($data, $id);
+            if($id == NULL){
+                $this->user_m->save($data);
+            }else{
+                $this->user_m->update($data,$id);
+            }
+            
             redirect('app/user');
         }
 

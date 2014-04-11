@@ -9,7 +9,7 @@ function add_meta_title ($string)
 function btn_add($uri){
     return anchor(
         $uri, 
-        '<button class="btn btn-small btn-primary" type="button"><i class="icon-plus icon-white"></i> Add</button>',
+        '<button class="btn btn-small btn-primary" type="button"><i class="icon-plusb icon-white"></i> Add</button>',
         'id="addb"'
     );
 }
@@ -18,7 +18,7 @@ function btn_edit ($uri)
 {
     return anchor(
         $uri, 
-        '<button class="btn btn-mini btn-primary" type="button"><i class="icon-edit icon-white"></i> Edit</button>'
+        '<button class="btn btn-mini btn-primary" type="button"><i class="icon-editb icon-white"></i> Edit</button>'
     );
 }
 

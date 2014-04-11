@@ -1,8 +1,9 @@
-<div class="modal-header">
-    <h4>Periode</h4>
-</div>
 <section_custom>
-    <?php echo btn_add('app/periode/edit'); ?>
+    <div id="tbform">
+        <b>Periode</b>
+        <span id="space"> &nbsp;&nbsp;&nbsp; </span>
+        <?php echo btn_add('app/periode/edit'); ?>
+    </div>
     <table id="example" class="table table-striped table-bordered table-hover table-condensed">
         <thead>
             <tr id="header1">

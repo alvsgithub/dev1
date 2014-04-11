@@ -1,15 +1,15 @@
-<div class="modal-header">
-    <h4>Group</h4>
-</div>
 <section_custom>
-    
-    <?php echo btn_add('app/group/edit'); ?>
+    <div id="tbform">
+        <b>Group</b>
+        <span id="space"> &nbsp;&nbsp;&nbsp; </span>
+        <?php echo btn_add('app/group/edit'); ?>
+    </div>
     
     <table id="example" class="table table-bordered table-hover table-condensed table-striped">
         <thead>
             <tr id="header1">
                 <th>Nama Group</th>
-                <th id="actions1">Actions</th>
+                <th id="actions1">Action</th>
             </tr>
         </thead>
         <tbody>

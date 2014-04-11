@@ -5,52 +5,119 @@ class Laporan extends Admin_Controller{
     public function __construct()
     {
         parent::__construct();
-        $this->load->library('upload');
+        $this->load->helper('pdf_helper');
     }
 
-    function run_import() {
-        $file_type              =   $_FILES['item']['type'];
-        $file_directory         =   $_FILES['item']['tmp_name'];
-        $file_name              =   str_replace(chr(32), "_", $_FILES['item']['name']);
-        $file_size              =   $_FILES['item']['size'];
-        $local_directory        =   './asset/files/' . $file_name;
-        $upload_file            =   move_uploaded_file($file_directory, $local_directory);
+    public function index()
 
-        $this->load->library('excel');
+	{
 
-        if ($file_type != "file/xls" AND $file_type != "file/xlsx" AND $file_size < 100000) {
-            try{
-                $inputFileType  = PHPExcel_IOFactory::identify($local_directory);
-                $objReader      = PHPExcel_IOFactory::createReader($inputFileType);
-                $objPHPExcel    = $objReader->load($local_directory);
-            }catch(Exception $e){
-                die('Error loading file "'.pathinfo($local_directory, PATHINFO_BASENAME) . '": ' . $e->getMessage());
+            $cek = $this->session->userdata('logged_in');
+
+            if(!empty($cek)){
+
+                $d['prg'] = $this->config->item('prg');
+
+                $d['web_prg'] = $this->config->item('web_prg');
+
+                $d['nama_program'] = $this->config->item('nama_program');
+
+                $d['instansi'] = $this->config->item('instansi');
+
+                $d['usaha'] = $this->config->item('usaha');
+
+                $d['alamat_instansi'] = $this->config->item('alamat_instansi');
+
+                $d['kode_group'] = $this->session->userdata('kode_group');
+
+                
+
+                if($this->app_model->check_menu_access('cek_pal_batas_laporan') < 1){
+
+                    redirect('home');
+
+                }else{
+
+                
+
+                    //main_content
+
+                    $d['judul'] = "Cek Pal Batas";
+
+                    $d['data_kawasan'] = $this->kawasan_model->getKawasan();
+
+                    $d['content'] = $this->load->view('pendataan/cek_pal_batas_laporan', $d, true);
+
+                    $d['menu'] = $this->app_model->getMenu($d['kode_group']);
+
+                    $d['sub_menu'] = $this->app_model->getSubMenu($d['kode_group']);
+
+                    
+
+                    $this->load->view('header',$d);
+
+                    $this->load->view('left_nav',$d);
+
+                    $this->load->view('main_content',$d);
+
+                    $this->load->view('footer',$d);
+
+
+
+                }
+
+            }else{
+
+                header('location:'.base_url());
+
             }
 
-            $sheet          = $objPHPExcel->getSheet(0);
-            $highestRow     = $sheet->getHighestRow();
-            $highestColumn  = $sheet->getHighestColumn();
+	}
 
-            for ($row = 2; $row <= $highestRow; $row++) {
-              
-                $rowData = $sheet->rangeToArray('A' . $row . ':' . $highestColumn . $row, NULL, TRUE, FALSE);
+        public function laporan_pdf()
 
-                $data = array(
-                            "kode"          => $rowData[0][0],
-                            "id_periode"    => $rowData[0][1],
-                            "nama"          => $rowData[0][2],
-                            "jenis"         => $rowData[0][3],
-                            "satuan"        => $rowData[0][4],
-                            "harga_pagu"    => $rowData[0][5],
-                            "harga_oe"      => $rowData[0][6]
-                        );
+        {
+            
+            $id_kawasan = $_REQUEST['kawasan'];
+            
+			$d['jabatan1'] = $_REQUEST['jabatan1'];
+            $d['jabatan2'] = $_REQUEST['jabatan2'];
+            $d['nama1'] = $_REQUEST['nama1'];
+            $d['nama2'] = $_REQUEST['nama2'];
+            $d['nip1'] = $_REQUEST['nip1'];
+            $d['nip2'] = $_REQUEST['nip2'];
 
-                $this->db->insert("item", $data);
+            $d['judul'] = "";
+            $d['id_kawasan'] = $id_kawasan;
+            $tgl1 = $_REQUEST['tgl1'];
+
+            $tgl2 = $_REQUEST['tgl2'];
+            
+            if($id_kawasan == 'SEMUA'){
+                $d['judul'] = "REKAPITULASI CEK PAL BATAS<br>".$tgl1." S/D ".$tgl2;
+            }else{
+                $kawasan = $this->kawasan_model->getKawasanWhere($id_kawasan);
+                
+                $d['judul'] = "REKAPITULASI CEK PAL BATAS<br>KAWASAN : "
+                              .$kawasan->kode_fungsi_kawasan.". ".$kawasan->nama_kawasan."<br>"
+                              .$tgl1." S/D ".$tgl2;
             }
+            
+            $d['prg'] = $this->config->item('prg');
 
-            unlink($local_directory); 
+            $d['web_prg'] = $this->config->item('web_prg');
+
+            $d['nama_program'] = $this->config->item('nama_program');
+
+            $d['instansi'] = $this->config->item('instansi');
+
+            $d['usaha'] = $this->config->item('usaha');
+
+            $d['alamat_instansi'] = $this->config->item('alamat_instansi');
+
+            $d['data_table'] = $this->cek_pal_batas_model->getDataReportLaporan($id_kawasan, $tgl1, $tgl2);
+
+            $this->load->view('pdfreport', $d);
+
         }
-
-        redirect('app/anggaran/index/upah');
-    }
 }

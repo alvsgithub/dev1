@@ -1,13 +1,17 @@
-<div class="modal-header"><h4>Users</h4></div>
+
 <section_custom>
-    <?php echo btn_add('app/user/edit'); ?>
+    <div id="tbform">
+        <b>Users</b>
+        <span id="space"> &nbsp;&nbsp;&nbsp; </span>
+        <?php echo btn_add('app/user/edit'); ?>
+    </div>
     <table id="example" class="table table-bordered table-hover table-condensed table-striped">
         <thead>
             <tr id="header1">
                 <th >Username</th>
                 <th >Email</th>
                 <th >Group</th>
-                <th id="actions1">Actions</th>
+                <th id="actions1">Action</th>
             </tr>
         </thead>
         <tbody>

@@ -16,13 +16,13 @@ class Analisa_harga extends Admin_Controller
         $this->data['options_periode'] = $this->periode_m->get();
 
         if(isset($_GET['analisa_harga'])){
-            echo $this->analisa_harga_m->getJson('AND a.id_periode = '.$_GET['analisa_harga']);
+            echo $this->analisa_harga_m->getJson($_GET['analisa_harga']);
         }else if(isset($_GET['analisa_harga_detail'])){
-            echo $this->analisa_harga_detail_m->getJson('AND a.id_analisa = '.$_GET['analisa_harga_detail']);
+            echo $this->analisa_harga_detail_m->getJson($_GET['analisa_harga_detail']);
         }else if(isset($_GET['item'])){
-            echo $this->item_m->getJsonOpt();
+            echo $this->item_m->getJsonOpt($_GET['idp']);
         }else{      
-            $this->data['subview'] = 'app/master/analisa_harga/index';
+            $this->data['subview'] = 'app/master/analisa_harga';
             $this->load->view('app/_layout_main', $this->data);
         }
         
@@ -34,61 +34,80 @@ class Analisa_harga extends Admin_Controller
         $this->data['options_periode'] = $this->periode_m->get();
 
         if(isset($_GET['analisa_harga'])){
-            echo $this->analisa_harga_m->getJson('AND a.id_periode = '.$_GET['analisa_harga']);
+            echo $this->analisa_harga_m->getJson($_GET['analisa_harga']);
         }else if(isset($_GET['analisa_harga_detail'])){
-            echo $this->analisa_harga_detail_m->getJson('AND a.id_analisa = '.$_GET['analisa_harga_detail']);
+            echo $this->analisa_harga_detail_m->getJson($_GET['analisa_harga_detail']);
         }else if(isset($_GET['item'])){
             echo $this->item_m->getJsonOpt();
         }else{      
-            $this->data['subview'] = 'app/master/analisa_harga/index';
+            $this->data['subview'] = 'app/master/analisa_harga';
             $this->load->view('app/_layout_main', $this->data);
         }
     }
     
     public function create()
     {
-        if(!isset($_POST))  
+        if(!isset($_POST)) { 
             show_404();
+        }
 
-        $data = $this->analisa_harga_m->array_from_post(array(
-                    'kode',
-                    'nama',
-                    'satuan'
-                ));
+        // Set up the form
+        $rules = $this->analisa_harga_m->rules;
+        $this->form_validation->set_rules($rules);
+        if ($this->form_validation->run() == TRUE){
+            $data = $this->analisa_harga_m->array_from_post(array(
+                        'id_periode',
+                        'kode',
+                        'nama',
+                        'satuan'
+                    ));
 
-        $data['id_periode'] = $_GET['id_periode'];
-
-        if($this->analisa_harga_m->save($data) == TRUE){
-            echo json_encode(array('success'=>true));
+            if($this->analisa_harga_m->save($data) == TRUE){
+                echo json_encode(array('success'=>true));
+            }else{
+                echo json_encode(array('msg'=>'error'));
+            }
         }else{
-            echo json_encode(array('msg'=>'error'));
+            $this->form_validation->set_error_delimiters('', '');
+            echo json_encode(array('msg'=> validation_errors() ));
         }
     }
 
     public function update($id = null)
     {
-        if(!isset($_POST))
+        if(!isset($_POST)){
             show_404();
+        }
 
-        $data = $this->analisa_harga_m->array_from_post(array(
-                    'kode',
-                    'nama',
-                    'satuan'
-                ));
+        // Set up the form
+        $rules = $this->analisa_harga_m->rules;
+        $this->form_validation->set_rules($rules);
+        if ($this->form_validation->run() == TRUE){
+            $data = $this->analisa_harga_m->array_from_post(array(
+                        'id_periode',
+                        'kode',
+                        'nama',
+                        'satuan'
+                    ));
 
-        if($this->analisa_harga_m->save($data, $id) == TRUE){ 
-            echo json_encode(array('success'=>true));
+            if($this->analisa_harga_m->update($data, $id) == TRUE){ 
+                echo json_encode(array('success'=>true));
+            }else{
+                echo json_encode(array('msg'=>'Data gagal dismpan!!!'));
+            }
         }else{
-            echo json_encode(array('msg'=>'Data gagal dismpan!!!'));
+            $this->form_validation->set_error_delimiters('', '');
+            echo json_encode(array('msg'=> validation_errors() ));
         }
     }
     
     public function delete($id = NULL)
     {
-        if(!isset($_POST))
+        if(!isset($_POST)){
             show_404();
-
-        $id = addslashes($_POST['id']);
+        }
+        
+        $id = addslashes($this->input->post('id'));
         if($this->analisa_harga_m->delete($id)){
             echo json_encode(array('success'=>true));
         }else{
@@ -100,58 +119,79 @@ class Analisa_harga extends Admin_Controller
 
     public function createDetail($id = NULL)
     {
-        if(!isset($_POST))
+        if(!isset($_POST)){
             show_404();
+        }
 
-        $data = $this->analisa_harga_detail_m->array_from_post(array(
-                    'id_analisa',
-                    'id_item',
-                    'volume',
-					'no_urut'
-                ));
-        $data['id_analisa'] = $id;
-        if($this->analisa_harga_detail_m->save($data) == TRUE){
-            $data_item['harga_pagu'] = $this->input->post('harga_pagu');
-            if($this->item_m->save($data_item, $data['id_item']) == TRUE){
-                echo json_encode(array('success'=>true));
+        // Set up the form
+        $rules = $this->analisa_harga_detail_m->rules;
+        $this->form_validation->set_rules($rules);
+        if ($this->form_validation->run() == TRUE){
+            $data = $this->analisa_harga_detail_m->array_from_post(array(
+                        'id_analisa',
+                        'id_item',
+                        'volume',
+                        'no_urut'
+                    ));
+            if($this->analisa_harga_detail_m->save($data) == TRUE){
+                $data_item['harga_pagu'] = $this->input->post('harga_pagu');
+                if($this->item_m->update($data_item, $data['id_item']) == TRUE){
+                    echo json_encode(array('success'=>true));
+                }else{
+                    echo json_encode(array('msg'=>'error'));
+                }
+            }else{
+                echo json_encode(array('msg'=>'error'));
             }
         }else{
-            echo json_encode(array('msg'=>'error'));
+            $this->form_validation->set_error_delimiters('', '');
+            echo json_encode(array('msg'=> validation_errors() ));
         }
     }
 
     public function updateDetail($id = null)
     {
-        if(!isset($_POST))  
+        if(!isset($_POST)){  
             show_404();
+        }
 
-        $data = $this->analisa_harga_detail_m->array_from_post(array(
-                    'id_item',
-					'no_urut',
-                    'volume'
-                ));
-        if($this->analisa_harga_detail_m->save($data, $id)){
-            if($this->input->post('harga_pagu') != 0){
-                $data_item['harga_pagu'] = $this->input->post('harga_pagu');
-            }
-            if($this->input->post('harga_oe') != 0){
-                $data_item['harga_oe'] = $this->input->post('harga_oe');
-            }
-            if($this->item_m->save($data_item, $data['id_item'])){
-                echo json_encode(array('success'=>true));
+        // Set up the form
+        $rules = $this->analisa_harga_detail_m->rules;
+        $this->form_validation->set_rules($rules);
+        if($this->form_validation->run() == TRUE){
+            $data = $this->analisa_harga_detail_m->array_from_post(array(
+                        'id_analisa',
+                        'id_item',
+                        'no_urut',
+                        'volume'
+                    ));
+            if($this->analisa_harga_detail_m->update($data,$id)){
+                if($this->input->post('harga_pagu') != 0){
+                    $data_item['harga_pagu'] = $this->input->post('harga_pagu');
+                }
+                if($this->input->post('harga_oe') != 0){
+                    $data_item['harga_oe'] = $this->input->post('harga_oe');
+                }
+                if($this->item_m->update($data_item, $data['id_item'])){
+                    echo json_encode(array('success'=>true));
+                }
+            }else{
+                echo json_encode(array('msg'=>'error'));
             }
         }else{
-            echo json_encode(array('msg'=>'error'));
+            $this->form_validation->set_error_delimiters('', '');
+            echo json_encode(array('msg'=> validation_errors() ));
         }
     }
     
     public function deleteDetail ($id = null)
     {
-        if(!isset($_POST))  
+        if(!isset($_POST)) {
             show_404();
+        }
 
-        $id = addslashes($_POST['id']);
-        if($this->analisa_harga_detail_m->delete($id)){
+        $id = addslashes($this->input->post('id'));
+        if($this->analisa_harga_detail_m->delete($id) == true){
             echo json_encode(array('success'=>true));
         }else{
             echo json_encode(array('msg'=>'error'));
@@ -163,11 +203,11 @@ class Analisa_harga extends Admin_Controller
         $file   = explode('.',$_FILES['analisa_harga']['name']);
         $length = count($file);
         if($file[$length -1] == 'xlsx' || $file[$length -1] == 'xls'){//jagain barangkali uploadnya selain file excel :-)
-            $tmp    = $_FILES['analisa_harga']['tmp_name'];//Baca dari tmp folder jadi file ga perlu jadi sampah di server :-p
-            $file_type    = $_FILES['analisa_harga']['type'];
+            $tmp = $_FILES['analisa_harga']['tmp_name'];//Baca dari tmp folder jadi file ga perlu jadi sampah di server :-p
+            $file_type = $_FILES['analisa_harga']['type'];
             $this->load->library('excel');
             /**  Create a new Reader of the type defined in $inputFileType  **/
-            $file_type  = PHPExcel_IOFactory::identify($tmp);
+            $file_type = PHPExcel_IOFactory::identify($tmp);
             $read = PHPExcel_IOFactory::createReader($file_type);
             /**  Advise the Reader that we only want to load cell data  **/
             $read->setReadDataOnly(true);
@@ -186,7 +226,7 @@ class Analisa_harga extends Admin_Controller
 
                     foreach($maxCol as $key => $coloumn)
                     {
-                        $field[$key]    = $_sheet->getCell($coloumn.'1')->getCalculatedValue();//Kolom pertama sebagai field list pada table
+                        $field[$key] = $_sheet->getCell($coloumn.'1')->getCalculatedValue();//Kolom pertama sebagai field list pada table
                     }
 
                     for($i = 2; $i <= $maxRow; $i++)
@@ -221,7 +261,7 @@ class Analisa_harga extends Admin_Controller
                                         'modified_time' => date('Y-m-d H:i:s')
                                     );
 
-                                    $this->db->insert($sheet, $data);//ribet banget tinggal insert doank...
+                                    $this->db->insert($sheet, $data);//insert
                                 }
                             }
                         }
@@ -233,7 +273,7 @@ class Analisa_harga extends Admin_Controller
                         $sql['modified_time']   = date('Y-m-d H:i:s');
 
                         if ($sheet == "analisa_harga") {
-                            $this->db->insert($sheet, $sql);//ribet banget tinggal insert doank...
+                            $this->db->insert($sheet, $sql);//insert
                         }
                     }
                 }

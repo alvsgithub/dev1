@@ -12,16 +12,14 @@
     
     <script src="<?php echo site_url('asset/js/jquery-1.8.3.min.js'); ?>"></script>
     <script src="<?php echo site_url('asset/js/bootstrap.min.js'); ?>"></script>
-    <script src="<?php echo site_url('asset/js/bootstrap-datepicker.js'); ?>"></script>
     <script src="<?php echo site_url('asset/js/jquery.easyui.min.js'); ?>"></script>
-    
     <script src="<?php echo site_url('asset/js/datagrid-detailview.js'); ?>"></script>
     
     <script src="<?php echo site_url('asset/js/jloader.js'); ?>"></script>
     
-	<?php if(isset($edatagrid) && $edatagrid === TRUE): ?>
-	   <script src="<?php echo site_url('asset/js/jquery.edatagrid.js'); ?>"></script>
-	<?php endif; ?>
+    <?php if(isset($edatagrid) && $edatagrid === TRUE): ?>
+       <script src="<?php echo site_url('asset/js/jquery.edatagrid.js'); ?>"></script>
+    <?php endif; ?>
 	
     <?php if(isset($datatables) && $datatables === TRUE): ?>
         <link href="<?php echo site_url('asset/css/DT_bootstrap.css');?>" rel="stylesheet">
